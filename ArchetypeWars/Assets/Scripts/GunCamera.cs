@@ -5,7 +5,6 @@ public class GunCamera : MonoBehaviour {
 
 	public float rotSpeed = 7f;
 	public float neckAngleLimit = 40f;
-	private float neckAngle = 0;
 
 	public GameObject target;
 	private Vector3 vec;

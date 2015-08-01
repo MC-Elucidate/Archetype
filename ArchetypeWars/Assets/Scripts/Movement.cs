@@ -4,15 +4,18 @@ using System.Collections;
 public class Movement : MonoBehaviour {
 
 
-	private bool doubleJumping = false, wallRunning  = false, sliding = false;
+	private bool doubleJumping = false, wallRunning  = false, wallrunLeft = false, wallrunRight = false, sliding = false;
+
+
+	public float rotSpeed = 7f;
 
 	private float verticalVel = 0f;
 	private float slideTime = 1.1f, currentSlide = 0, slidespeed = 1.5f;
 	private float gravity = -9.8f, speed = 10f;
-	public float rotSpeed = 7f;
 	private float jumpPower = 3f;
 	private float jumpTime = .25f, jumpGravity = 3f, currentJump = 0;
 	private float zMove = 0, xMove = 0;
+	private float wallrunTime = 1.5f, currentWallrun = 0;
 
 	private CharacterController charCon;
 	private Animator anim;
@@ -32,6 +35,7 @@ public class Movement : MonoBehaviour {
 			float yaw = Input.GetAxis ("Mouse X") * rotSpeed;
 
 
+			wallRunning = wallrunLeft = wallrunRight = false;
 
 			transform.Rotate (0f, yaw, 0f);
 			
@@ -76,23 +80,59 @@ public class Movement : MonoBehaviour {
 				doubleJumping = false;
 			}
 	
-			xMove = hor;
 			if(vert >= 0)
+			{
+				xMove = hor;
 				zMove = vert;
+			}
 			else
+			{
 				zMove = 0.5f*vert;
+				xMove = 0.5f*hor;
+			}
 
 		} else if (wallRunning) {
 
-			verticalVel = 15f;
+			verticalVel = 3f;
 			xMove = 0;
-			zMove = 20f;
+			zMove = 1f;
+			currentWallrun += Time.deltaTime;
 
-			if(Input.GetButtonDown("Jump"))
+			if(currentWallrun >= wallrunTime)
 			{
-				xMove = 25f;
-				verticalVel = 20f;
-				wallRunning = false;
+				verticalVel = -3f;
+			}
+
+			if(Input.GetButtonDown("Jump") && !doubleJumping)
+			{
+				zMove = Input.GetAxis("Vertical") * jumpPower * speed;
+				xMove = Input.GetAxis("Horizontal") * jumpPower * speed;
+				verticalVel = jumpPower;
+				wallRunning = wallrunLeft = wallrunRight = false;
+				currentWallrun = 0f;
+				doubleJumping = true;
+			}
+
+			if(Input.GetButtonUp("Wallrun"))
+			{
+				wallRunning = wallrunLeft = wallrunRight = false;
+				currentWallrun = 0f;
+			}
+
+			if(wallrunRight)
+			{
+				if(Physics.Raycast(transform.position, transform.right, 0.61f))
+				{}
+				else
+				{wallrunRight = wallRunning = false;}
+			}
+
+			else
+			{
+				if(Physics.Raycast(transform.position, -transform.right, 0.61f))
+				{}
+				else
+				{wallrunLeft = wallRunning = false;}
 			}
 
 		} else if (sliding) {
@@ -119,4 +159,50 @@ public class Movement : MonoBehaviour {
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
 	}
+
+	void OnControllerColliderHit(ControllerColliderHit collision) {
+		if (collision.gameObject.tag == "Wall" && Input.GetButton("Wallrun") && !wallRunning && zMove > 0) {
+			wallRunning = true;
+			RaycastHit target, target2;
+			if(Physics.Raycast(transform.position, 10*transform.forward + transform.right, out target, 0.61f))
+			{
+				if(target.transform.gameObject.tag == "Wall")
+				{
+					wallrunRight = true;
+					//Debug.Log("rotating");
+					float angle = Vector3.Angle(transform.forward, target.normal);
+					angle -= 90;
+					transform.Rotate(0, -angle, 0);
+				}				
+				else
+					wallrunLeft = true;
+			}
+			else if (Physics.Raycast(transform.position, transform.right, out target2, 0.61f))
+			{
+				if(target2.transform.gameObject.tag == "Wall")
+				{
+					wallrunRight = true;
+					float angle = Vector3.Angle(transform.forward, target2.normal);
+					angle -= 90;
+					transform.Rotate(0, -angle, 0);
+				}
+				else
+					wallrunLeft = true;
+			}
+			else
+				wallrunLeft = true;
+
+			if(wallrunLeft)
+			{
+				if (Physics.Raycast(transform.position, transform.forward - transform.right, out target, 0.61f))
+				{
+					float angle = Vector3.Angle(transform.forward, target.normal);
+					angle -= 90;
+					Debug.Log(angle);
+					transform.Rotate(0, angle, 0);
+				}
+			}
+		}
+	}
+
 }
