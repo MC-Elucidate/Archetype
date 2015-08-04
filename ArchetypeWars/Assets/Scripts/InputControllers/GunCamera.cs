@@ -9,14 +9,15 @@ public class GunCamera : MonoBehaviour {
 	public GameObject target;
 	private Vector3 vec;
 
+	protected string yAxis;
 	// Use this for initialization
 	void Start () {
 		//vec = target.transform.position - transform.position;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		float pitch = Input.GetAxis ("Mouse Y") * rotSpeed;
+	public void Update () {
+		float pitch = Input.GetAxis (yAxis) * rotSpeed;
 
 		if (pitch > 0) { // if we look up
 			if(		(transform.localEulerAngles.x > 320) 	|| 	(transform.localEulerAngles.x < 90)		)
