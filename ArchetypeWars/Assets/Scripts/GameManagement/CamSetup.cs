@@ -8,9 +8,49 @@ public class CamSetup : MonoBehaviour {
 	public Camera cam3;
 	public Camera cam4;
 
+	public GameStartup charSelection;
+	public Transform heavy;
+	public Transform commander;
+	public Transform ninja;
+	public Transform sniper;
+
 	// Use this for initialization
 	void Start () {
-	
+		charSelection = GameObject.Find ("CharacterSelectManager").GetComponent<GameStartup>();
+		switch (charSelection.playerChoices [1]) {
+		case 1: {
+			Transform playerChar = Instantiate(heavy, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
+			playerChar.gameObject.AddComponent("Controller1");
+			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
+			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
+			gc.target = playerChar.gameObject;
+		}
+			break;
+		case 2:{
+			Transform playerChar = Instantiate(commander, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
+			playerChar.gameObject.AddComponent("Controller1");
+			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
+			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
+			gc.target = playerChar.gameObject;
+		}
+			break;
+		case 3:{
+			Transform playerChar = Instantiate(ninja, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
+			playerChar.gameObject.AddComponent("Controller1");
+			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
+			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
+			gc.target = playerChar.gameObject;
+		}
+			break;
+		case 4:{
+			Transform playerChar = Instantiate(sniper, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
+			playerChar.gameObject.AddComponent("Controller1");
+			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
+			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
+			gc.target = playerChar.gameObject;
+		}
+			break;
+		}
 	}
 	
 	// Update is called once per frame

@@ -57,6 +57,8 @@ public class ScreenManager : MonoBehaviour {
 		//Set an element in the new screen as the new Selected one.
 		GameObject go = FindFirstEnabledSelectable(anim.gameObject);
 		SetSelected(go);
+
+
 	}
 	
 	//Finds the first Selectable element in the providade hierarchy.
@@ -123,6 +125,6 @@ public class ScreenManager : MonoBehaviour {
 		//Since we are using a pointer device, we don't want anything selected. 
 		//But if the user switches to the keyboard, we want to start the navigation from the provided game object.
 		//So here we set the current Selected to null, so the provided gameObject becomes the Last Selected in the EventSystem.
-		EventSystem.current.SetSelectedGameObject(null);
+		//EventSystem.current.SetSelectedGameObject(null);
 	}
 }
