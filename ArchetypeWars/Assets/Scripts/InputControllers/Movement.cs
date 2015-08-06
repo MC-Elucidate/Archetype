@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour {
 	private Animator anim;
 	private CharacterBase character;
 
-	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag;
+	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag;
 
 	// Use this for initialization
 	protected void Start () {
@@ -32,11 +32,16 @@ public class Movement : MonoBehaviour {
 		character = gameObject.GetComponent<CharacterBase> ();
 		characterRadius = character.characterRadius;
 	}
-	
+
+
+
 	// Update is called once per frame
 	protected void Update () {
+		//Use custom method for checking if we are on the ground
 		checkGrounded ();
-		//Debug.Log (isGrounded);
+
+
+		//If we are not wallrunning or sliding (we have free movement)
 		if (!wallRunning && !sliding) {
 			float vert = Input.GetAxis (verticalTag);
 			float hor = Input.GetAxis (horizontalTag);
@@ -46,11 +51,13 @@ public class Movement : MonoBehaviour {
 			wallRunning = wallrunLeft = wallrunRight = wallrunUp = false;
 
 			transform.Rotate (0f, yaw, 0f);
-			
-			if (!isGrounded)
+
+
+			//If we are in the air
+			if (!isGrounded) 
 			{
-				verticalVel += (gravity  * Time.deltaTime);
-				if(Input.GetButtonDown(jumpTag) && !doubleJumping)
+				verticalVel += (gravity  * Time.deltaTime); //gravity doing its thing
+				if(Input.GetButtonDown(jumpTag) && !doubleJumping) //Double jump if we haven't already done so
 				{
 					verticalVel = jumpPower;
 					currentJump = 0f;
@@ -58,7 +65,7 @@ public class Movement : MonoBehaviour {
 					doubleJumping = true;
 				}
 
-				if(Input.GetButton(jumpTag))
+				if(Input.GetButton(jumpTag)) //Holding jump to accelerate upwards (platformer style)
 				{
 					if(currentJump >= jumpTime)
 					{
@@ -74,33 +81,42 @@ public class Movement : MonoBehaviour {
 				}
 
 			}
+
+
+			//When we're on the ground and trying to jump
 			else if(Input.GetButtonDown(jumpTag))
 			{
 				verticalVel = jumpPower;
 				currentJump = 0f;
 				gravity = jumpGravity;
 			}
+
+			//on ground, not trying to jump
 			else
 			{
 				verticalVel = 0;
 				doubleJumping = false; currentJump = 0;
 
-				if(Input.GetButtonDown(slideTag))
+				if(Input.GetButtonDown(slideTag)) //can only slide when on ground
 					sliding = true;
 			}
 	
-			if(vert >= 0)
+			if(vert >= 0) //running forwards
 			{
 				xMove = hor;
 				zMove = vert;
 			}
-			else
+			else //backpedaling
 			{
 				zMove = 0.5f*vert;
 				xMove = 0.5f*hor;
 			}
 
-		} else if (wallRunning) {
+		}
+
+
+		//We don't have free movement (wallrunning or sliding)
+		else if (wallRunning) { //while wallrunning
 
 			currentWallrun += Time.deltaTime;
 			if(wallrunUp)
@@ -116,14 +132,14 @@ public class Movement : MonoBehaviour {
 					currentWallrunCooldown = 0;
 				}
 
-				else if(currentWallrun >= wallrunTime)
+				else if(currentWallrun >= wallrunTime) //pass wallrun time limit (drop down)
 				{
 					wallRunning = wallrunUp = false;
 					currentWallrun = 0;
 					currentWallrunCooldown = 0;
 				}
 
-				if(!Physics.Raycast(transform.position, transform.forward, characterRadius))
+				if(!Physics.Raycast(transform.position, transform.forward, characterRadius)) //reach top of wall
 				{
 					wallRunning = wallrunUp = false;
 					verticalVel += jumpPower;
@@ -131,7 +147,7 @@ public class Movement : MonoBehaviour {
 					currentWallrunCooldown = 0;
 				}
 			}
-			else
+			else //wallrunning diagonally
 			{
 
 				verticalVel = 3f;
@@ -193,9 +209,34 @@ public class Movement : MonoBehaviour {
 			}
 		}
 
+
+		//Move character
 		xMove = xMove * speed;
 		zMove = zMove * speed;
 		charCon.Move (transform.rotation * new Vector3 (xMove, verticalVel, zMove) * Time.deltaTime);
+
+
+
+
+
+		//Camera Up/Down Movement
+		float pitch = Input.GetAxis (mouseYTag) * rotSpeed;
+		
+		if (pitch > 0) { // if we look up
+			if(		(character.cam.transform.localEulerAngles.x > 320) 	|| 	(character.cam.transform.localEulerAngles.x < 90)		)
+				character.cam.transform.RotateAround (transform.position, transform.right, -pitch);
+		} else if (pitch < 0) { //if we look down
+			if(		(character.cam.transform.localEulerAngles.x > 270) 	|| 	(character.cam.transform.localEulerAngles.x < 40)		)
+				character.cam.transform.RotateAround (transform.position, transform.right, -pitch);
+		}
+
+
+
+
+		//FIRE!
+		if (Input.GetAxis(fireTag) > 0) { //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
+			character.shootWeapon ();
+		}
 	}
 
 	protected void FixedUpdate()
@@ -250,7 +291,7 @@ public class Movement : MonoBehaviour {
 	public void checkGrounded()
 	{
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, -transform.up, out hit, 0.05f)) {
+		if (Physics.Raycast (transform.position, -transform.up, out hit, character.floorcast)) { //If shit be fucked up with the jump, decrease floorcast and raise the character controller capsule a tad
 			isGrounded = true;
 		}
 		else

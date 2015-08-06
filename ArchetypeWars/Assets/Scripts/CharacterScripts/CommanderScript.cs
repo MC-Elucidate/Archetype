@@ -20,4 +20,9 @@ public class CommanderScript: CharacterBase {
 	{
 		Debug.Log ("Chessuto!");
 	}
+
+	public override void shootWeapon()
+	{
+		base.shootWeapon ();
+	}
 }

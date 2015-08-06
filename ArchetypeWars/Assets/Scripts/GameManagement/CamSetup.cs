@@ -3,10 +3,12 @@ using System.Collections;
 
 public class CamSetup : MonoBehaviour {
 
-	public Camera cam1;
+	/*public Camera cam1;
 	public Camera cam2;
 	public Camera cam3;
-	public Camera cam4;
+	public Camera cam4;*/
+
+	public Camera[] cam = new Camera[4];
 
 	public GameStartup charSelection;
 	public Transform heavy;
@@ -17,39 +19,54 @@ public class CamSetup : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		charSelection = GameObject.Find ("CharacterSelectManager").GetComponent<GameStartup>();
-		switch (charSelection.playerChoices [1]) {
-		case 1: {
-			Transform playerChar = Instantiate(heavy, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
-			playerChar.gameObject.AddComponent("Controller1");
-			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
-			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
-			gc.target = playerChar.gameObject;
-		}
-			break;
-		case 2:{
-			Transform playerChar = Instantiate(commander, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
-			playerChar.gameObject.AddComponent("Controller1");
-			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
-			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
-			gc.target = playerChar.gameObject;
-		}
-			break;
-		case 3:{
-			Transform playerChar = Instantiate(ninja, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
-			playerChar.gameObject.AddComponent("Controller1");
-			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
-			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
-			gc.target = playerChar.gameObject;
-		}
-			break;
-		case 4:{
-			Transform playerChar = Instantiate(sniper, new Vector3(0, 1, 0), Quaternion.identity) as Transform;
-			playerChar.gameObject.AddComponent("Controller1");
-			cam1 = playerChar.gameObject.GetComponentInChildren<Camera>();
-			GunController1 gc = cam1.gameObject.AddComponent("GunController1") as GunController1;
-			gc.target = playerChar.gameObject;
-		}
-			break;
+		for (int i=1; i<=4; i++) {
+
+			if(charSelection.playerChoices[i] == 0)
+				break;
+			Transform playerChar;
+			switch (charSelection.playerChoices [i]) {
+			case 1:
+				{
+					playerChar = Instantiate (heavy, new Vector3 (0, 1, 0), Quaternion.identity) as Transform;
+					//playerChar.gameObject.AddComponent ("Controller" + i);
+					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
+					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
+					//gc.target = playerChar.gameObject;
+				}
+				break;
+			case 2:
+				{
+					playerChar = Instantiate (commander, new Vector3 (4, 1, 4), Quaternion.identity) as Transform;
+					//playerChar.gameObject.AddComponent ("Controller" + i);
+					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
+					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
+					//gc.target = playerChar.gameObject;
+				}	
+				break;
+			case 3:
+				{	
+					playerChar = Instantiate (ninja, new Vector3 (-4, 1, -4), Quaternion.identity) as Transform;
+					//playerChar.gameObject.AddComponent ("Controller" + i);
+					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
+					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
+					//gc.target = playerChar.gameObject;
+				}
+				break;
+			case 4:
+				{
+					playerChar = Instantiate (sniper, new Vector3 (0, 1, 5), Quaternion.identity) as Transform;
+					//playerChar.gameObject.AddComponent ("Controller" + i);
+					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
+					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
+					//gc.target = playerChar.gameObject;
+				}
+				break;
+
+			default: playerChar = null; break;
+			}
+
+			playerChar.gameObject.AddComponent ("Controller" + i);
+			cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
 		}
 	}
 	
@@ -57,25 +74,25 @@ public class CamSetup : MonoBehaviour {
 	void Update () {
 
 
-		if (cam1 && cam2 && cam3 && cam4) {
+		if (cam[0] && cam[1] && cam[2] && cam[3]) {
 			//Debug.Log ("Doing 4 cameras");
-			cam1.rect = new Rect (0f, 0.5f, 0.5f, 0.5f);
-			cam2.rect = new Rect (0.5f, 0.5f, 0.5f, 0.5f);
-			cam3.rect = new Rect (0f, 0f, 0.5f, 0.5f);
-			cam4.rect = new Rect (0.5f,0f,0.5f,0.5f);
+			cam[0].rect = new Rect (0f, 0.5f, 0.5f, 0.5f);
+			cam[1].rect = new Rect (0.5f, 0.5f, 0.5f, 0.5f);
+			cam[2].rect = new Rect (0f, 0f, 0.5f, 0.5f);
+			cam[3].rect = new Rect (0.5f,0f,0.5f,0.5f);
 		}
 
-		else if (cam1 && cam2 && cam3) {
+		else if (cam[0] && cam[1] && cam[2]) {
 			//Debug.Log ("Doing 3 cameras");
-			cam1.rect = new Rect (0f, 0.5f, 1f, 0.5f);
-			cam2.rect = new Rect (0f, 0f, 0.5f, 0.5f);
-			cam3.rect = new Rect (0.5f, 0f, 0.5f, 0.5f);
+			cam[0].rect = new Rect (0f, 0.5f, 1f, 0.5f);
+			cam[1].rect = new Rect (0f, 0f, 0.5f, 0.5f);
+			cam[2].rect = new Rect (0.5f, 0f, 0.5f, 0.5f);
 		} 
 
-		else if (cam1 && cam2) {
+		else if (cam[0] && cam[1]) {
 			//Debug.Log ("Doing 2 cameras");
-			cam2.rect = new Rect (0f, 0f, 1f, 0.5f);
-			cam1.rect = new Rect (0f, 0.5f, 1f, 0.5f);
+			cam[1].rect = new Rect (0f, 0f, 1f, 0.5f);
+			cam[0].rect = new Rect (0f, 0.5f, 1f, 0.5f);
 		} 
 
 		else{}
