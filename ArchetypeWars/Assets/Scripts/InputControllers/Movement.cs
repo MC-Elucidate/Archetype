@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour {
 	private Animator anim;
 	private CharacterBase character;
 
-	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag;
+	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag, special1Tag;
 
 	// Use this for initialization
 	protected void Start () {
@@ -222,15 +222,13 @@ public class Movement : MonoBehaviour {
 		//Camera Up/Down Movement
 		float pitch = Input.GetAxis (mouseYTag) * rotSpeed;
 		
-		if (pitch > 0) { // if we look up
-			if(		(character.cam.transform.localEulerAngles.x > 320) 	|| 	(character.cam.transform.localEulerAngles.x < 90)		)
-				character.cam.transform.RotateAround (transform.position, transform.right, -pitch);
-		} else if (pitch < 0) { //if we look down
-			if(		(character.cam.transform.localEulerAngles.x > 270) 	|| 	(character.cam.transform.localEulerAngles.x < 40)		)
-				character.cam.transform.RotateAround (transform.position, transform.right, -pitch);
+		character.rotateCamera (pitch);
+
+
+		if (Input.GetButtonDown (special1Tag)) {
+			character.special1();
+			Debug.Log ("special1");
 		}
-
-
 
 
 		//FIRE!

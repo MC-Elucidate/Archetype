@@ -15,6 +15,7 @@ public class Controller3 : Movement {
 		slideTag = "Slide 3";
 		mouseYTag = "Mouse Y 3";
 		fireTag = "Fire 3";
+		special1Tag = "Special1 3";
 	}
 	
 	// Update is called once per frame

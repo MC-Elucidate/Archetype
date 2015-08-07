@@ -3,10 +3,6 @@ using System.Collections;
 
 public class CamSetup : MonoBehaviour {
 
-	/*public Camera cam1;
-	public Camera cam2;
-	public Camera cam3;
-	public Camera cam4;*/
 
 	public Camera[] cam = new Camera[4];
 
@@ -67,13 +63,36 @@ public class CamSetup : MonoBehaviour {
 
 			playerChar.gameObject.AddComponent ("Controller" + i);
 			cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
+
+			if (cam[0] && cam[1] && cam[2] && cam[3]) {
+				//Debug.Log ("Doing 4 cameras");
+				cam[0].rect = new Rect (0f, 0.5f, 0.5f, 0.5f);
+				cam[1].rect = new Rect (0.5f, 0.5f, 0.5f, 0.5f);
+				cam[2].rect = new Rect (0f, 0f, 0.5f, 0.5f);
+				cam[3].rect = new Rect (0.5f,0f,0.5f,0.5f);
+			}
+			
+			else if (cam[0] && cam[1] && cam[2]) {
+				//Debug.Log ("Doing 3 cameras");
+				cam[0].rect = new Rect (0f, 0.5f, 1f, 0.5f);
+				cam[1].rect = new Rect (0f, 0f, 0.5f, 0.5f);
+				cam[2].rect = new Rect (0.5f, 0f, 0.5f, 0.5f);
+			} 
+			
+			else if (cam[0] && cam[1]) {
+				//Debug.Log ("Doing 2 cameras");
+				cam[1].rect = new Rect (0f, 0f, 1f, 0.5f);
+				cam[0].rect = new Rect (0f, 0.5f, 1f, 0.5f);
+			} 
+			
+			else{}
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-
+		/*
 		if (cam[0] && cam[1] && cam[2] && cam[3]) {
 			//Debug.Log ("Doing 4 cameras");
 			cam[0].rect = new Rect (0f, 0.5f, 0.5f, 0.5f);
@@ -96,6 +115,6 @@ public class CamSetup : MonoBehaviour {
 		} 
 
 		else{}
-	
+		*/
 	}
 }

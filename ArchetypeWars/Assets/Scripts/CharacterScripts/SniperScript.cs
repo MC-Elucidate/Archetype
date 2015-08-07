@@ -3,17 +3,30 @@ using System.Collections;
 
 public class SniperScript: CharacterBase {
 
+	public float rotSpeed = 2f;
+	public float neckAngleLimit = 50f;
+	private float neckAngle = 0f;
+
+	public bool scoped = false;
+	public Camera tpcam;
+	public Camera fpcam;
 	// Use this for initialization
 	protected void Start () {
 		health = 100;
 		runSpeed = 10;
 		meleeMax = 2;
 		characterRadius = 0.4f;
+
+		//Character-specific weapon stats
+		weaponRange = 100f;
+		weaponFireRate = 2f;
+		spreadRate = 0.2f;
+		maxSpread = 8;
 	}
 	
 	// Update is called once per frame
 	protected void Update () {
-	
+		base.Update ();
 	}
 
 	public override void meleeAttack()
@@ -23,6 +36,61 @@ public class SniperScript: CharacterBase {
 
 	public override void shootWeapon()
 	{
-		base.shootWeapon ();
+		//base.shootWeapon ();
+
+		if (scoped) {
+			if (weaponFireRateTimer <= 0) {
+				RaycastHit hit;
+				Ray camRay = cam.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0));
+				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+				Physics.Raycast (camRay, out hit, weaponRange);
+			
+				//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
+			
+				Vector3 target = hit.point;
+				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
+				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+
+				weaponFireRateTimer = weaponFireRate;
+				spreadCount++;
+				spreadRateTimer = spreadRate;
+			}
+		} 
+		else {
+			base.shootWeapon ();
+			spreadCount=maxSpread;
+		}
+	}
+
+	//Puts scope on/takes scope off
+	public override void special1()
+	{
+		if (!scoped) {
+			scoped = !scoped;
+			fpcam.enabled = true;
+			tpcam.enabled = false;
+			fpcam.rect = tpcam.rect;
+			neckAngle = 0f;
+			cam = fpcam;
+		} else {
+			scoped = !scoped;
+			fpcam.enabled = false;
+			tpcam.enabled = true;
+			cam = tpcam;
+		}
+	}
+
+	public override void rotateCamera(float pitch)
+	{
+		if (scoped) {
+			neckAngle -= pitch; //Change the angle the camera is looking at based n input
+			if (neckAngle > neckAngleLimit) //Clamp the camera angle so we don't break out necks
+				neckAngle = neckAngleLimit;
+			else if (neckAngle < -neckAngleLimit)
+				neckAngle = -neckAngleLimit;
+			cam.transform.localRotation = Quaternion.Euler (neckAngle, 0f, 0f);
+		} 
+		else
+			base.rotateCamera (pitch);
 	}
 }
