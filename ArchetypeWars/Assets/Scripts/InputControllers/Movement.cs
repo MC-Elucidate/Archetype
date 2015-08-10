@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour {
 
 	private CharacterController charCon;
 	private Animator anim;
-	private CharacterBase character;
+	private PlayerCharacter character;
 
 	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag, special1Tag;
 
@@ -29,7 +29,7 @@ public class Movement : MonoBehaviour {
 	protected void Start () {
 		charCon = gameObject.GetComponent<CharacterController>();
 		anim = gameObject.GetComponent<Animator>();
-		character = gameObject.GetComponent<CharacterBase> ();
+		character = gameObject.GetComponent<PlayerCharacter> ();
 		characterRadius = character.characterRadius;
 	}
 

@@ -3,25 +3,28 @@ using System.Collections;
 
 public class CharacterBase : MonoBehaviour {
 
-	public int health, meleeMax, currentMelee = 0;
-	public float runSpeed, characterRadius, floorcast = 0.05f;
+	protected int health, maxHealth;
 
 	//Weapon stuff
-	public float weaponRange = 100f, weaponFireRate, weaponFireRateTimer = 0f, spreadRate, spreadRateTimer = 0f, meleeFireRate, meleeFireRateTimer = 0f;
-	public int ammoCount, maxAmmo, ammoPickup; 			//ammoPickup = how much ammo you get back from pickup
-	public int spreadCount = 0, maxSpread;				//Accuracy value (pixel range from centre)
-
-	public bool melee = false;
-	public Camera cam;
+	protected float weaponRange = 100f, weaponFireRate, weaponFireRateTimer = 0f, spreadRate, spreadRateTimer = 0f, meleeFireRate, meleeFireRateTimer = 0f;
+	protected int ammoCount, maxAmmo, ammoPickup; 			//ammoPickup = how much ammo you get back from pickup
+	protected int spreadCount = 0, maxSpread;				//Accuracy value (pixel range from centre)
+	protected int meleeMax, currentMelee = 0;
 	public Transform shot_source;
-	RaycastHit hit;
+
+
+	//Stuff for movement controller
+	public bool melee = false, alive = true;
+	public float runSpeed, characterRadius, floorcast = 0.05f;
+
+
 	// Use this for initialization
-	protected void Start () {
+	public void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	protected void Update () {
+	public void Update () {
 
 		if (weaponFireRateTimer>0)
 			weaponFireRateTimer -= Time.deltaTime;
@@ -51,7 +54,7 @@ public class CharacterBase : MonoBehaviour {
 	public virtual void shootWeapon() {
 		//Get the gameObject that GunScript is attached to, then find the camera attached to that child.
 		//Take the screen point that we want to use as the point we're going to shoot towards
-
+		/*
 		if (weaponFireRateTimer <= 0) {
 		
 			Ray camRay = cam.ScreenPointToRay (new Vector3 (Screen.width / 2 + Random.Range (-spreadCount, spreadCount),  Screen.height * 2 / 3 + Random.Range (-spreadCount, spreadCount), 0));
@@ -69,31 +72,29 @@ public class CharacterBase : MonoBehaviour {
 			spreadRateTimer = spreadRate;
 
 		} 
-		else {}
+		else {}*/
 	}
 
-	public virtual void special1()
-	{}
 
-	public virtual void special2()
-	{}
-
-	public virtual void super()
-	{}
 
 	public virtual void dash()
 	{//generic dash code
 	}
 
-	public virtual void rotateCamera(float pitch)
+
+
+	public void receiveDamage(int dmg)
 	{
-		if (pitch > 0) { // if we look up
-			if(		(cam.transform.localEulerAngles.x > 320) 	|| 	(cam.transform.localEulerAngles.x < 90)		)
-				cam.transform.RotateAround (transform.position, transform.right, -pitch);
-		} else if (pitch < 0) { //if we look down
-			if(		(cam.transform.localEulerAngles.x > 270) 	|| 	(cam.transform.localEulerAngles.x < 40)		)
-				cam.transform.RotateAround (transform.position, transform.right, -pitch);
-		}
+		health -= dmg;
+		if (health <= 0)
+			alive = false;
+	}
+
+	public void receiveHealth(int up)
+	{
+		health += up;
+		if (health >= maxHealth)
+			health = maxHealth;
 	}
 
 }

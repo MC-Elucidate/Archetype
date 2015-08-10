@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SniperScript: CharacterBase {
+public class SniperScript: PlayerCharacter {
 
 	public float rotSpeed = 2f;
 	public float neckAngleLimit = 50f;
@@ -13,6 +13,7 @@ public class SniperScript: CharacterBase {
 	// Use this for initialization
 	protected void Start () {
 		health = 100;
+		maxHealth = 100;
 		runSpeed = 10;
 		meleeMax = 2;
 		characterRadius = 0.4f;
@@ -22,6 +23,9 @@ public class SniperScript: CharacterBase {
 		weaponFireRate = 2f;
 		spreadRate = 0.2f;
 		maxSpread = 8;
+
+		gunDamage = 80;
+		meleeDamage = 30;
 	}
 	
 	// Update is called once per frame

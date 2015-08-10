@@ -1,25 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HeavyScript: CharacterBase {
+public class CommanderScript: PlayerCharacter {
 
 	// Use this for initialization
 	protected void Start () {
-		health = 200;
-		runSpeed = 10;
-		meleeMax = 4;
+		health = 150;
+		maxHealth = 150;
+		runSpeed = 12;
+		meleeMax = 3;
 		characterRadius = 0.4f;
 
 		//Character-specific weapon stats
 		weaponRange = 100f;
 		weaponFireRate = 0.2f;
-		spreadRate = 1.2f;
+		spreadRate = 0.21f;
 		maxSpread = 12;
 	}
 	
 	// Update is called once per frame
 	protected void Update () {
-	
+		base.Update ();
 	}
 
 	public override void meleeAttack()
