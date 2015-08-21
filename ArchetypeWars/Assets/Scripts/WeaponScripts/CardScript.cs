@@ -4,7 +4,8 @@ using System.Collections;
 public class CardScript : MonoBehaviour {
 
 	public float velocity;	//MoveSpeed
-	public float lifetime;	//Time before destruction
+	public float lifetime; //Time before destruction
+	public int damage = 25;
 							//Range = velocity * lifetime, of course
 
 	// Use this for initialization
@@ -24,9 +25,10 @@ public class CardScript : MonoBehaviour {
 
 	void OnCollisionEnter(Collision other) {
 
-		Debug.Log ("Hit an object");
+		//Debug.Log ("Hit an object");
 		if (other.gameObject.tag == "Enemy") {
-			//Do damage
+			other.gameObject.SendMessage("receiveDamage", damage);//Do damage
+			Destroy (this.gameObject);
 		} 
 		else if (other.gameObject.tag == "Wall") {
 			ricochet ();

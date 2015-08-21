@@ -16,6 +16,9 @@ public class Controller1 : Movement {
 		mouseYTag = "Mouse Y 1";
 		fireTag = "Fire 1";
 		special1Tag = "Special1 1";
+		special2Tag = "Special2 1";
+		superTag = "Super 1";
+		meleeTag = "Melee 1";
 	}
 	
 	// Update is called once per frame

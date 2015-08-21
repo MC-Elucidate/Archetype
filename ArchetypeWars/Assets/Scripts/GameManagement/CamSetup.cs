@@ -11,6 +11,10 @@ public class CamSetup : MonoBehaviour {
 	public Transform commander;
 	public Transform ninja;
 	public Transform sniper;
+	public GameObject heavyLRweapon;
+	public GameObject sniperLRweapon;
+	public GameObject commanderLRweapon;
+	public GameObject ninjaLRweapon;
 
 	// Use this for initialization
 	void Start () {
@@ -20,10 +24,23 @@ public class CamSetup : MonoBehaviour {
 			if(charSelection.playerChoices[i] == 0)
 				break;
 			Transform playerChar;
+			GameObject LRWeapon;
 			switch (charSelection.playerChoices [i]) {
 			case 1:
 				{
 					playerChar = Instantiate (heavy, new Vector3 (0, 1, 0), Quaternion.identity) as Transform;
+					PlayerCharacter heavyscript = playerChar.GetComponent<HeavyScript>();
+					LRWeapon = (GameObject) Instantiate (heavyLRweapon, heavyscript.RightHand.position, Quaternion.identity);
+					GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();
+					LRWeapon.transform.parent = heavyscript.RightHand; //attach the weapon to the right hand
+				
+				
+					//initialising hand IK targets
+					heavyscript.LRWeapon = LRWeapon;
+					heavyscript.LHandPos = gunstats.LHandPos;
+					heavyscript.RHandPos = gunstats.RHandPos;
+					heavyscript.shot_source = gunstats.bulletSpawn;
+					
 					//playerChar.gameObject.AddComponent ("Controller" + i);
 					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
 					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;

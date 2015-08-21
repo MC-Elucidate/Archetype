@@ -6,10 +6,12 @@ public class HeavyScript: PlayerCharacter {
 	public Transform rocketPrefab;
 	// Use this for initialization
 	protected void Start () {
+		base.Start ();
 		health = 200;
 		maxHealth = 200;
 		runSpeed = 10;
 		meleeMax = 4;
+		currentMelee = 0;
 		characterRadius = 0.4f;
 
 		//Character-specific weapon stats
@@ -19,6 +21,7 @@ public class HeavyScript: PlayerCharacter {
 		maxSpread = 12;
 	}
 	
+
 	// Update is called once per frame
 	protected void Update () {
 		base.Update ();
@@ -26,7 +29,7 @@ public class HeavyScript: PlayerCharacter {
 
 	public override void meleeAttack()
 	{
-		Debug.Log ("Chessuto!");
+		base.meleeAttack ();
 	}
 
 	public override void shootWeapon()

@@ -4,6 +4,7 @@ using System.Collections;
 public class RocketScript : MonoBehaviour {
 
 	public float velocity;
+	public int damage = 300;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,15 @@ public class RocketScript : MonoBehaviour {
 		//Uncomment this when we have an explosion to instantiate
 
 		//Instantiate (Explosion, transform.position, Quaternion.identity);
-
+		Collider[] hitColliders = Physics.OverlapSphere (transform.position, 5.0f);
+		foreach(Collider coll in hitColliders)
+		{
+			if(coll.tag == "Enemy")
+			{
+				coll.gameObject.SendMessage("receiveDamage", damage);
+				coll.rigidbody.AddExplosionForce(600f, transform.position, 8.0f, 40.0f);
+			}
+		}
 		Destroy (this.gameObject);
 	}
 

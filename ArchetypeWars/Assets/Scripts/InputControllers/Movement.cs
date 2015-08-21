@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour {
 	private Animator anim;
 	private PlayerCharacter character;
 
-	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag, special1Tag;
+	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag, special1Tag, special2Tag, superTag, meleeTag;
 
 	// Use this for initialization
 	protected void Start () {
@@ -99,6 +99,15 @@ public class Movement : MonoBehaviour {
 
 				if(Input.GetButtonDown(slideTag)) //can only slide when on ground
 					sliding = true;
+
+				else if(Input.GetButtonDown(meleeTag)) //can only melee when on ground
+				{
+					Debug.Log ("MELEE");
+					character.meleeAttack();
+				}
+
+				else if (Input.GetKey(KeyCode.V))
+				{character.weaponHeld = !character.weaponHeld;}
 			}
 	
 			if(vert >= 0) //running forwards
@@ -241,7 +250,9 @@ public class Movement : MonoBehaviour {
 	{
 		//checkGrounded ();
 		anim.SetBool ("Sliding", sliding);
+		anim.SetBool ("WeaponHeld", character.weaponHeld);
 		anim.SetBool ("Wallrunning", wallRunning);
+		anim.SetBool ("Melee", character.melee);
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
 	}
@@ -295,5 +306,6 @@ public class Movement : MonoBehaviour {
 		else
 			isGrounded = false;
 	}
+
 
 }

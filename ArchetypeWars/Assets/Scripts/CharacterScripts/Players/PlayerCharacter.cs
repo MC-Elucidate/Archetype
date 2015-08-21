@@ -10,6 +10,7 @@ public class PlayerCharacter : CharacterBase {
 	// Use this for initialization
 	public void Start () {
 		base.Start ();
+		SRWeapon.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -21,10 +22,16 @@ public class PlayerCharacter : CharacterBase {
 	{
 		if (pitch > 0) { // if we look up
 			if(		(cam.transform.localEulerAngles.x > 320) 	|| 	(cam.transform.localEulerAngles.x < 90)		)
+			{
 				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+				LRWeapon.transform.RotateAround (RHandPos.position, transform.right, -pitch);
+			}
 		} else if (pitch < 0) { //if we look down
 			if(		(cam.transform.localEulerAngles.x > 270) 	|| 	(cam.transform.localEulerAngles.x < 40)		)
+			{
 				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+				LRWeapon.transform.RotateAround (RHandPos.position, transform.right, -pitch);
+			}
 		}
 	}
 
@@ -44,13 +51,36 @@ public class PlayerCharacter : CharacterBase {
 			Vector3 target = hit.point;
 			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 			Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-			
+			hit.collider.SendMessage ("Damage", hit, SendMessageOptions.DontRequireReceiver);
 			weaponFireRateTimer = weaponFireRate;
 			spreadCount++;
 			spreadRateTimer = spreadRate;
 			
 		} 
 		else {}
+	}
+
+	public override void meleeAttack()
+	{
+		//Debug.Log (anim.GetCurrentAnimatorStateInfo(0).nameHash);
+		if (currentMelee == 0) {
+			currentMelee++;
+			melee = true;
+			weaponHeld = false;
+			SRWeapon.SetActive(true);
+			//SRWeapon.collider.enabled = true;
+			//SRWeapon.renderer.enabled = true;
+		} else if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Melee " + currentMelee)) && (currentMelee < meleeMax)){
+			currentMelee++;
+		}
+	}
+
+	public override void endMeleeAttack()
+	{
+		melee = false;
+		currentMelee = 0;
+		SRWeapon.SetActive (false);
+		weaponHeld = true;
 	}
 
 
