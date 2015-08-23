@@ -12,6 +12,7 @@ public class SniperScript: PlayerCharacter {
 	public Camera fpcam;
 	// Use this for initialization
 	protected void Start () {
+		base.Start ();
 		health = 100;
 		maxHealth = 100;
 		runSpeed = 10;

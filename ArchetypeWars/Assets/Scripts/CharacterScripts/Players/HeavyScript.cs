@@ -40,14 +40,14 @@ public class HeavyScript: PlayerCharacter {
 			RaycastHit hit;
 			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor),  0.666667f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor), 0));
 			
-			//Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+			Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
 			Physics.Raycast (camRay, out hit, weaponRange);
 			
-			//Debug.Log ("Heavy Shooting at " + hit.transform.gameObject.name);
+			Debug.Log ("Heavy Shooting at " + hit.transform.gameObject.name);
 			
 			Vector3 target = hit.point;
 			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
-			//Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+			Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
 			
 			Quaternion rocketRotation = Quaternion.identity;
 			rocketRotation.SetLookRotation(target - shot_source.position, Vector3.up);

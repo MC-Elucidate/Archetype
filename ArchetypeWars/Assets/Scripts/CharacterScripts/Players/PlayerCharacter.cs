@@ -5,6 +5,8 @@ public class PlayerCharacter : CharacterBase {
 
 	public Camera cam;
 	protected int gunDamage, meleeDamage;
+	//public float meleeType = 0f;
+	//protected float meleeInterval;
 	protected RaycastHit hit;
 	protected float spreadFactor = 0.003f;
 	// Use this for initialization
@@ -62,17 +64,15 @@ public class PlayerCharacter : CharacterBase {
 
 	public override void meleeAttack()
 	{
-		//Debug.Log (anim.GetCurrentAnimatorStateInfo(0).nameHash);
 		if (currentMelee == 0) {
 			currentMelee++;
 			melee = true;
 			weaponHeld = false;
 			SRWeapon.SetActive(true);
-			//SRWeapon.collider.enabled = true;
-			//SRWeapon.renderer.enabled = true;
-		} else if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Melee " + currentMelee)) && (currentMelee < meleeMax)){
+		} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo(0).IsName("Melee " + currentMelee))){
 			currentMelee++;
 		}
+
 	}
 
 	public override void endMeleeAttack()

@@ -5,6 +5,7 @@ public class CommanderScript: PlayerCharacter {
 
 	// Use this for initialization
 	protected void Start () {
+		base.Start ();
 		health = 150;
 		maxHealth = 150;
 		runSpeed = 12;

@@ -23,6 +23,8 @@ public class Movement : MonoBehaviour {
 	private Animator anim;
 	private PlayerCharacter character;
 
+	//private float melee_dt = 0f;
+
 	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag, special1Tag, special2Tag, superTag, meleeTag;
 
 	// Use this for initialization
@@ -42,41 +44,33 @@ public class Movement : MonoBehaviour {
 
 
 		//If we are not wallrunning or sliding (we have free movement)
-		if (!wallRunning && !sliding) {
+		if (!wallRunning && !sliding && !character.melee) {
 			float vert = Input.GetAxis (verticalTag);
 			float hor = Input.GetAxis (horizontalTag);
 			float yaw = Input.GetAxis (mouseXTag) * rotSpeed;
 
-			currentWallrunCooldown+=Time.deltaTime;
+			currentWallrunCooldown += Time.deltaTime;
 			wallRunning = wallrunLeft = wallrunRight = wallrunUp = false;
 
 			transform.Rotate (0f, yaw, 0f);
 
 
 			//If we are in the air
-			if (!isGrounded) 
-			{
-				verticalVel += (gravity  * Time.deltaTime); //gravity doing its thing
-				if(Input.GetButtonDown(jumpTag) && !doubleJumping) //Double jump if we haven't already done so
-				{
+			if (!isGrounded) {
+				verticalVel += (gravity * Time.deltaTime); //gravity doing its thing
+				if (Input.GetButtonDown (jumpTag) && !doubleJumping) { //Double jump if we haven't already done so
 					verticalVel = jumpPower;
 					currentJump = 0f;
 					gravity = jumpGravity;
 					doubleJumping = true;
 				}
 
-				if(Input.GetButton(jumpTag)) //Holding jump to accelerate upwards (platformer style)
-				{
-					if(currentJump >= jumpTime)
-					{
+				if (Input.GetButton (jumpTag)) { //Holding jump to accelerate upwards (platformer style)
+					if (currentJump >= jumpTime) {
 						gravity = -9.8f;
-					}
-					else
+					} else
 						currentJump += Time.deltaTime;
-				}
-
-				else
-				{
+				} else {
 					gravity = -9.8f;
 				}
 
@@ -84,94 +78,75 @@ public class Movement : MonoBehaviour {
 
 
 			//When we're on the ground and trying to jump
-			else if(Input.GetButtonDown(jumpTag))
-			{
+			else if (Input.GetButtonDown (jumpTag)) {
 				verticalVel = jumpPower;
 				currentJump = 0f;
 				gravity = jumpGravity;
 			}
 
 			//on ground, not trying to jump
-			else
-			{
+			else {
 				verticalVel = 0;
-				doubleJumping = false; currentJump = 0;
+				doubleJumping = false;
+				currentJump = 0;
 
-				if(Input.GetButtonDown(slideTag)) //can only slide when on ground
+				if (Input.GetButtonDown (slideTag)) //can only slide when on ground
 					sliding = true;
-
-				else if(Input.GetButtonDown(meleeTag)) //can only melee when on ground
-				{
-					Debug.Log ("MELEE");
-					character.meleeAttack();
+				else if (Input.GetButtonDown (meleeTag)) { //can only melee when on ground
+					character.meleeAttack ();
+				} else if (Input.GetKey (KeyCode.V)) {
+					character.weaponHeld = !character.weaponHeld;
 				}
-
-				else if (Input.GetKey(KeyCode.V))
-				{character.weaponHeld = !character.weaponHeld;}
 			}
 	
-			if(vert >= 0) //running forwards
-			{
+			if (vert >= 0) { //running forwards
 				xMove = hor;
 				zMove = vert;
-			}
-			else //backpedaling
-			{
-				zMove = 0.5f*vert;
-				xMove = 0.5f*hor;
+			} else { //backpedaling
+				zMove = 0.5f * vert;
+				xMove = 0.5f * hor;
 			}
 
-		}
+		} 
 
-
-		//We don't have free movement (wallrunning or sliding)
+		//We don't have free movement (wallrunning or sliding or melee)
 		else if (wallRunning) { //while wallrunning
 
 			currentWallrun += Time.deltaTime;
-			if(wallrunUp)
-			{
+			if (wallrunUp) {
 				xMove = 0;
 				zMove = 0f;
 				verticalVel = 4f;
 
-				if(Input.GetButtonUp(wallrunTag)) //Release wallrun button. Ends wallrun. Begins freefall
-				{
+				if (Input.GetButtonUp (wallrunTag)) { //Release wallrun button. Ends wallrun. Begins freefall
+					wallRunning = wallrunUp = false;
+					currentWallrun = 0;
+					currentWallrunCooldown = 0;
+				} else if (currentWallrun >= wallrunTime) { //pass wallrun time limit (drop down)
 					wallRunning = wallrunUp = false;
 					currentWallrun = 0;
 					currentWallrunCooldown = 0;
 				}
 
-				else if(currentWallrun >= wallrunTime) //pass wallrun time limit (drop down)
-				{
-					wallRunning = wallrunUp = false;
-					currentWallrun = 0;
-					currentWallrunCooldown = 0;
-				}
-
-				if(!Physics.Raycast(transform.position, transform.forward, characterRadius)) //reach top of wall
-				{
+				if (!Physics.Raycast (transform.position, transform.forward, characterRadius)) { //reach top of wall
 					wallRunning = wallrunUp = false;
 					verticalVel += jumpPower;
 					currentWallrun = 0;
 					currentWallrunCooldown = 0;
 				}
-			}
-			else //wallrunning diagonally
-			{
+			} else { //wallrunning diagonally
 
 				verticalVel = 3f;
 				xMove = 0;
 				zMove = 1f;
 
-				if(currentWallrun >= wallrunTime)
-				{
+				if (currentWallrun >= wallrunTime) {
 					verticalVel = -3f;
 				}
 
-				if(Input.GetButtonDown(jumpTag) && !doubleJumping) //Jump off wall. Allows player to leap in direction being held. Uses double jump
-				{
-					zMove = Input.GetAxis("Vertical") * jumpPower * speed;
-					xMove = Input.GetAxis("Horizontal") * jumpPower * speed;
+				if (Input.GetButtonDown (jumpTag) && !doubleJumping) { //Jump off wall. Allows player to leap in direction being held. Uses double jump
+					zMove = Input.GetAxis (verticalTag) * jumpPower * speed;
+					xMove = Input.GetAxis (horizontalTag) * jumpPower * speed;
 					verticalVel = jumpPower;
 					wallRunning = wallrunLeft = wallrunRight = false;
 					currentWallrun = 0f;
@@ -179,27 +154,20 @@ public class Movement : MonoBehaviour {
 					currentWallrunCooldown = 0;
 				}
 
-				if(Input.GetButtonUp(wallrunTag)) //Release wallrun button. Ends wallrun. Begins freefall
-				{
+				if (Input.GetButtonUp (wallrunTag)) { //Release wallrun button. Ends wallrun. Begins freefall
 					wallRunning = wallrunLeft = wallrunRight = false;
 					currentWallrun = 0f;
 					currentWallrunCooldown = 0;
 				}
 
-				if(wallrunRight) //Check if wall ends.
-				{
-					if(!Physics.Raycast(transform.position, transform.right, characterRadius))
-					{
+				if (wallrunRight) { //Check if wall ends.
+					if (!Physics.Raycast (transform.position, transform.right, characterRadius)) {
 						wallrunRight = wallRunning = false;
 						currentWallrun = 0;
 						currentWallrunCooldown = 0;
 					}
-				}
-
-				else //Check if left wall ends
-				{
-					if(!Physics.Raycast(transform.position, -transform.right, characterRadius))
-					{
+				} else { //Check if left wall ends
+					if (!Physics.Raycast (transform.position, -transform.right, characterRadius)) {
 						wallrunLeft = wallRunning = false;
 						currentWallrun = 0;
 						currentWallrunCooldown = 0;
@@ -210,12 +178,24 @@ public class Movement : MonoBehaviour {
 			verticalVel = 0;
 			xMove = 0;
 			zMove = slidespeed;
-			currentSlide+=Time.deltaTime;
-			if(currentSlide >= slideTime)
-			{
+			currentSlide += Time.deltaTime;
+			if (currentSlide >= slideTime) {
 				currentSlide = 0;
 				sliding = false;
 			}
+		} else if (character.melee ){//&& anim.GetBool("Melee")) { //In a melee. Continue combo?
+			
+			if (Input.GetButtonDown (meleeTag)) 
+				character.meleeAttack ();
+			else if (!(anim.GetCurrentAnimatorStateInfo (0).IsTag ("MeleeAttack"))){// && melee_dt > 0f) {
+				character.endMeleeAttack ();
+				//melee_dt = 0f;
+			}/*
+			else
+			{
+				melee_dt+=Time.deltaTime;
+				Debug.Log (melee_dt + " " + (anim.GetCurrentAnimatorStateInfo (0).IsTag ("MeleeAttack")));
+			}*/
 		}
 
 
@@ -223,9 +203,6 @@ public class Movement : MonoBehaviour {
 		xMove = xMove * speed;
 		zMove = zMove * speed;
 		charCon.Move (transform.rotation * new Vector3 (xMove, verticalVel, zMove) * Time.deltaTime);
-
-
-
 
 
 		//Camera Up/Down Movement
@@ -244,17 +221,30 @@ public class Movement : MonoBehaviour {
 		if (Input.GetAxis(fireTag) > 0) { //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
 			character.shootWeapon ();
 		}
+
+		anim.SetBool ("Sliding", sliding);
+		anim.SetBool ("WeaponHeld", character.weaponHeld);
+		anim.SetBool ("Wallrunning", wallRunning);
+		anim.SetBool ("Melee", character.melee);
+		anim.SetInteger ("MeleeCount", character.currentMelee);
+		anim.SetFloat ("Vertical", zMove);
+		anim.SetFloat ("Horizontal", xMove);
 	}
 
 	protected void FixedUpdate()
 	{
 		//checkGrounded ();
+		/*
 		anim.SetBool ("Sliding", sliding);
 		anim.SetBool ("WeaponHeld", character.weaponHeld);
 		anim.SetBool ("Wallrunning", wallRunning);
 		anim.SetBool ("Melee", character.melee);
+		anim.SetInteger ("MeleeCount", character.currentMelee);
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
+*/
+		//Debug.Log (Time.fixedDeltaTime);
+
 	}
 
 	protected void OnControllerColliderHit(ControllerColliderHit collision) {

@@ -9,7 +9,8 @@ public class CharacterBase : MonoBehaviour {
 	protected float weaponRange = 100f, weaponFireRate, weaponFireRateTimer = 0f, spreadRate, spreadRateTimer = 0f, meleeFireRate, meleeFireRateTimer = 0f;
 	protected int ammoCount, maxAmmo, ammoPickup; 			//ammoPickup = how much ammo you get back from pickup
 	protected int spreadCount = 0, maxSpread;				//Accuracy value (pixel range from centre)
-	protected int meleeMax, currentMelee = 0;
+	protected int meleeMax;
+	public int currentMelee = 0;
 	public Transform shot_source;
 
 	//IK stuff
@@ -54,7 +55,7 @@ public class CharacterBase : MonoBehaviour {
 		if (spreadRateTimer <= 0) {
 			if (spreadCount>0)
 			{
-				Debug.Log ("Counting down spread");
+				//Debug.Log ("Counting down spread");
 				spreadCount--;
 				spreadRateTimer=spreadRate;
 			}
@@ -107,7 +108,7 @@ public class CharacterBase : MonoBehaviour {
 
 	public void receiveDamage(int dmg)
 	{
-		Debug.Log ("ouch");
+		//Debug.Log ("ouch");
 		health -= dmg;
 		if (health <= 0) {
 			alive = false;
@@ -156,7 +157,7 @@ public class CharacterBase : MonoBehaviour {
 			{
 				float playbackTime = animPlayingState.normalizedTime % 1;
 				
-				if ((an_dt > 0.44f) && (an_Set == false))
+				if ((an_dt > 0.01f) && (an_Set == false))
 				{
 					
 					LRWeapon.SetActive (true);
@@ -164,7 +165,7 @@ public class CharacterBase : MonoBehaviour {
 					LRWeapon.transform.localRotation = Quaternion.identity;
 					LRWeapon.transform.Rotate(220, 0, -90);
 					LRWeapon.transform.RotateAround (RHandPos.position, transform.right, 75);
-					print ("Gun withdrawn");
+					//print ("Gun withdrawn");
 					
 					an_Set = true;
 					weaponDrawn = true;
@@ -187,7 +188,7 @@ public class CharacterBase : MonoBehaviour {
 				an_Set = false;
 				an_dt = 0f;
 				weaponDrawn = false;
-				print ("Gun put away");
+				//print ("Gun put away");
 			}
 			
 		}

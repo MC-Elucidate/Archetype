@@ -41,37 +41,46 @@ public class CamSetup : MonoBehaviour {
 					heavyscript.RHandPos = gunstats.RHandPos;
 					heavyscript.shot_source = gunstats.bulletSpawn;
 					
-					//playerChar.gameObject.AddComponent ("Controller" + i);
-					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
-					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
-					//gc.target = playerChar.gameObject;
+					
 				}
 				break;
 			case 2:
 				{
 					playerChar = Instantiate (commander, new Vector3 (4, 1, 4), Quaternion.identity) as Transform;
-					//playerChar.gameObject.AddComponent ("Controller" + i);
-					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
-					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
-					//gc.target = playerChar.gameObject;
+					PlayerCharacter commanderscript = playerChar.GetComponent<CommanderScript>();
+					LRWeapon = (GameObject) Instantiate (commanderLRweapon, commanderscript.RightHand.position, Quaternion.identity);
+					GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();
+					LRWeapon.transform.parent = commanderscript.RightHand; //attach the weapon to the right hand
+				
+				
+					//initialising hand IK targets
+					commanderscript.LRWeapon = LRWeapon;
+					commanderscript.LHandPos = gunstats.LHandPos;
+					commanderscript.RHandPos = gunstats.RHandPos;
+					commanderscript.shot_source = gunstats.bulletSpawn;
+
 				}	
 				break;
 			case 3:
 				{	
 					playerChar = Instantiate (ninja, new Vector3 (-4, 1, -4), Quaternion.identity) as Transform;
-					//playerChar.gameObject.AddComponent ("Controller" + i);
-					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
-					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
-					//gc.target = playerChar.gameObject;
+					
 				}
 				break;
 			case 4:
 				{
 					playerChar = Instantiate (sniper, new Vector3 (0, 1, 5), Quaternion.identity) as Transform;
-					//playerChar.gameObject.AddComponent ("Controller" + i);
-					//cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
-					//GunCamera gc = cam[i-1].gameObject.AddComponent ("GunController" + i) as GunCamera;
-					//gc.target = playerChar.gameObject;
+					PlayerCharacter sniperscript = playerChar.GetComponent<SniperScript>();
+					LRWeapon = (GameObject) Instantiate (sniperLRweapon, sniperscript.RightHand.position, Quaternion.identity);
+					GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();
+					LRWeapon.transform.parent = sniperscript.RightHand; //attach the weapon to the right hand
+				
+				
+					//initialising hand IK targets
+					sniperscript.LRWeapon = LRWeapon;
+					sniperscript.LHandPos = gunstats.LHandPos;
+					sniperscript.RHandPos = gunstats.RHandPos;
+					sniperscript.shot_source = gunstats.bulletSpawn;
 				}
 				break;
 
