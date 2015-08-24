@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour {
 
 
 		//If we are not wallrunning or sliding (we have free movement)
-		if (!wallRunning && !sliding && !character.melee) {
+		if (!wallRunning && !sliding) {
 			float vert = Input.GetAxis (verticalTag);
 			float hor = Input.GetAxis (horizontalTag);
 			float yaw = Input.GetAxis (mouseXTag) * rotSpeed;
@@ -94,9 +94,13 @@ public class Movement : MonoBehaviour {
 					sliding = true;
 				else if (Input.GetButtonDown (meleeTag)) { //can only melee when on ground
 					character.meleeAttack ();
-				} else if (Input.GetKey (KeyCode.V)) {
-					character.weaponHeld = !character.weaponHeld;
+				} 
+				else if(character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))){
+					character.endMeleeAttack();
 				}
+				/*else if (Input.GetKey (KeyCode.V)) {
+					character.weaponHeld = !character.weaponHeld;
+				}*/
 			}
 	
 			if (vert >= 0) { //running forwards
@@ -183,20 +187,20 @@ public class Movement : MonoBehaviour {
 				currentSlide = 0;
 				sliding = false;
 			}
-		} else if (character.melee ){//&& anim.GetBool("Melee")) { //In a melee. Continue combo?
+		} /*else if (character.melee ){//&& anim.GetBool("Melee")) { //In a melee. Continue combo?
 			
 			if (Input.GetButtonDown (meleeTag)) 
 				character.meleeAttack ();
-			else if (!(anim.GetCurrentAnimatorStateInfo (0).IsTag ("MeleeAttack"))){// && melee_dt > 0f) {
+			else if (!(anim.GetCurrentAnimatorStateInfo (0).IsTag ("MeleeAttack")) && melee_dt > 0.2f) {
 				character.endMeleeAttack ();
-				//melee_dt = 0f;
-			}/*
+				melee_dt = 0f;
+			}
 			else
 			{
 				melee_dt+=Time.deltaTime;
 				Debug.Log (melee_dt + " " + (anim.GetCurrentAnimatorStateInfo (0).IsTag ("MeleeAttack")));
-			}*/
-		}
+			}
+		}*/
 
 
 		//Move character
@@ -226,6 +230,8 @@ public class Movement : MonoBehaviour {
 		anim.SetBool ("WeaponHeld", character.weaponHeld);
 		anim.SetBool ("Wallrunning", wallRunning);
 		anim.SetBool ("Melee", character.melee);
+		anim.SetBool ("Stunned", character.stunned);
+		anim.SetBool ("KnockedDown", character.knockedDown);
 		anim.SetInteger ("MeleeCount", character.currentMelee);
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);

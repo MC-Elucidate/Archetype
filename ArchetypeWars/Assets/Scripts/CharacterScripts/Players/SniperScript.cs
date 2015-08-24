@@ -33,10 +33,12 @@ public class SniperScript: PlayerCharacter {
 	protected void Update () {
 		base.Update ();
 	}
-
+	public void FixedUpdate(){
+		base.FixedUpdate ();
+	}
 	public override void meleeAttack()
 	{
-		Debug.Log ("Chessuto!");
+		base.meleeAttack ();
 	}
 
 	public override void shootWeapon()
@@ -59,6 +61,7 @@ public class SniperScript: PlayerCharacter {
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;
+				sounds.pew();
 			}
 		} 
 		else {

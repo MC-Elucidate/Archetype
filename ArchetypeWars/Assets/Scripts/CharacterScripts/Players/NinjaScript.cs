@@ -23,10 +23,12 @@ public class NinjaScript: PlayerCharacter {
 	protected void Update () {
 		base.Update ();
 	}
-
+	public void FixedUpdate(){
+		base.FixedUpdate ();
+	}
 	public override void meleeAttack()
 	{
-		Debug.Log ("Chessuto!");
+		base.meleeAttack ();
 	}
 
 	public override void shootWeapon()
@@ -52,7 +54,7 @@ public class NinjaScript: PlayerCharacter {
 			weaponFireRateTimer = weaponFireRate;
 			spreadCount++;
 			spreadRateTimer = spreadRate;
-			
+			sounds.pew();
 		} 
 		
 		else {}

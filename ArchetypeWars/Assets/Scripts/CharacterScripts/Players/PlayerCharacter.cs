@@ -5,10 +5,9 @@ public class PlayerCharacter : CharacterBase {
 
 	public Camera cam;
 	protected int gunDamage, meleeDamage;
-	//public float meleeType = 0f;
-	//protected float meleeInterval;
 	protected RaycastHit hit;
 	protected float spreadFactor = 0.003f;
+
 	// Use this for initialization
 	public void Start () {
 		base.Start ();
@@ -18,6 +17,9 @@ public class PlayerCharacter : CharacterBase {
 	// Update is called once per frame
 	public void Update () {
 		base.Update ();
+	}
+	public void FixedUpdate(){
+		base.FixedUpdate ();
 	}
 
 	public virtual void rotateCamera(float pitch)
@@ -48,16 +50,16 @@ public class PlayerCharacter : CharacterBase {
 			Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
 			Physics.Raycast (camRay, out hit, weaponRange);
 			
-			//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
+			Debug.Log ("Shooting at " + hit.transform.gameObject.name);
 			
 			Vector3 target = hit.point;
 			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 			Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-			hit.collider.SendMessage ("Damage", hit, SendMessageOptions.DontRequireReceiver);
+			hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
 			weaponFireRateTimer = weaponFireRate;
 			spreadCount++;
 			spreadRateTimer = spreadRate;
-			
+			sounds.pew();
 		} 
 		else {}
 	}
@@ -69,7 +71,7 @@ public class PlayerCharacter : CharacterBase {
 			melee = true;
 			weaponHeld = false;
 			SRWeapon.SetActive(true);
-		} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo(0).IsName("Melee " + currentMelee))){
+		} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo(1).IsName("Attack" + currentMelee))){
 			currentMelee++;
 		}
 

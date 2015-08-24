@@ -28,16 +28,25 @@ public class CharacterBase : MonoBehaviour {
 	//Melee stuff
 	public GameObject SRWeapon;
 
+	//Sound Stuff
+	public SoundPool sounds;
+
+	
+	//Poise
+	float maxPoise = 100f;
+	float currentPoise = 100f;
+
 
 	//Stuff for movement controller
-	public bool melee = false, alive = true, weaponHeld = true, damaged = false;
+	public bool melee = false, alive = true, weaponHeld = true, stunned = false, knockedDown = false;
 	public float runSpeed, characterRadius, floorcast = 0.05f;
 
 
 	// Use this for initialization
 	public void Start () {
 		anim = gameObject.GetComponent<Animator> ();
-		anim.SetLayerWeight (0, 0.5f);
+		//anim.SetLayerWeight (0, 0.5f);
+		sounds = gameObject.GetComponent<SoundPool> ();
 	}
 	
 	// Update is called once per frame
@@ -61,8 +70,22 @@ public class CharacterBase : MonoBehaviour {
 			}
 		}
 
+		if ((stunned && !anim.GetCurrentAnimatorStateInfo (0).IsName ("Stunned")) || (knockedDown && !anim.GetCurrentAnimatorStateInfo (0).IsName ("KnockedDown"))){
+			currentPoise = 75;
+			stunned = false;
+			knockedDown = false;
+		}
+
 		checkIK ();
 	
+	}
+
+	public void FixedUpdate()
+	{
+		//Increase Poise over time. 1 second = 10 poise;
+		currentPoise += Time.fixedDeltaTime*10;
+		if (currentPoise > maxPoise)
+			currentPoise = maxPoise;
 	}
 
 	public virtual void meleeAttack()
@@ -106,13 +129,24 @@ public class CharacterBase : MonoBehaviour {
 
 
 
-	public void receiveDamage(int dmg)
+	public void receiveDamage(int dmg, float poisedmg)
 	{
-		//Debug.Log ("ouch");
+		Debug.Log ("ouch");
 		health -= dmg;
 		if (health <= 0) {
 			alive = false;
 			Destroy (this.gameObject, 3f);
+		} else {
+			currentPoise -= poisedmg;
+			if(currentPoise < 20)
+			{
+				knockedDown = true;
+				stunned = false;
+			}
+			else if(currentPoise > 30 && currentPoise < 50)
+			{
+				stunned = true;
+			}
 		}
 	}
 

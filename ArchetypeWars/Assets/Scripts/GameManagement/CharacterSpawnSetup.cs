@@ -1,20 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CamSetup : MonoBehaviour {
+public class CharacterSpawnSetup : MonoBehaviour {
 
 
 	public Camera[] cam = new Camera[4];
 
 	public GameStartup charSelection;
+
+	//Player Character Prefabs
 	public Transform heavy;
 	public Transform commander;
 	public Transform ninja;
 	public Transform sniper;
+
+	//Player Character Gun Prefabs
 	public GameObject heavyLRweapon;
 	public GameObject sniperLRweapon;
 	public GameObject commanderLRweapon;
 	public GameObject ninjaLRweapon;
+
+
+	//Enemy Prefabs (Move to EnemySpawn scipt)
+	public Transform mediumEnemy;
 
 	// Use this for initialization
 	void Start () {
@@ -87,6 +95,7 @@ public class CamSetup : MonoBehaviour {
 			default: playerChar = null; break;
 			}
 
+			AI_Logic.threats.Add(playerChar);
 			playerChar.gameObject.AddComponent ("Controller" + i);
 			cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
 
@@ -113,6 +122,12 @@ public class CamSetup : MonoBehaviour {
 			
 			else{}
 		}
+
+
+		//Spawn a single enemy
+		//Testing purposes, move to EnemySpawn script
+
+		//Transform enemy = Instantiate(mediumEnemy, new Vector3 (10, 1, 10), Quaternion.identity) as Transform;
 	}
 	
 	// Update is called once per frame

@@ -17,16 +17,19 @@ public class CommanderScript: PlayerCharacter {
 		weaponFireRate = 0.2f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
+		gunDamage = 30;
 	}
 	
 	// Update is called once per frame
 	protected void Update () {
 		base.Update ();
 	}
-
+	public void FixedUpdate(){
+		base.FixedUpdate ();
+	}
 	public override void meleeAttack()
 	{
-		Debug.Log ("Chessuto!");
+		base.meleeAttack ();
 	}
 
 	public override void shootWeapon()

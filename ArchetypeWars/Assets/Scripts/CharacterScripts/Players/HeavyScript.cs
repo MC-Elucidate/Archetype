@@ -26,7 +26,9 @@ public class HeavyScript: PlayerCharacter {
 	protected void Update () {
 		base.Update ();
 	}
-
+	public void FixedUpdate(){
+		base.FixedUpdate ();
+	}
 	public override void meleeAttack()
 	{
 		base.meleeAttack ();
@@ -57,7 +59,7 @@ public class HeavyScript: PlayerCharacter {
 			weaponFireRateTimer = weaponFireRate;
 			spreadCount++;
 			spreadRateTimer = spreadRate;
-			
+			sounds.pew();
 		} 
 		
 		else {}

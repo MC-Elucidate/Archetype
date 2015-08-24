@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MeleeStats : MonoBehaviour {
+public class EnemySpawner : MonoBehaviour {
 
-	public int damage;
-	public float poisedmg = 90;
 	// Use this for initialization
 	void Start () {
 	
