@@ -17,4 +17,8 @@ public class EnemyHeavy : EnemyCharacter {
 	public void FixedUpdate(){
 		base.FixedUpdate ();
 	}
+
+	public void onDestroy(){
+		base.OnDestroy();
+	}
 }

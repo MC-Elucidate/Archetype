@@ -7,7 +7,7 @@ public class RoundManager : MonoBehaviour {
 	EnemySpawner spawner;
 
 	//ROUND TYPES
-	enum Round	{Survival, CTF, PreRound};
+	public enum Round	{Survival, CTF, PreRound};
 
 	//ROUND AFFIXES - modifiers that affect each round
 	//TODO: Add more over here once the basics are implemented. This can be pretty damn fun.
@@ -16,17 +16,24 @@ public class RoundManager : MonoBehaviour {
 					Enemy_HalfHealth, Enemy_DoubleSpawn, Enemy_FasterMovement, 
 					Enemy_DoubleHealth, Enemy_ExplosiveShots	};
 
-	Round currentRound;
+	public static Round currentRound;
 
 	//General round vars
 	public bool alternateRound;			//alternateRound indicates that 3 affixes will be chosen for the round.
 	public int alternateRoundChance = 10;
 	public float roundTimer = 0f;
-	int score = 0;
+	public static int score = 0;
+
+	public Transform[] spawnPoints;
+	public float reinforcementDelay = 6f;
+	public float reinforcementTimer = 0f;
+	public int reinforcementSize;
+	public int maxReinforcements = 15;
 
 	//SURVIVAL VARS
 	//========================================================================================
-	public int enemyCount = 50;			//Keep spawning enemies. On enemy kill, decrement this, and kill all enemies when the count is zero for MAX FUN!
+	public static int enemyCount = 10;			//Keep spawning enemies. On enemy kill, decrement this, and kill all enemies when the count is zero for MAX FUN!
+	//Max enemies
 	//========================================================================================
 	//CTF VARS
 	//========================================================================================
@@ -35,8 +42,6 @@ public class RoundManager : MonoBehaviour {
 	//Transform EnemyFlag
 	//Capture number
 	//Capture limit
-	//Enemy reinforcement timer
-	//Enemy reinforcement size
 	//Max defenders, max attackers		//Can't flood the game with enemies, but keep spawning waves at some point
 	//========================================================================================
 
@@ -71,8 +76,22 @@ public class RoundManager : MonoBehaviour {
 	void Update () {
 
 		//Round in progress
-		if (roundTimer > 0 && !CheckVictory())
+		if (roundTimer > 0 && !CheckVictory ()) {
 			roundTimer -= Time.deltaTime;
+			reinforcementTimer -= Time.deltaTime;
+
+			//Which spawn logic do we want?
+
+			if (reinforcementTimer <= 0 && currentRound == Round.Survival) {
+				SpawnEnemies_Survival();
+				reinforcementTimer = reinforcementDelay;
+			}
+
+			else if (reinforcementTimer <= 0 && currentRound == Round.CTF) {
+				SpawnEnemies_CTF();
+				reinforcementTimer = reinforcementDelay;
+			}
+		}
 
 		//Pre-round Timer up, start new round
 		else if (roundTimer <= 0 && currentRound == Round.PreRound)
@@ -94,13 +113,16 @@ public class RoundManager : MonoBehaviour {
 		currentRound = Round.PreRound;
 		roundTimer = 10f;
 		ResetConditions ();
+		KillAllEnemies ();
 		Debug.Log ("Killing round. 10 seconds to new round");
 	}
 
 	void NewRound(){
 
 		//Spawns one enemy for testing purposes
-		spawner.spawnMediumEnemy (new Vector3(10, 1, 10f));
+		//spawner.spawnMediumEnemy (new Vector3(10, 1, 10f));
+
+		reinforcementTimer = reinforcementDelay;	//Making sure this variable starts the same for
 
 		if (Random.Range (0, 101) > (100 - alternateRoundChance))
 			alternateRound = true;				//Use this variable for score later on
@@ -112,8 +134,9 @@ public class RoundManager : MonoBehaviour {
 
 		case 0:	//SURVIVAL
 			currentRound = Round.Survival;
-			roundTimer = 300f;
-			enemyCount = 50;
+			roundTimer = 120f;
+			enemyCount = 10;
+			reinforcementTimer = 0;
 			Debug.Log ("New round initiated. Current round is Survival Mode. Get ready to die!");
 			break;
 
@@ -151,6 +174,7 @@ public class RoundManager : MonoBehaviour {
 
 		//SURVIVAL
 		enemyCount = 0;
+		reinforcementTimer = 0;
 
 		//TODO: CTF
 
@@ -177,13 +201,48 @@ public class RoundManager : MonoBehaviour {
 	//SURVIVAL MODE-SPECIFIC METHODS
 	//========================================================================================
 
+	/* //DEPRECATED
 	public void KillConfirmEnemy() {
 		//Use this method to decrement the enemyCount in Survival Mode
 		enemyCount--;
-	}
+	}*/
 
 	void KillAllEnemies() {
 		//TODO: Use this when the round ends to clear the battlefield.
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+
+		foreach (GameObject enemy in enemies) {
+		
+			enemy.SendMessage("receiveDamage", 1000f);
+		}
+	}
+
+	void SpawnEnemies_Survival() {
+
+		//Debug.Log ("Spawning enemies");
+		int currentForceSize = GameObject.FindGameObjectsWithTag("Enemy").Length;
+		
+		reinforcementSize = Random.Range (3, 7);	//3 to 6 enemies spawned at a time
+
+		if (currentForceSize + reinforcementSize > 15)
+			reinforcementSize = 15 - currentForceSize;
+
+		for (int i = 0; i<reinforcementSize; i++) {
+			switch(Random.Range (0,3)) {
+			case 0:
+				spawner.spawnMediumEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position);	//Spawn light enemy
+				break;
+			case 1:
+				spawner.spawnMediumEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position);	//Spawn medium enemy
+				break;
+			case 2:
+				spawner.spawnMediumEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position); //Spawn heavy enemy
+				break;
+			}
+		}
+
+		Debug.Log("Current enemies on the battlefield: " + GameObject.FindGameObjectsWithTag("Enemy").Length);
 	}
 
 	//========================================================================================
@@ -194,6 +253,11 @@ public class RoundManager : MonoBehaviour {
 
 	//ResetFlag
 	//CaptureConfirmFlag
+
+	void SpawnEnemies_CTF() {
+	
+		Debug.Log ("Later");
+	}
 
 	//========================================================================================
 

@@ -137,7 +137,7 @@ public class CharacterBase : MonoBehaviour {
 		health -= dmg;
 		if (health <= 0) {
 			alive = false;
-			Destroy (this.gameObject, 3f);
+			Destroy (this.gameObject, 1.5f);
 		}
 	}
 
@@ -234,7 +234,6 @@ public class CharacterBase : MonoBehaviour {
 			
 		}
 	}
-
 
 
 }

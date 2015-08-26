@@ -4,6 +4,8 @@ using System.Collections;
 public class HeavyScript: PlayerCharacter {
 
 	public Transform rocketPrefab;
+	public Transform defensePrefab;
+
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
@@ -67,7 +69,22 @@ public class HeavyScript: PlayerCharacter {
 
 	public override void special1()
 	{
-		Debug.Log ("Doing special1");
+		RaycastHit hit;
+		Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f,  0.666667f, 0));
+		
+		Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+		Physics.Raycast (camRay, out hit, weaponRange);
+		
+		Debug.Log ("Heavy throwing special at " + hit.transform.gameObject.name);
+		
+		Vector3 target = hit.point;
+		Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
+		Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+		
+		Quaternion shieldRotation = Quaternion.identity;
+		shieldRotation.SetLookRotation(target - shot_source.position, Vector3.up);
+		
+		HeavyShieldScript shield = Instantiate (defensePrefab, RHandPos.position, shieldRotation) as HeavyShieldScript;
 	}
 	
 	public override void special2()
