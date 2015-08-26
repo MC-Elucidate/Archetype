@@ -26,7 +26,6 @@ public class SniperScript: PlayerCharacter {
 		maxSpread = 8;
 
 		gunDamage = 80;
-		meleeDamage = 30;
 	}
 	
 	// Update is called once per frame

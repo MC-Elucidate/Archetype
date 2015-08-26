@@ -3,6 +3,9 @@ using System.Collections;
 
 public class RoundManager : MonoBehaviour {
 
+	//OTHER SCRIPTS
+	EnemySpawner spawner;
+
 	//ROUND TYPES
 	enum Round	{Survival, CTF, PreRound};
 
@@ -59,6 +62,7 @@ public class RoundManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		spawner = gameObject.GetComponent<EnemySpawner>();
 		KillRound ();
 
 	}
@@ -94,6 +98,9 @@ public class RoundManager : MonoBehaviour {
 	}
 
 	void NewRound(){
+
+		//Spawns one enemy for testing purposes
+		spawner.spawnMediumEnemy (new Vector3(10, 1, 10f));
 
 		if (Random.Range (0, 101) > (100 - alternateRoundChance))
 			alternateRound = true;				//Use this variable for score later on

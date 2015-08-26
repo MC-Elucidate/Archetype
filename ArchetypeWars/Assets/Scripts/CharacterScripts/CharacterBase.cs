@@ -11,6 +11,7 @@ public class CharacterBase : MonoBehaviour {
 	protected int spreadCount = 0, maxSpread;				//Accuracy value (pixel range from centre)
 	protected int meleeMax;
 	public int currentMelee = 0;
+	protected int gunDamage;
 	public Transform shot_source;
 
 	//IK stuff
@@ -33,13 +34,14 @@ public class CharacterBase : MonoBehaviour {
 
 	
 	//Poise
-	float maxPoise = 100f;
-	float currentPoise = 100f;
+	protected float maxPoise = 100f;
+	protected float currentPoise = 100f;
+	protected float poiseDamage = 15f;
 
 
 	//Stuff for movement controller
 	public bool melee = false, alive = true, weaponHeld = true, stunned = false, knockedDown = false;
-	public float runSpeed, characterRadius, floorcast = 0.05f;
+	public float runSpeed, characterRadius, floorcast = 0.12f;
 
 
 	// Use this for initialization
@@ -129,14 +131,19 @@ public class CharacterBase : MonoBehaviour {
 
 
 
-	public void receiveDamage(int dmg, float poisedmg)
+	public void receiveDamage(int dmg)
 	{
 		Debug.Log ("ouch");
 		health -= dmg;
 		if (health <= 0) {
 			alive = false;
 			Destroy (this.gameObject, 3f);
-		} else {
+		}
+	}
+
+	public void receivePoiseDamage(float poisedmg)
+	{
+		if(alive){
 			currentPoise -= poisedmg;
 			if(currentPoise < 20)
 			{

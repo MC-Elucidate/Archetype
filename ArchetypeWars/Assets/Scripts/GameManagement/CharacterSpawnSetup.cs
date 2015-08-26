@@ -21,8 +21,8 @@ public class CharacterSpawnSetup : MonoBehaviour {
 	public GameObject ninjaLRweapon;
 
 
-	//Enemy Prefabs (Move to EnemySpawn scipt)
-	public Transform mediumEnemy;
+	//gui
+	public RectTransform gui;
 
 	// Use this for initialization
 	void Start () {
@@ -31,8 +31,13 @@ public class CharacterSpawnSetup : MonoBehaviour {
 
 			if(charSelection.playerChoices[i] == 0)
 				break;
+
 			Transform playerChar;
 			GameObject LRWeapon;
+			Transform playergui;
+			playergui = Instantiate(gui, new Vector3(0,0,0), Quaternion.identity) as RectTransform;
+
+
 			switch (charSelection.playerChoices [i]) {
 			case 1:
 				{
@@ -41,13 +46,14 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					LRWeapon = (GameObject) Instantiate (heavyLRweapon, heavyscript.RightHand.position, Quaternion.identity);
 					GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();
 					LRWeapon.transform.parent = heavyscript.RightHand; //attach the weapon to the right hand
-				
-				
+
 					//initialising hand IK targets
 					heavyscript.LRWeapon = LRWeapon;
 					heavyscript.LHandPos = gunstats.LHandPos;
 					heavyscript.RHandPos = gunstats.RHandPos;
 					heavyscript.shot_source = gunstats.bulletSpawn;
+
+					playergui.gameObject.GetComponent<PlayerHUD>().character = heavyscript;
 					
 					
 				}
@@ -67,11 +73,15 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					commanderscript.RHandPos = gunstats.RHandPos;
 					commanderscript.shot_source = gunstats.bulletSpawn;
 
+					playergui.gameObject.GetComponent<PlayerHUD>().character = commanderscript;
+
 				}	
 				break;
 			case 3:
 				{	
 					playerChar = Instantiate (ninja, new Vector3 (-4, 1, -4), Quaternion.identity) as Transform;
+					PlayerCharacter ninjascript = playerChar.GetComponent<NinjaScript>();
+					playergui.gameObject.GetComponent<PlayerHUD>().character = ninjascript;
 					
 				}
 				break;
@@ -89,6 +99,8 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					sniperscript.LHandPos = gunstats.LHandPos;
 					sniperscript.RHandPos = gunstats.RHandPos;
 					sniperscript.shot_source = gunstats.bulletSpawn;
+
+					playergui.gameObject.GetComponent<PlayerHUD>().character = sniperscript;
 				}
 				break;
 
@@ -98,6 +110,10 @@ public class CharacterSpawnSetup : MonoBehaviour {
 			AI_Logic.threats.Add(playerChar);
 			playerChar.gameObject.AddComponent ("Controller" + i);
 			cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
+
+
+			playergui.GetComponent<Canvas>().worldCamera = cam[i-1];//playerChar.gameObject.GetComponentInChildren<Camera> ();
+
 
 			if (cam[0] && cam[1] && cam[2] && cam[3]) {
 				//Debug.Log ("Doing 4 cameras");
@@ -124,10 +140,6 @@ public class CharacterSpawnSetup : MonoBehaviour {
 		}
 
 
-		//Spawn a single enemy
-		//Testing purposes, move to EnemySpawn script
-
-		//Transform enemy = Instantiate(mediumEnemy, new Vector3 (10, 1, 10), Quaternion.identity) as Transform;
 	}
 	
 	// Update is called once per frame

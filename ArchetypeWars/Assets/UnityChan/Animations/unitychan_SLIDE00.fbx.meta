@@ -624,7 +624,7 @@ ModelImporter:
     - serializedVersion: 16
       name: SLIDE00
       takeName: Take 001
-      firstFrame: 1
+      firstFrame: 11
       lastFrame: 42
       wrapMode: 0
       orientationOffsetY: 0

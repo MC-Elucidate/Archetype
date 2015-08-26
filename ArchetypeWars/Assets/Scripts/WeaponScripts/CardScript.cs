@@ -7,6 +7,7 @@ public class CardScript : MonoBehaviour {
 	public float lifetime; //Time before destruction
 	public int damage = 25;
 							//Range = velocity * lifetime, of course
+	public float poiseDamage = 15;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +29,7 @@ public class CardScript : MonoBehaviour {
 		//Debug.Log ("Hit an object");
 		if (other.gameObject.tag == "Enemy") {
 			other.gameObject.SendMessage("receiveDamage", damage);//Do damage
+			other.gameObject.SendMessage("receivePoiseDamage", poiseDamage);
 			Destroy (this.gameObject);
 		} 
 		else if (other.gameObject.tag == "Wall") {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 public class AI_Logic : MonoBehaviour {
 
@@ -10,16 +11,16 @@ public class AI_Logic : MonoBehaviour {
 		Patrol, Chase, Attack
 	}
 
-	FiniteState mainState;
+	public FiniteState mainState;
 	EnemyMovement enemyMovement;
 	EnemyCharacter enemyChar;
-	public static Collection<Transform> threats = new Collection<Transform>();
+	public static List<Transform> threats = new List<Transform>();
 	float time = 0.0f;
 	float logicTime, visionTime, threatSpottedTimeOut;
 	public float dLogicTime, dVisionTime, dThreatSpottedTimeOut; 
-	protected NavMeshAgent agent;
-	public Transform asset; //somethin to protect or patrol around
-	public Transform probe; //raycast point
+	//protected NavMeshAgent agent;
+	//public Transform asset; //somethin to protect or patrol around
+	//public Transform probe; //raycast point
 	private Vector3 dir;
 	public Transform threat; //the target player to attack
 	float targetOffset;
@@ -27,7 +28,7 @@ public class AI_Logic : MonoBehaviour {
 
 	void Start () 
 	{
-		mainState = FiniteState.Patrol;
+		mainState = FiniteState.Chase;
 
 		enemyMovement = GetComponent<EnemyMovement> ();
 		enemyChar = GetComponent<EnemyCharacter>();
@@ -35,8 +36,8 @@ public class AI_Logic : MonoBehaviour {
 		visionTime = dVisionTime;
 		threatSpottedTimeOut = dThreatSpottedTimeOut;
 		threat = null;
-		agent = enemyMovement.agent;
-		agent.speed = 1.5f;
+		//agent = enemyMovement.agent;
+		//agent.speed = 1.5f;
 		dir = Vector3.zero;
 		targetOffset = enemyChar.targetOffset;
 	}
@@ -45,7 +46,7 @@ public class AI_Logic : MonoBehaviour {
 	void Update () 
 	{
 
-		Debug.DrawRay (probe.position , enemyChar.visionRadius * dir.normalized , Color.red);
+		//Debug.DrawRay (probe.position , enemyChar.visionRadius * dir.normalized , Color.red);
 			logicTime += dLogicTime;
 
 
@@ -53,7 +54,7 @@ public class AI_Logic : MonoBehaviour {
 			{
 			case FiniteState.Patrol:
 
-				bool threatSpotted = false;
+		/*		bool threatSpotted = false;
 				if (time > visionTime)
 				{
 					visionTime += dVisionTime;
@@ -74,14 +75,16 @@ public class AI_Logic : MonoBehaviour {
 					Vector3 patrolPoint = asset.position;
 					agent.SetDestination(patrolPoint);
 					print("time: " + time +" ;patrolling around the asset");
-				}
+				}*/
 				break;
 			case FiniteState.Chase:
 				//to be coded
+			calculateThreat();
 				break;
+
 			case FiniteState.Attack:
 				//print("time " + time +" ;attacking");
-
+			/*
 				if (time > visionTime)
 				{
 					visionTime += dVisionTime;
@@ -108,7 +111,7 @@ public class AI_Logic : MonoBehaviour {
 					visionTime = time + dVisionTime;
 					print("time: " + time +" ;time to patrol");
 				}
-
+*/
 				break;
 				
 			}
@@ -118,6 +121,7 @@ public class AI_Logic : MonoBehaviour {
 
 	}
 
+	/*
 	protected Transform LookForThreat() //Checks if any of the players are visible to the agent and returns the index of the closest player
 	{
 		foreach (Transform threat in threats)
@@ -147,6 +151,21 @@ public class AI_Logic : MonoBehaviour {
 		}
 
 		return null;
+	}*/
+
+	//Function to determine which character this AI chases and attacks
+	public Vector3 getTarget()
+	{
+		return threat.position;
+	}
+
+
+	//Use this to calculate which character in the threats list to attack. 
+	//Each character will have a CharacterBase component containing their aggro.
+	//Threat level is directly proportional to a character's aggro, and inversely proportional to their distance from this AI
+	private void calculateThreat()
+	{
+		threat = threats [0];
 	}
 
 }

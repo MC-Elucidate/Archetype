@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerCharacter : CharacterBase {
 
 	public Camera cam;
-	protected int gunDamage, meleeDamage;
 	protected RaycastHit hit;
 	protected float spreadFactor = 0.003f;
 
@@ -55,7 +54,10 @@ public class PlayerCharacter : CharacterBase {
 			Vector3 target = hit.point;
 			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 			Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-			hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
+			if(hit.transform.gameObject.tag == "Enemy"){
+				hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
+				hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
+			}
 			weaponFireRateTimer = weaponFireRate;
 			spreadCount++;
 			spreadRateTimer = spreadRate;

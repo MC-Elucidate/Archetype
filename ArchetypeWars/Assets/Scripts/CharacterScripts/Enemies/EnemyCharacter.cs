@@ -33,7 +33,8 @@ public class EnemyCharacter : CharacterBase {
 	{
 		if (other.tag == "PlayerMelee") {
 			MeleeStats ms = other.gameObject.GetComponent<MeleeStats> ();
-			receiveDamage (ms.damage, ms.poisedmg);
+			receiveDamage (ms.damage);
+			receivePoiseDamage(ms.poisedmg);
 		}
 	}
 
@@ -53,6 +54,10 @@ public class EnemyCharacter : CharacterBase {
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;
+				if(hit.transform.gameObject.tag == "Player"){
+					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
+					hit.transform.gameObject.SendMessage ("receiveDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
+				}
 				//print ("m shooting");
 				sounds.pew();
 			}

@@ -5,7 +5,7 @@ public class RocketScript : MonoBehaviour {
 
 	public float velocity;
 	public int damage = 300;
-
+	public float poiseDamage = 70;
 	// Use this for initialization
 	void Start () {
 		Physics.IgnoreCollision (this.collider, FindObjectOfType<HeavyScript>().gameObject.collider, true);	//I don't know how to do this any other way really.
@@ -29,7 +29,8 @@ public class RocketScript : MonoBehaviour {
 			if(coll.tag == "Enemy")
 			{
 				coll.gameObject.SendMessage("receiveDamage", damage);
-				coll.rigidbody.AddExplosionForce(600f, transform.position, 8.0f, 40.0f);
+				coll.gameObject.SendMessage("receivePoiseDamage", poiseDamage);
+				//coll.rigidbody.AddExplosionForce(600f, transform.position, 8.0f, 40.0f);
 			}
 		}
 		Destroy (this.gameObject);

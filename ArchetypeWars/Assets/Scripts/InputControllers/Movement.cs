@@ -12,11 +12,11 @@ public class Movement : MonoBehaviour {
 
 
 	private float verticalVel = 0f;
-	private float slideTime = 1.1f, currentSlide = 0;
+	private float slideTime = 0.75f, currentSlide = 0;
 	private float gravity = -9.8f;
 	private float jumpTime = .25f, currentJump = 0;
 	private float zMove = 0, xMove = 0;
-	private float wallrunTime = 1.5f, currentWallrun = 0, wallrunCooldown = 1.5f, currentWallrunCooldown = 0;
+	private float wallrunTime = 0.8f, currentWallrun = 0, wallrunCooldown = 1.5f, currentWallrunCooldown = 0;
 	private float characterRadius;
 
 	private CharacterController charCon;
@@ -40,7 +40,8 @@ public class Movement : MonoBehaviour {
 	// Update is called once per frame
 	protected void Update () {
 		//Use custom method for checking if we are on the ground
-		checkGrounded ();
+		if(verticalVel <= 0)
+			checkGrounded ();
 
 
 		//If we are not wallrunning or sliding (we have free movement)
@@ -82,6 +83,7 @@ public class Movement : MonoBehaviour {
 				verticalVel = jumpPower;
 				currentJump = 0f;
 				gravity = jumpGravity;
+				isGrounded = false;
 			}
 
 			//on ground, not trying to jump
@@ -120,16 +122,18 @@ public class Movement : MonoBehaviour {
 			if (wallrunUp) {
 				xMove = 0;
 				zMove = 0f;
-				verticalVel = 4f;
+				verticalVel = 8f;
 
 				if (Input.GetButtonUp (wallrunTag)) { //Release wallrun button. Ends wallrun. Begins freefall
 					wallRunning = wallrunUp = false;
 					currentWallrun = 0;
 					currentWallrunCooldown = 0;
+					doubleJumping = true;
 				} else if (currentWallrun >= wallrunTime) { //pass wallrun time limit (drop down)
 					wallRunning = wallrunUp = false;
 					currentWallrun = 0;
 					currentWallrunCooldown = 0;
+					doubleJumping = true;
 				}
 
 				if (!Physics.Raycast (transform.position, transform.forward, characterRadius)) { //reach top of wall
@@ -142,7 +146,7 @@ public class Movement : MonoBehaviour {
 
 				verticalVel = 3f;
 				xMove = 0;
-				zMove = 1f;
+				zMove = 1.8f;
 
 				if (currentWallrun >= wallrunTime) {
 					verticalVel = -3f;
@@ -162,6 +166,7 @@ public class Movement : MonoBehaviour {
 					wallRunning = wallrunLeft = wallrunRight = false;
 					currentWallrun = 0f;
 					currentWallrunCooldown = 0;
+					doubleJumping = true;
 				}
 
 				if (wallrunRight) { //Check if wall ends.
@@ -169,12 +174,14 @@ public class Movement : MonoBehaviour {
 						wallrunRight = wallRunning = false;
 						currentWallrun = 0;
 						currentWallrunCooldown = 0;
+						doubleJumping = true;
 					}
 				} else { //Check if left wall ends
 					if (!Physics.Raycast (transform.position, -transform.right, characterRadius)) {
 						wallrunLeft = wallRunning = false;
 						currentWallrun = 0;
 						currentWallrunCooldown = 0;
+						doubleJumping = true;
 					}
 				}
 			}
@@ -232,6 +239,7 @@ public class Movement : MonoBehaviour {
 		anim.SetBool ("Melee", character.melee);
 		anim.SetBool ("Stunned", character.stunned);
 		anim.SetBool ("KnockedDown", character.knockedDown);
+		anim.SetBool ("Alive", character.alive);
 		anim.SetInteger ("MeleeCount", character.currentMelee);
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
@@ -254,9 +262,10 @@ public class Movement : MonoBehaviour {
 	}
 
 	protected void OnControllerColliderHit(ControllerColliderHit collision) {
-		if (collision.gameObject.tag == "Wall" && Input.GetButton(wallrunTag) && !wallRunning && zMove > 0 && !sliding && !doubleJumping && (wallrunCooldown <= currentWallrunCooldown)) {
+		if (collision.gameObject.tag == "Wall" && Input.GetButton(wallrunTag) && !wallRunning && zMove > 0 && !sliding && !doubleJumping){// && (wallrunCooldown <= currentWallrunCooldown)) {
 			RaycastHit target;
-			if(Physics.Raycast(transform.position, transform.forward, out target, characterRadius))
+
+			if(Physics.Raycast(transform.position + new Vector3(0, 2.5f, 0), transform.forward, out target, characterRadius))
 			{
 				if(target.transform.gameObject.tag == "Wall")
 				{
@@ -266,6 +275,7 @@ public class Movement : MonoBehaviour {
 					angle -= 180;
 					transform.Rotate(0, -angle, 0);
 					angle = Vector3.Angle(transform.forward, target.normal) - 180;
+					//Debug.DrawRay(transform.position + new Vector3(0, 1, 0), (transform.position + new Vector3(0,1,0)) - target.point, Color.blue, 0.8f);
 					if(angle != 180)
 					{
 						transform.Rotate(0, angle, 0);
@@ -296,6 +306,7 @@ public class Movement : MonoBehaviour {
 	public void checkGrounded()
 	{
 		RaycastHit hit;
+		//Debug.DrawRay(transform.position, -transform.up * character.floorcast, Color.blue, 0.8f);
 		if (Physics.Raycast (transform.position, -transform.up, out hit, character.floorcast)) { //If shit be fucked up with the jump, decrease floorcast and raise the character controller capsule a tad
 			isGrounded = true;
 		}
