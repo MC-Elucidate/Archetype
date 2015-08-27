@@ -17,4 +17,8 @@ public class EnemyLight : EnemyCharacter {
 	public void FixedUpdate(){
 		base.FixedUpdate ();
 	}
+
+	public void OnDestroy(){
+		base.OnDestroy();
+	}
 }

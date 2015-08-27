@@ -20,7 +20,11 @@ public class EnemyMedium : EnemyCharacter {
 	void Update () {
 		base.Update ();
 	}
-	public void FixedUpdate(){
+	void FixedUpdate(){
 		base.FixedUpdate ();
+	}
+
+	void OnDestroy(){
+		base.OnDestroy();
 	}
 }

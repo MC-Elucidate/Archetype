@@ -82,4 +82,18 @@ public class EnemyCharacter : CharacterBase {
 		} 
 	}
 
+	public virtual void OnDestroy() {
+		
+		//Not the neatest code, but this should work
+		if (RoundManager.currentRound == RoundManager.Round.Survival) {
+			RoundManager.enemyCount--;
+			Debug.Log ("Enemy kill confirmed:" + RoundManager.enemyCount + " remaining");
+		}
+
+		else if (RoundManager.currentRound == RoundManager.Round.CTF) {
+			//Reduce attacker or defender size
+			Debug.Log ("Enemy kill confirmed");
+		}
+	}
+
 }
