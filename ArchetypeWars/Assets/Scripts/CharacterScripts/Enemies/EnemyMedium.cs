@@ -8,6 +8,12 @@ public class EnemyMedium : EnemyCharacter {
 		base.Start();
 		maxHealth = 160;
 		health = 160;
+
+		weaponRange = 500f;
+		weaponFireRate = 0.2f;
+		spreadRate = 0.21f;
+		maxSpread = 12;
+		gunDamage = 10;
 	}
 	
 	// Update is called once per frame

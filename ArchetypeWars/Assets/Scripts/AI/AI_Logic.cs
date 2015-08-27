@@ -13,7 +13,7 @@ public class AI_Logic : MonoBehaviour {
 
 	public FiniteState mainState;
 	EnemyMovement enemyMovement;
-	EnemyCharacter enemyChar;
+	EnemyCharacter character;
 	public static List<Transform> threats = new List<Transform>();
 	float time = 0.0f;
 	float logicTime, visionTime, threatSpottedTimeOut;
@@ -31,7 +31,7 @@ public class AI_Logic : MonoBehaviour {
 		mainState = FiniteState.Chase;
 
 		enemyMovement = GetComponent<EnemyMovement> ();
-		enemyChar = GetComponent<EnemyCharacter>();
+		character = GetComponent<EnemyCharacter>();
 		logicTime = dLogicTime;
 		visionTime = dVisionTime;
 		threatSpottedTimeOut = dThreatSpottedTimeOut;
@@ -39,7 +39,7 @@ public class AI_Logic : MonoBehaviour {
 		//agent = enemyMovement.agent;
 		//agent.speed = 1.5f;
 		dir = Vector3.zero;
-		targetOffset = enemyChar.targetOffset;
+		//targetOffset = enemyChar.targetOffset;
 	}
 	
 	// Update is called once per frame
@@ -78,11 +78,19 @@ public class AI_Logic : MonoBehaviour {
 				}*/
 				break;
 			case FiniteState.Chase:
+		{
 				//to be coded
 			calculateThreat();
+			if((transform.position - threat.position).magnitude < character.shootingRange)
+				mainState = FiniteState.Attack;
+		}
 				break;
 
 			case FiniteState.Attack:
+		{
+			if((transform.position - threat.position).magnitude > character.shootingRange)
+				mainState = FiniteState.Chase;
+		}
 				//print("time " + time +" ;attacking");
 			/*
 				if (time > visionTime)

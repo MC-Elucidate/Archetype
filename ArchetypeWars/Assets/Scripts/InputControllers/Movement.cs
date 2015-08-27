@@ -237,27 +237,15 @@ public class Movement : MonoBehaviour {
 		anim.SetBool ("WeaponHeld", character.weaponHeld);
 		anim.SetBool ("Wallrunning", wallRunning);
 		anim.SetBool ("Melee", character.melee);
-		anim.SetBool ("Stunned", character.stunned);
-		anim.SetBool ("KnockedDown", character.knockedDown);
 		anim.SetBool ("Alive", character.alive);
 		anim.SetInteger ("MeleeCount", character.currentMelee);
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
+		anim.SetFloat ("Poise", character.currentPoise);
 	}
 
 	protected void FixedUpdate()
 	{
-		//checkGrounded ();
-		/*
-		anim.SetBool ("Sliding", sliding);
-		anim.SetBool ("WeaponHeld", character.weaponHeld);
-		anim.SetBool ("Wallrunning", wallRunning);
-		anim.SetBool ("Melee", character.melee);
-		anim.SetInteger ("MeleeCount", character.currentMelee);
-		anim.SetFloat ("Vertical", zMove);
-		anim.SetFloat ("Horizontal", xMove);
-*/
-		//Debug.Log (Time.fixedDeltaTime);
 
 	}
 

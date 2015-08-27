@@ -32,6 +32,7 @@ public class EnemyMovement : MonoBehaviour {
 		time = 0.0f;
 		shootTimeOut = 0.0f;
 
+		agent.stoppingDistance = character.stoppingRange;
 		fire_Move = false;
 
 	}
@@ -54,7 +55,24 @@ public class EnemyMovement : MonoBehaviour {
 		charCon.Move (speed * moveDir * Time.deltaTime);
 		*/
 
-		agent.SetDestination (logic.getTarget());
+		switch (logic.mainState) {
+		case AI_Logic.FiniteState.Chase:
+			{
+				if (!character.freemove)
+					agent.Stop ();
+				else {
+					agent.SetDestination (logic.getTarget ());
+				}
+			}
+			break;
+		
+		case AI_Logic.FiniteState.Attack:
+			{
+				character.ShootWeapon (logic.threat);
+			}
+			break;
+		}
+	
 
 	}
 
@@ -64,8 +82,9 @@ public class EnemyMovement : MonoBehaviour {
 		anim.SetBool ("Sliding", sliding);
 		anim.SetBool ("WeaponHeld", weaponHeld);
 		anim.SetBool ("Alive", character.alive);
-		anim.SetBool ("Stunned", character.stunned);
-		anim.SetBool ("KnockedDown", character.knockedDown);
+		//anim.SetBool ("Stunned", character.stunned);
+		//anim.SetBool ("KnockedDown", character.knockedDown);
+		anim.SetFloat ("Poise", character.currentPoise);
 		//anim.SetFloat ("Vertical", zMove);
 		//anim.SetFloat ("Horizontal", xMove);
 	}
