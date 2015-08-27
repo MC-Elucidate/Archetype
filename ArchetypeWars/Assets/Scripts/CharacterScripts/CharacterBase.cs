@@ -3,7 +3,8 @@ using System.Collections;
 
 public class CharacterBase : MonoBehaviour {
 
-	protected int health, maxHealth;
+	protected int maxHealth;
+	public int health;
 
 	//Weapon stuff
 	protected float weaponRange = 100f, weaponFireRate, weaponFireRateTimer = 0f, spreadRate, spreadRateTimer = 0f, meleeFireRate, meleeFireRateTimer = 0f;
@@ -35,12 +36,12 @@ public class CharacterBase : MonoBehaviour {
 	
 	//Poise
 	protected float maxPoise = 100f;
-	protected float currentPoise = 100f;
+	public float currentPoise = 100f;
 	protected float poiseDamage = 15f;
 
 
 	//Stuff for movement controller
-	public bool melee = false, alive = true, weaponHeld = true, stunned = false, knockedDown = false;
+	public bool freemove = true, melee = false, alive = true, weaponHeld = true;
 	public float runSpeed, characterRadius, floorcast = 0.12f;
 
 
@@ -72,11 +73,12 @@ public class CharacterBase : MonoBehaviour {
 			}
 		}
 
-		if ((stunned && !anim.GetCurrentAnimatorStateInfo (0).IsName ("Stunned")) || (knockedDown && !anim.GetCurrentAnimatorStateInfo (0).IsName ("KnockedDown"))){
+
+		if (currentPoise < 25.0 && !anim.GetCurrentAnimatorStateInfo (0).IsTag ("NoFreeMove")) {
 			currentPoise = 75;
-			stunned = false;
-			knockedDown = false;
-		}
+			freemove = true;
+		} else if (currentPoise > 35.0 && alive)
+			freemove = true;
 
 		checkIK ();
 	
@@ -133,11 +135,12 @@ public class CharacterBase : MonoBehaviour {
 
 	public void receiveDamage(int dmg)
 	{
-		Debug.Log ("ouch");
+		//Debug.Log ("ouch");
 		health -= dmg;
 		if (health <= 0) {
 			alive = false;
-			Destroy (this.gameObject, 1.5f);
+			Destroy (this.gameObject, 2.0f);
+			freemove = false;
 		}
 	}
 
@@ -145,14 +148,15 @@ public class CharacterBase : MonoBehaviour {
 	{
 		if(alive){
 			currentPoise -= poisedmg;
-			if(currentPoise < 20)
+			if(currentPoise <= 20)
 			{
-				knockedDown = true;
-				stunned = false;
+				freemove = false;
+				Debug.Log("KD");
 			}
-			else if(currentPoise > 30 && currentPoise < 50)
+			else if(currentPoise <= 30 && currentPoise > 20)
 			{
-				stunned = true;
+				freemove = false;
+				Debug.Log("Stunned");
 			}
 		}
 	}
@@ -234,6 +238,7 @@ public class CharacterBase : MonoBehaviour {
 			
 		}
 	}
+
 
 
 }
