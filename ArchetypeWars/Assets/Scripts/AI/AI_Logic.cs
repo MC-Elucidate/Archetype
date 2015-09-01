@@ -80,6 +80,7 @@ public class AI_Logic : MonoBehaviour {
 			case FiniteState.Chase:
 		{
 				//to be coded
+
 			calculateThreat();
 			if((transform.position - threat.position).magnitude < character.shootingRange)
 				mainState = FiniteState.Attack;
@@ -163,6 +164,11 @@ public class AI_Logic : MonoBehaviour {
 
 	//Function to determine which character this AI chases and attacks
 	public Vector3 getTarget()
+	{
+		return threat.position;
+	}
+
+	public Vector3 getCover()
 	{
 		return threat.position;
 	}

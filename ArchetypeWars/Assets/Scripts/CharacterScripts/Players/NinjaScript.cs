@@ -6,6 +6,7 @@ public class NinjaScript: PlayerCharacter {
 	public Transform cardPrefab;
 	// Use this for initialization
 	protected void Start () {
+		base.Start ();
 		health = 150;
 		maxHealth = 150;
 		runSpeed = 16;
@@ -17,6 +18,7 @@ public class NinjaScript: PlayerCharacter {
 		weaponFireRate = 0.2f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
+		weaponHeld = false;
 	}
 	
 	// Update is called once per frame
@@ -84,4 +86,7 @@ public class NinjaScript: PlayerCharacter {
 	{
 		base.rotateCamera (pitch);
 	}
+
+	public override void checkIK()
+	{}
 }

@@ -69,6 +69,7 @@ public class EnemyMovement : MonoBehaviour {
 		case AI_Logic.FiniteState.Attack:
 			{
 				character.ShootWeapon (logic.threat);
+				//agent.SetDestination (logic.getCover ());
 			}
 			break;
 		}

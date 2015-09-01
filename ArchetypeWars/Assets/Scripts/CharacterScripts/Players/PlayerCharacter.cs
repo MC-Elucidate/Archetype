@@ -3,14 +3,36 @@ using System.Collections;
 
 public class PlayerCharacter : CharacterBase {
 
+
+	//Player Camera
 	public Camera cam;
+
+	//Player specific shooting logic
 	protected RaycastHit hit;
 	protected float spreadFactor = 0.003f;
+
+
+	//Player movement variables
+	public Vector3 velocity;
+	public float globalGravity = -10f, currentGravity = -10f;
+	private float maxForwardSpeed = 10f, maxBackSpeed = -5f, maxSideSpeed = 7f, groundAcc = 20f, airAcc = 2f, airFriction = 20f;
+
+	//State booleans
+	public bool doubleJumping = false, wallRunning  = false, wallrunUp = false, wallrunLeft = false, wallrunRight = false, sliding = false, isGrounded = false;
+
+	//Jump variables
+	private float jumpPower = 3f, jumpGravity = 3f, jumpTime = 0.25f, currentJump = 0f;
+
+	//Slide variables
+	private float slideSpeed = 15f, slideTime = 0.75f, currentSlide = 0f;
+
+	//Wallrun variables
+	private float wallrunTime = 1f, currentWallrun = 0, verticalWallVelocity = 8f, diagonalWallVelocity = 20f;
 
 	// Use this for initialization
 	public void Start () {
 		base.Start ();
-		SRWeapon.SetActive (false);
+		SRWeapon.SetActive (false); //Hide melee weapon and turnoff collision
 	}
 	
 	// Update is called once per frame
@@ -21,6 +43,12 @@ public class PlayerCharacter : CharacterBase {
 		base.FixedUpdate ();
 	}
 
+
+
+	/*
+	 * Rotates the player's camera based on Y-axis input.
+	 * Locks the camera to 40 degrees up and down.
+	 * */
 	public virtual void rotateCamera(float pitch)
 	{
 		if (pitch > 0) { // if we look up
@@ -38,18 +66,34 @@ public class PlayerCharacter : CharacterBase {
 		}
 	}
 
+	public override void receiveDamage(int dmg)
+	{
+		//Debug.Log ("ouch");
+		health -= dmg;
+		if (health <= 0) {
+			alive = false;
+			freemove = false;
+			cam.transform.parent = null;
+		}
+	}
+
+
+
+	/*
+	 * Function called when player presses the Fire button.
+	 * Simulates weapon recoil and accuracy, and fire rate of weapons.
+	 * */
 	public virtual void shootWeapon() {
 		//Get the gameObject that GunScript is attached to, then find the camera attached to that child.
 		//Take the screen point that we want to use as the point we're going to shoot towards
 		
 		if (weaponFireRateTimer <= 0) {
 			
-			//Ray camRay = cam.ScreenPointToRay (new Vector3 (Screen.width / 2 + Random.Range (-spreadCount, spreadCount),  Screen.height * 2 / 3 + Random.Range (-spreadCount, spreadCount), 0));
 			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor),  0.666667f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor), 0));
 			Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
 			Physics.Raycast (camRay, out hit, weaponRange);
 			
-			Debug.Log ("Shooting at " + hit.transform.gameObject.name);
+			//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
 			
 			Vector3 target = hit.point;
 			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
@@ -63,23 +107,36 @@ public class PlayerCharacter : CharacterBase {
 			spreadRateTimer = spreadRate;
 			sounds.pew();
 		} 
-		else {}
+		//else {}
 	}
 
+
+	/*
+	 * Function called when player presses the Melee button.
+	 * Allows the player character to perform a melee attack, hiding the firearm and showing the melee weapon.
+	 * Allows the player to transition into a new melee move from the previous one.
+	 * */
 	public override void meleeAttack()
 	{
-		if (currentMelee == 0) {
-			currentMelee++;
-			melee = true;
-			weaponHeld = false;
-			SRWeapon.SetActive(true);
-		} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo(1).IsName("Attack" + currentMelee))){
-			currentMelee++;
+		if (isGrounded) { //Can only melee on the ground
+			if (currentMelee == 0) { //First melee attack in the combo
+				currentMelee++;
+				melee = true;
+				weaponHeld = false;
+				SRWeapon.SetActive (true);
+			} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo (1).IsName ("Attack" + currentMelee))) { //Post-first melee attacks, can only transition into state n+1 if we're in state n
+				currentMelee++;
+			}
 		}
 
 	}
 
-	public override void endMeleeAttack()
+
+	/*
+	 * Function called when the character is no longer in a melee attck animation.
+	 * Hides the melee weapon and restores the firearm.
+	 * */
+	public override void meleeAttackEnd()
 	{
 		melee = false;
 		currentMelee = 0;
@@ -87,13 +144,292 @@ public class PlayerCharacter : CharacterBase {
 		weaponHeld = true;
 	}
 
-
+	/*
+	 * Function called when the player presses the special 1 button.
+	 * To be overridden in character specific classes
+	 * */
 	public virtual void special1()
 	{}
-	
+
+	/*
+	 * Function called when the player presses the special 2 button.
+	 * To be overridden in character specific classes
+	 * */
 	public virtual void special2()
 	{}
-	
+
+	/*
+	 * Function called when the player presses the super button.
+	 * To be overridden in character specific classes
+	 * */
 	public virtual void super()
 	{}
+
+	/*
+	 * Function called when the player presses the slide button.
+	 * Sets forward velocity high for a set time.
+	 * */
+	public virtual void slide()
+	{
+
+		if (!sliding && isGrounded)
+			sliding = true;
+
+		velocity.x = 0;
+		velocity.y = 0;
+		velocity.z = slideSpeed;
+
+
+		currentSlide += Time.deltaTime;
+		if (currentSlide >= slideTime) {
+			sliding = false;
+			currentSlide = 0;
+		}
+	}
+
+	/*
+	 * Function called when the player presses the jump button.
+	 * Handles jumping and double jumping
+	 * */
+	public virtual void jump()
+	{
+		if (isGrounded) {
+			velocity.y = jumpPower;
+			currentJump = 0f;
+			currentGravity = jumpGravity;
+			isGrounded = false;
+		} 
+		else if (!doubleJumping) {
+			velocity.y = jumpPower;
+			currentJump = 0f;
+			currentGravity = jumpGravity;
+			doubleJumping = true;
+		}
+	}
+
+	/*
+	 * Function called when the player holds the jump button while jumping.
+	 * Handles accelrated vertical movement. (Also used for sniper's parasol glide)
+	 * */
+	public virtual void jumpHold()
+	{
+		if (currentJump >= jumpTime) {
+			currentGravity = globalGravity;
+		} 
+		else
+			currentJump += Time.deltaTime;
+	 
+	}
+
+	public virtual void jumpEnd()
+	{
+		currentGravity = globalGravity;
+	}
+
+	/*
+	 * Function called when the player is diagonally wallrunning.
+	 * Used to determine vertical velocity
+	 * */
+	public virtual void wallrunDiagonal()
+	{
+		currentGravity = globalGravity;
+		velocity.y += currentGravity * Time.deltaTime;
+		velocity.z = 15f;
+		if (wallrunRight) { //Check if wall ends.
+			if (!Physics.Raycast (transform.position, transform.right, characterRadius)) {
+				wallrunEnd();
+			}
+		} else { //Check if left wall ends
+			if (!Physics.Raycast (transform.position, -transform.right, characterRadius)) {
+				wallrunEnd();
+			}
+		}
+	}
+
+	/*
+	 * Function called when the player is vertically wallrunning.
+	 * Used to determine vertical velocity
+	 * */
+	public virtual void wallrunVertical()
+	{
+		velocity.x = 0f;
+		velocity.y = verticalWallVelocity;
+		velocity.z = 0f;
+
+		if (!Physics.Raycast (transform.position, transform.forward, characterRadius)) { //reach top of wall
+			wallRunning = wallrunUp = false;
+			velocity.y = jumpPower*2;
+			currentWallrun = 0;
+		}
+	}
+
+	public virtual void wallrunEnd()
+	{
+		wallRunning = wallrunLeft = wallrunRight = wallrunUp = false;
+		currentWallrun = 0;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	/*
+	 * Function called when the player is moving.
+	 * Calculates velocity based on input and gravity.
+	 * Adjusts velocity to give a sense of momentum.
+	 * */
+	public virtual void movementUpdate(float vert, float hor)
+	{
+		float dx = 0, dy = 0, dz = 0;
+
+		if (vert != 0)
+			vert = vert / Mathf.Abs (vert);
+		if (hor != 0)
+			hor = hor / Mathf.Abs (hor);
+
+		if (freemove) {
+
+			//Set Z Component
+			if (velocity.z >= 0) {
+				if (velocity.z > maxForwardSpeed) {
+					dz -= airFriction * Time.deltaTime;
+					velocity.z += dz;
+				} else {
+					if (isGrounded) {
+						if (vert == 0 && velocity.z != 0)
+						{
+							dz -= airFriction * Time.deltaTime;
+							if (velocity.z + dz <= 0)
+							{dz = 0; velocity.z = 0;}
+						}
+						else
+							dz = (vert * groundAcc) * Time.deltaTime;
+
+					} else {
+						if (vert == 0)
+							dz -= airFriction * Time.deltaTime;
+						else
+							dz = (vert * airAcc) * Time.deltaTime;
+					}
+					
+	
+					velocity.z += dz;
+					if (velocity.z > maxForwardSpeed)
+						velocity.z = maxForwardSpeed;
+				}
+
+			} else if (velocity.z < 0) {
+				if (velocity.z < maxBackSpeed) {
+					dz += airFriction * Time.deltaTime;
+					velocity.z += dz;
+				} else {
+					if (isGrounded) {
+						if (vert == 0 && velocity.z != 0)
+						{
+							dz += airFriction * Time.deltaTime;
+							if (velocity.z + dz >= 0)
+							{dz = 0; velocity.z = 0;}
+						}
+						else
+							dz = (vert * groundAcc) * Time.deltaTime;
+					} else {
+						if (vert == 0)
+							dz += airFriction * Time.deltaTime;
+						else
+							dz = (vert * airAcc) * Time.deltaTime;
+					}
+
+					velocity.z += dz;
+					if (velocity.z < maxBackSpeed)
+						velocity.z = maxBackSpeed;
+				}
+			}
+
+			//End Z Change
+
+			//Set X Component
+			if (velocity.x >= 0) {
+				if (velocity.x > maxSideSpeed) {
+					dx -= airFriction * Time.deltaTime;
+					velocity.x += dx;
+				} else {
+					if (isGrounded) {
+						if (hor == 0 && velocity.x != 0)
+						{
+							dx -= airFriction * Time.deltaTime;
+							if (velocity.x + dx <= 0)
+							{dx = 0; velocity.x = 0;}
+						}
+						else
+							dx = (hor * groundAcc) * Time.deltaTime;
+					} else {
+						if (hor == 0)
+							dx -= airFriction * Time.deltaTime;
+						else
+							dz = (hor * airAcc) * Time.deltaTime;
+					}
+					
+					
+					velocity.x += dx;
+					if (velocity.x > maxSideSpeed)
+						velocity.x = maxSideSpeed;
+				}
+				
+			} else if (velocity.x < 0) {
+				if (velocity.x < -maxSideSpeed) {
+					dx += airFriction * Time.deltaTime;
+					velocity.x += dx;
+				} else {
+					if (isGrounded) {
+						if (hor == 0 && velocity.x != 0)
+						{
+							dx += airFriction * Time.deltaTime;
+							if (velocity.x + dx >= 0)
+							{dx = 0; velocity.x = 0;}
+						}
+						else
+							dx = (hor * groundAcc) * Time.deltaTime;
+					} else {
+						if (hor == 0)
+							dx += airFriction * Time.deltaTime;
+						else
+							dx = (hor * airAcc) * Time.deltaTime;
+					}
+					
+					velocity.x += dx;
+					if (velocity.x < -maxSideSpeed)
+						velocity.x = -maxSideSpeed;
+				}
+			}
+
+			//End X Change
+
+			//Set Y Component
+			if (isGrounded) {
+				velocity.y = 0;
+				doubleJumping = false;
+				currentJump = 0;
+			} else {
+				velocity.y += currentGravity * Time.deltaTime;
+			}
+
+			//End Y Change
+		} else {
+			//Set Y Component
+			if (isGrounded) {
+				velocity.y = 0;
+				doubleJumping = false;
+				currentJump = 0;
+			} else {
+				velocity.y += currentGravity * Time.deltaTime;
+			}
+		}
+	}
 }

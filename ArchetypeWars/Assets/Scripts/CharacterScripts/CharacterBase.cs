@@ -97,7 +97,7 @@ public class CharacterBase : MonoBehaviour {
 		Debug.Log ("Hyaa!");
 	}
 
-	public virtual void endMeleeAttack()
+	public virtual void meleeAttackEnd()
 	{
 	}
 
@@ -133,7 +133,7 @@ public class CharacterBase : MonoBehaviour {
 
 
 
-	public void receiveDamage(int dmg)
+	public virtual void receiveDamage(int dmg)
 	{
 		//Debug.Log ("ouch");
 		health -= dmg;
@@ -192,7 +192,7 @@ public class CharacterBase : MonoBehaviour {
 	}
 
 	
-	public void checkIK()
+	public virtual void checkIK()
 	{
 		if (weaponHeld == true)
 		{
