@@ -19,6 +19,13 @@ public class NinjaScript: PlayerCharacter {
 		spreadRate = 0.21f;
 		maxSpread = 12;
 		weaponHeld = false;
+		ammoCount = 40;
+		maxAmmo = 40;
+
+		//Special cooldowns
+		special1CD = 90f;
+		special2CD = 90f;
+		superCD = 90f;
 	}
 	
 	// Update is called once per frame
@@ -35,28 +42,32 @@ public class NinjaScript: PlayerCharacter {
 
 	public override void shootWeapon()
 	{
-		if (weaponFireRateTimer <= 0) {
-			
-			RaycastHit hit;
-			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor),  0.666667f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor), 0));
-			Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
-			Physics.Raycast (camRay, out hit, weaponRange);
-			
-			Debug.Log ("Ninja Shooting at " + hit.transform.gameObject.name);
-			
-			Vector3 target = hit.point;
-			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
-			Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-			
-			Quaternion cardRotation = Quaternion.identity;
-			cardRotation.SetLookRotation(target - shot_source.position, Vector3.up);
-			
-			CardScript card = Instantiate (cardPrefab, shot_source.position, cardRotation) as CardScript;
-			
-			weaponFireRateTimer = weaponFireRate;
-			spreadCount++;
-			spreadRateTimer = spreadRate;
-			sounds.pew();
+		if(ammoCount>0)
+		{
+			if (weaponFireRateTimer <= 0) {
+				
+				RaycastHit hit;
+				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor),  0.666667f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor), 0));
+				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+				Physics.Raycast (camRay, out hit, weaponRange);
+				
+				Debug.Log ("Ninja Shooting at " + hit.transform.gameObject.name);
+				
+				Vector3 target = hit.point;
+				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
+				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+				
+				Quaternion cardRotation = Quaternion.identity;
+				cardRotation.SetLookRotation(target - shot_source.position, Vector3.up);
+				
+				CardScript card = Instantiate (cardPrefab, shot_source.position, cardRotation) as CardScript;
+				
+				weaponFireRateTimer = weaponFireRate;
+				spreadCount++;
+				spreadRateTimer = spreadRate;
+				ammoCount--;
+				sounds.pew();
+			}
 		} 
 		
 		else {}
@@ -64,17 +75,26 @@ public class NinjaScript: PlayerCharacter {
 
 	public override void special1()
 	{
-		Debug.Log ("Doing special1");
+		if (currentSpecial1 <= 0) {
+			currentSpecial1 = special1CD;
+			Debug.Log ("Doing special1");
+		}
 	}
 	
 	public override void special2()
 	{
-		Debug.Log ("Doing special2");
+		if (currentSpecial2 <= 0) {
+			currentSpecial2 = special2CD;
+			Debug.Log ("Doing special2");
+		}
 	}
 	
 	public override void super()
 	{
-		Debug.Log ("Doing super");
+		if (currentSuper <= 0) {
+			currentSuper = superCD;
+			Debug.Log ("Doing super");
+		}
 	}
 	
 	public override void dash()

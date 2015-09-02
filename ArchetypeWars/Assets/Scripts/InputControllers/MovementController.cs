@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Movement : MonoBehaviour {
+public class MovementController: MonoBehaviour {
 
 	public float rotSpeed = 7f;
 
@@ -47,11 +47,11 @@ public class Movement : MonoBehaviour {
 			 * JUMP INPUT MANAGEMENT
 			 */
 			if (Input.GetButtonDown (jumpTag))  //Jump button pressed
-				character.jump();
+				character.jump ();
 			else if (Input.GetButton (jumpTag))  //Holding jump to accelerate upwards (platformer style)
-				character.jumpHold();
-			else if(Input.GetButtonUp(jumpTag)) //Release jump button, return to normal gravity
-				character.jumpEnd();
+				character.jumpHold ();
+			else if (Input.GetButtonUp (jumpTag)) //Release jump button, return to normal gravity
+				character.jumpEnd ();
 			/*
 			 * END OF JUMP SECTION
 			 */
@@ -60,18 +60,18 @@ public class Movement : MonoBehaviour {
 			 * OTHER MOVEMENT ACTIONS INPUT MANAGEMENT (MELEE AND SLIDE)
 			 */
 			else if (Input.GetButtonDown (slideTag)) //Slide button pressed
-				character.slide();
+				character.slide ();
 			else if (Input.GetButtonDown (meleeTag))  //Melee button pressed
-				character.meleeAttack (); 
-			else if(character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
-				character.meleeAttackEnd();
+				character.meleeAttack ();
+			else if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+				character.meleeAttackEnd ();
 			else if (Input.GetButtonDown (special1Tag)) //Performing special 1
-				character.special1();
+				character.special1 ();
 			else if (Input.GetButtonDown (special2Tag)) //Performing special 2
-				character.special1();
+				character.special1 ();
 			else if (Input.GetButtonDown (superTag)) //Performing super move
-				character.special1();
-			else if (Input.GetAxis(fireTag) > 0) //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
+				character.special1 ();
+			else if (Input.GetAxis (fireTag) > 0) //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
 				character.shootWeapon ();
 
 
@@ -85,18 +85,18 @@ public class Movement : MonoBehaviour {
 			currentWallrun += Time.deltaTime;
 			if (character.wallrunUp) {
 
-				character.wallrunVertical();
+				character.wallrunVertical ();
 
 				if (Input.GetButtonUp (wallrunTag)) { //Release wallrun button. Ends wallrun. Begins freefall
-					character.wallrunEnd();
+					character.wallrunEnd ();
 					currentWallrun = 0;
 				} else if (currentWallrun >= wallrunTime) { //pass wallrun time limit (drop down)
-					character.wallrunEnd();
+					character.wallrunEnd ();
 					currentWallrun = 0;
 				}
 			} else { //wallrunning diagonally
 
-				character.wallrunDiagonal();
+				character.wallrunDiagonal ();
 
 				/*
 				if (Input.GetButtonDown (jumpTag) && !doubleJumping) { //Jump off wall. Allows player to leap in direction being held. Uses double jump
@@ -109,17 +109,17 @@ public class Movement : MonoBehaviour {
 				}*/
 
 				if (Input.GetButtonUp (wallrunTag)) { //Release wallrun button. Ends wallrun. Begins freefall
-					character.wallrunEnd();
+					character.wallrunEnd ();
 					currentWallrun = 0;
-				}
-				else if(currentWallrun >= wallrunTime)
-				{
-					character.wallrunEnd();
+				} else if (currentWallrun >= wallrunTime) {
+					character.wallrunEnd ();
 					currentWallrun = 0;
 				}
 			}
 		} else if (character.sliding) {
-			character.slide();
+			character.slide ();
+		} else if (!character.alive) {
+			character.movementUpdate(0, 0);
 		}
 		 
 
@@ -138,6 +138,7 @@ public class Movement : MonoBehaviour {
 		anim.SetInteger ("MeleeCount", character.currentMelee);
 		anim.SetFloat ("Vertical", character.velocity.z);
 		anim.SetFloat ("Horizontal", character.velocity.x);
+		anim.SetFloat ("UpDown", character.velocity.y);
 		anim.SetFloat ("Poise", character.currentPoise);
 	}
 

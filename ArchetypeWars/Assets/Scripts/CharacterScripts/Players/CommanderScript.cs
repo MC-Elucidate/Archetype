@@ -18,6 +18,13 @@ public class CommanderScript: PlayerCharacter {
 		spreadRate = 0.21f;
 		maxSpread = 12;
 		gunDamage = 30;
+		ammoCount = 30;
+		maxAmmo = 30;
+
+		//Special cooldowns
+		special1CD = 90f;
+		special2CD = 90f;
+		superCD = 90f;
 	}
 	
 	// Update is called once per frame
@@ -39,17 +46,26 @@ public class CommanderScript: PlayerCharacter {
 
 	public override void special1()
 	{
-		Debug.Log ("Doing special1");
+		if (currentSpecial1 <= 0) {
+			currentSpecial1 = special1CD;
+			Debug.Log ("Doing special1");
+		}
 	}
 	
 	public override void special2()
 	{
-		Debug.Log ("Doing special2");
+		if (currentSpecial2 <= 0) {
+			currentSpecial2 = special2CD;
+			Debug.Log ("Doing special2");
+		}
 	}
 	
 	public override void super()
 	{
-		Debug.Log ("Doing super");
+		if (currentSuper <= 0) {
+			currentSuper = superCD;
+			Debug.Log ("Doing super");
+		}
 	}
 	
 	public override void dash()

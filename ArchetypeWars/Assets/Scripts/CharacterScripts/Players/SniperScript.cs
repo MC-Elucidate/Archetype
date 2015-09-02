@@ -24,8 +24,14 @@ public class SniperScript: PlayerCharacter {
 		weaponFireRate = 2f;
 		spreadRate = 0.2f;
 		maxSpread = 8;
-
 		gunDamage = 80;
+		ammoCount = 14;
+		maxAmmo = 14;
+
+		//Special cooldowns
+		special1CD = 0f;
+		special2CD = 90f;
+		superCD = 90f;
 	}
 	
 	// Update is called once per frame
@@ -42,48 +48,70 @@ public class SniperScript: PlayerCharacter {
 
 	public override void shootWeapon()
 	{
-		//base.shootWeapon ();
-
-		if (scoped) {
-			if (weaponFireRateTimer <= 0) {
-				RaycastHit hit;
-				Ray camRay = cam.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0));
-				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
-				Physics.Raycast (camRay, out hit, weaponRange);
-			
-				//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
-			
-				Vector3 target = hit.point;
-				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
-				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-
-				weaponFireRateTimer = weaponFireRate;
-				spreadCount++;
-				spreadRateTimer = spreadRate;
-				sounds.pew();
+		if (ammoCount > 0) {
+			if (scoped) {
+				if (weaponFireRateTimer <= 0) {
+					RaycastHit hit;
+					Ray camRay = cam.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0));
+					Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+					Physics.Raycast (camRay, out hit, weaponRange);
+				
+					//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
+				
+					Vector3 target = hit.point;
+					Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
+					Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+	
+					weaponFireRateTimer = weaponFireRate;
+					spreadCount++;
+					spreadRateTimer = spreadRate;
+					ammoCount--;
+					sounds.pew ();
+				}
+			} else {
+				base.shootWeapon ();
+				spreadCount = maxSpread;
 			}
-		} 
-		else {
-			base.shootWeapon ();
-			spreadCount=maxSpread;
 		}
 	}
 
-	//Puts scope on/takes scope off
+	/*
+	 * Allows the sniper to look thorugh her scope.
+	 * Changes the active camera of the sniper.
+	 */
 	public override void special1()
 	{
-		if (!scoped) {
-			scoped = !scoped;
-			fpcam.enabled = true;
-			tpcam.enabled = false;
-			fpcam.rect = tpcam.rect;
-			neckAngle = 0f;
-			cam = fpcam;
-		} else {
-			scoped = !scoped;
-			fpcam.enabled = false;
-			tpcam.enabled = true;
-			cam = tpcam;
+		if (currentSpecial1 <= 0) {
+			currentSpecial1 = special1CD;
+			if (!scoped) {
+				scoped = !scoped;
+				fpcam.enabled = true;
+				tpcam.enabled = false;
+				fpcam.rect = tpcam.rect;
+				neckAngle = 0f;
+				cam = fpcam;
+			} else {
+				scoped = !scoped;
+				fpcam.enabled = false;
+				tpcam.enabled = true;
+				cam = tpcam;
+			}
+		}
+	}
+
+	public override void special2()
+	{
+		if (currentSpecial2 <= 0) {
+			currentSpecial2 = special2CD;
+			Debug.Log ("Doing special2");
+		}
+	}
+
+	public override void super()
+	{
+		if (currentSuper <= 0) {
+			currentSuper = superCD;
+			Debug.Log ("Doing super");
 		}
 	}
 

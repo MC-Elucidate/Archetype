@@ -15,7 +15,7 @@ public class PlayerCharacter : CharacterBase {
 	//Player movement variables
 	public Vector3 velocity;
 	public float globalGravity = -10f, currentGravity = -10f;
-	private float maxForwardSpeed = 10f, maxBackSpeed = -5f, maxSideSpeed = 7f, groundAcc = 20f, airAcc = 2f, airFriction = 20f;
+	private float maxForwardSpeed = 10f, maxBackSpeed = -5f, maxSideSpeed = 7f, groundAcc = 20f, airAcc = 10f, airFriction = 20f;
 
 	//State booleans
 	public bool doubleJumping = false, wallRunning  = false, wallrunUp = false, wallrunLeft = false, wallrunRight = false, sliding = false, isGrounded = false;
@@ -27,7 +27,10 @@ public class PlayerCharacter : CharacterBase {
 	private float slideSpeed = 15f, slideTime = 0.75f, currentSlide = 0f;
 
 	//Wallrun variables
-	private float wallrunTime = 1f, currentWallrun = 0, verticalWallVelocity = 8f, diagonalWallVelocity = 20f;
+	private float wallrunTime = 1f, currentWallrun = 0, verticalWallVelocity = 8f, diagonalWallVelocity = 15f;
+
+	//Special ability variables
+	public float special1CD, special2CD, superCD, currentSpecial1 = 0, currentSpecial2 = 0, currentSuper = 0;
 
 	// Use this for initialization
 	public void Start () {
@@ -38,11 +41,43 @@ public class PlayerCharacter : CharacterBase {
 	// Update is called once per frame
 	public void Update () {
 		base.Update ();
+		checkStun ();
 	}
 	public void FixedUpdate(){
 		base.FixedUpdate ();
+		if (currentSpecial1 > 0)
+			currentSpecial1 -= Time.fixedDeltaTime;
+		if (currentSpecial2 > 0)
+			currentSpecial2 -= Time.fixedDeltaTime;
+		if (currentSuper > 0)
+			currentSuper -= Time.fixedDeltaTime;
 	}
 
+	/*
+	 * Used to get the current health of the player character.
+	 * Used for the HUD
+	 */
+	public int getHealth ()
+	{return health;}
+
+	/*
+	 * Used to get the current ammo of the player character.
+	 * Used for the HUD
+	 */
+	public int getAmmo()
+	{return ammoCount;}
+
+	/*
+	 * Used to prevent the character from moveing if they are stunned/knocked down.
+	 * Sets velocity's x and z compenents to 0.
+	 */
+	private void checkStun()
+	{
+		if (!freemove) {
+			velocity.x = 0;
+			velocity.z = 0;
+		}
+	}
 
 
 	/*
@@ -74,6 +109,10 @@ public class PlayerCharacter : CharacterBase {
 			alive = false;
 			freemove = false;
 			cam.transform.parent = null;
+			currentGravity = globalGravity;
+			velocity.x = 0;
+			velocity.y = 0;
+			velocity.z = 0;
 		}
 	}
 
@@ -86,27 +125,30 @@ public class PlayerCharacter : CharacterBase {
 	public virtual void shootWeapon() {
 		//Get the gameObject that GunScript is attached to, then find the camera attached to that child.
 		//Take the screen point that we want to use as the point we're going to shoot towards
-		
-		if (weaponFireRateTimer <= 0) {
-			
-			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor),  0.666667f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor), 0));
-			Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
-			Physics.Raycast (camRay, out hit, weaponRange);
-			
-			//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
-			
-			Vector3 target = hit.point;
-			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
-			Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-			if(hit.transform.gameObject.tag == "Enemy"){
-				hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
-				hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
-			}
-			weaponFireRateTimer = weaponFireRate;
-			spreadCount++;
-			spreadRateTimer = spreadRate;
-			sounds.pew();
-		} 
+
+		if (ammoCount > 0) {
+			if (weaponFireRateTimer <= 0) {
+				
+				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0.666667f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0));
+				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+				Physics.Raycast (camRay, out hit, weaponRange);
+				
+				//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
+				
+				Vector3 target = hit.point;
+				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
+				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+				if (hit.transform.gameObject.tag == "Enemy") {
+					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
+					hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
+				}
+				weaponFireRateTimer = weaponFireRate;
+				spreadCount++;
+				spreadRateTimer = spreadRate;
+				ammoCount--;
+				sounds.pew ();
+			} 
+		}
 		//else {}
 	}
 
@@ -234,7 +276,7 @@ public class PlayerCharacter : CharacterBase {
 	{
 		currentGravity = globalGravity;
 		velocity.y += currentGravity * Time.deltaTime;
-		velocity.z = 15f;
+		velocity.z = diagonalWallVelocity;
 		if (wallrunRight) { //Check if wall ends.
 			if (!Physics.Raycast (transform.position, transform.right, characterRadius)) {
 				wallrunEnd();
@@ -259,14 +301,18 @@ public class PlayerCharacter : CharacterBase {
 		if (!Physics.Raycast (transform.position, transform.forward, characterRadius)) { //reach top of wall
 			wallRunning = wallrunUp = false;
 			velocity.y = jumpPower*2;
-			currentWallrun = 0;
+			//currentWallrun = 0;
 		}
 	}
 
+	/*
+	 * Function called when a wallrun ends.
+	 * Sets all wallrun booleans to false.
+	 * */
 	public virtual void wallrunEnd()
 	{
 		wallRunning = wallrunLeft = wallrunRight = wallrunUp = false;
-		currentWallrun = 0;
+		//currentWallrun = 0;
 	}
 
 
@@ -294,6 +340,7 @@ public class PlayerCharacter : CharacterBase {
 		if (hor != 0)
 			hor = hor / Mathf.Abs (hor);
 
+		//We have control over the character.
 		if (freemove) {
 
 			//Set Z Component

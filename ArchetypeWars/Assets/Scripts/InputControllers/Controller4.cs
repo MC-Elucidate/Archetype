@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Controller4 : Movement {
+public class Controller4 : MovementController {
 
 	// Use this for initialization
 	protected void Start () {

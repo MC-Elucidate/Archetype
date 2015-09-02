@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerHUD : MonoBehaviour {
@@ -19,8 +20,8 @@ public class PlayerHUD : MonoBehaviour {
 	public Camera followcam;			//Set this object's canvas to use the correct camera
 										//NB! If we want the sniper to have her HUD in scope, we need to change the followcam here too
 
-	//public Text healthVal				//Update the health counter on updates
-	//public Text ammoVal				//Update the ammo counter on updates
+	public Text healthVal;			//Update the health counter on updates
+	public Text ammoVal;				//Update the ammo counter on updates
 	//public Texture2D portrait			//This one's for the character face
 
 	// Use this for initialization
@@ -37,8 +38,8 @@ public class PlayerHUD : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		//healthVal = character.getHealth().toString();
-		//ammoVal = character.getAmmo().toString();
+		healthVal.text = character.getHealth ().ToString ();
+		ammoVal.text = character.getAmmo().ToString();
 	}
 
 	public void setCam()
