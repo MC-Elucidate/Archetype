@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: c5537f213781f144681bbc8b36e63b2a
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Ladder
+    100002: Ladder1
+    100004: Ladder_1
+    100006: Ladder_1 1
+    100008: Ladder_2
+    100010: Ladder_2 1
+    100012: Ladder_3
+    100014: Ladder_3 1
+    100016: Ladder_Main_2
+    100018: Ladder_Main_2 1
+    100020: LadderMain_1
+    100022: LadderMain_1 1
+    100024: //RootNode
+    100026: Pool 1
+    100028: Pool_Main
+    100030: Water1
+    400000: Ladder
+    400002: Ladder1
+    400004: Ladder_1
+    400006: Ladder_1 1
+    400008: Ladder_2
+    400010: Ladder_2 1
+    400012: Ladder_3
+    400014: Ladder_3 1
+    400016: Ladder_Main_2
+    400018: Ladder_Main_2 1
+    400020: LadderMain_1
+    400022: LadderMain_1 1
+    400024: //RootNode
+    400026: Pool 1
+    400028: Pool_Main
+    400030: Water1
+    2300000: Ladder_1
+    2300002: Ladder_1 1
+    2300004: Ladder_2
+    2300006: Ladder_2 1
+    2300008: Ladder_3
+    2300010: Ladder_3 1
+    2300012: Ladder_Main_2
+    2300014: Ladder_Main_2 1
+    2300016: LadderMain_1
+    2300018: LadderMain_1 1
+    2300020: Pool 1
+    2300022: Water1
+    3300000: Ladder_1
+    3300002: Ladder_1 1
+    3300004: Ladder_2
+    3300006: Ladder_2 1
+    3300008: Ladder_3
+    3300010: Ladder_3 1
+    3300012: Ladder_Main_2
+    3300014: Ladder_Main_2 1
+    3300016: LadderMain_1
+    3300018: LadderMain_1 1
+    3300020: Pool 1
+    3300022: Water1
+    4300000: Pool
+    4300002: Water1
+    4300004: Ladder_Main_2
+    4300006: LadderMain_1
+    4300008: Ladder_1
+    4300010: Ladder_2
+    4300012: Ladder_3
+    4300014: Ladder_Main_2
+    4300016: LadderMain_1
+    4300018: Ladder_1
+    4300020: Ladder_2
+    4300022: Ladder_3
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

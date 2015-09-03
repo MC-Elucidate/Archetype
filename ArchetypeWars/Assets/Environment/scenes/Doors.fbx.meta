@@ -1,0 +1,137 @@
+fileFormatVersion: 2
+guid: 4447f6182b7e4ef428886c5cd727dc37
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Door_Frame_01L
+    100002: Door_Frame_01R
+    100004: Door_Frame_02L
+    100006: Door_Frame_02R
+    100008: Door_Glass_01L
+    100010: Door_Glass_01R
+    100012: Door_Glass_02L
+    100014: Door_Glass_02R
+    100016: Door_Handle_01L
+    100018: Door_Handle_01R
+    100020: Door_Handle_02L
+    100022: Door_Handle_02R
+    100024: Door_MainL
+    100026: Door_MainR
+    100028: DoorL
+    100030: DoorR
+    100032: //RootNode
+    400000: Door_Frame_01L
+    400002: Door_Frame_01R
+    400004: Door_Frame_02L
+    400006: Door_Frame_02R
+    400008: Door_Glass_01L
+    400010: Door_Glass_01R
+    400012: Door_Glass_02L
+    400014: Door_Glass_02R
+    400016: Door_Handle_01L
+    400018: Door_Handle_01R
+    400020: Door_Handle_02L
+    400022: Door_Handle_02R
+    400024: Door_MainL
+    400026: Door_MainR
+    400028: DoorL
+    400030: DoorR
+    400032: //RootNode
+    2300000: Door_Frame_01L
+    2300002: Door_Frame_01R
+    2300004: Door_Frame_02L
+    2300006: Door_Frame_02R
+    2300008: Door_Glass_01L
+    2300010: Door_Glass_01R
+    2300012: Door_Glass_02L
+    2300014: Door_Glass_02R
+    2300016: Door_Handle_01L
+    2300018: Door_Handle_01R
+    2300020: Door_Handle_02L
+    2300022: Door_Handle_02R
+    2300024: Door_MainL
+    2300026: Door_MainR
+    3300000: Door_Frame_01L
+    3300002: Door_Frame_01R
+    3300004: Door_Frame_02L
+    3300006: Door_Frame_02R
+    3300008: Door_Glass_01L
+    3300010: Door_Glass_01R
+    3300012: Door_Glass_02L
+    3300014: Door_Glass_02R
+    3300016: Door_Handle_01L
+    3300018: Door_Handle_01R
+    3300020: Door_Handle_02L
+    3300022: Door_Handle_02R
+    3300024: Door_MainL
+    3300026: Door_MainR
+    4300000: Door_MainL
+    4300002: Door_Handle_02L
+    4300004: Door_Handle_01L
+    4300006: Door_Frame_01L
+    4300008: Door_Frame_02L
+    4300010: Door_Glass_01L
+    4300012: Door_Glass_02L
+    4300014: Door_MainR
+    4300016: Door_Handle_02R
+    4300018: Door_Handle_01R
+    4300020: Door_Frame_01R
+    4300022: Door_Frame_02R
+    4300024: Door_Glass_01R
+    4300026: Door_Glass_02R
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

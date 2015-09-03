@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: d821aa08dcd7c7142bfdb5523e3c0cf3
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Locker_Box
+    100004: Locker_Box 1
+    100006: Locker_Box_01
+    100008: Locker_Box_02
+    100010: Locker_Box_03
+    100012: Locker_Door
+    100014: Locker_Door1
+    100016: LockerDoor_01
+    100018: LockerDoor_01 1
+    100020: LockerDoor_02
+    100022: LockerDoor_02 1
+    100024: LockerDoor_Handle
+    100026: LockerDoor_Handle 1
+    100028: LockerDoor_Lock
+    100030: LockerDoor_Lock 1
+    400000: //RootNode
+    400002: Locker_Box
+    400004: Locker_Box 1
+    400006: Locker_Box_01
+    400008: Locker_Box_02
+    400010: Locker_Box_03
+    400012: Locker_Door
+    400014: Locker_Door1
+    400016: LockerDoor_01
+    400018: LockerDoor_01 1
+    400020: LockerDoor_02
+    400022: LockerDoor_02 1
+    400024: LockerDoor_Handle
+    400026: LockerDoor_Handle 1
+    400028: LockerDoor_Lock
+    400030: LockerDoor_Lock 1
+    2300000: Locker_Box 1
+    2300002: Locker_Box_01
+    2300004: Locker_Box_02
+    2300006: Locker_Box_03
+    2300008: LockerDoor_01
+    2300010: LockerDoor_01 1
+    2300012: LockerDoor_02
+    2300014: LockerDoor_02 1
+    2300016: LockerDoor_Handle
+    2300018: LockerDoor_Handle 1
+    2300020: LockerDoor_Lock
+    2300022: LockerDoor_Lock 1
+    3300000: Locker_Box 1
+    3300002: Locker_Box_01
+    3300004: Locker_Box_02
+    3300006: Locker_Box_03
+    3300008: LockerDoor_01
+    3300010: LockerDoor_01 1
+    3300012: LockerDoor_02
+    3300014: LockerDoor_02 1
+    3300016: LockerDoor_Handle
+    3300018: LockerDoor_Handle 1
+    3300020: LockerDoor_Lock
+    3300022: LockerDoor_Lock 1
+    4300000: LockerDoor_02
+    4300002: LockerDoor_Lock
+    4300004: LockerDoor_Handle
+    4300006: LockerDoor_01
+    4300008: LockerDoor_02
+    4300010: LockerDoor_Lock
+    4300012: LockerDoor_Handle
+    4300014: LockerDoor_01
+    4300016: Locker_Box
+    4300018: Locker_Box_01
+    4300020: Locker_Box_02
+    4300022: Locker_Box_03
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
