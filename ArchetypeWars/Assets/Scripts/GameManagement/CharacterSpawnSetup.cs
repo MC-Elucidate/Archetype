@@ -41,7 +41,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 			switch (charSelection.playerChoices [i]) {
 			case 1:
 				{
-					playerChar = Instantiate (heavy, new Vector3 (0, 1, 0), Quaternion.identity) as Transform;
+					playerChar = Instantiate (heavy, GameObject.Find ("Player_HeavySpawnPoint").transform.position, Quaternion.identity) as Transform;
 					PlayerCharacter heavyscript = playerChar.GetComponent<HeavyScript>();
 					LRWeapon = (GameObject) Instantiate (heavyLRweapon, heavyscript.RightHand.position, Quaternion.identity);
 					GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();
@@ -60,7 +60,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 				break;
 			case 2:
 				{
-					playerChar = Instantiate (commander, new Vector3 (4, 1, 4), Quaternion.identity) as Transform;
+					playerChar = Instantiate (commander, GameObject.Find ("Player_CommanderSpawnPoint").transform.position, Quaternion.identity) as Transform;
 					PlayerCharacter commanderscript = playerChar.GetComponent<CommanderScript>();
 					LRWeapon = (GameObject) Instantiate (commanderLRweapon, commanderscript.RightHand.position, Quaternion.identity);
 					GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();
@@ -79,7 +79,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 				break;
 			case 3:
 				{	
-					playerChar = Instantiate (ninja, new Vector3 (-4, 1, -4), Quaternion.identity) as Transform;
+					playerChar = Instantiate (ninja, GameObject.Find ("Player_NinjaSpawnPoint").transform.position, Quaternion.identity) as Transform;
 					PlayerCharacter ninjascript = playerChar.GetComponent<NinjaScript>();
 					playergui.gameObject.GetComponent<PlayerHUD>().character = ninjascript;
 					
@@ -87,7 +87,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 				break;
 			case 4:
 				{
-					playerChar = Instantiate (sniper, new Vector3 (0, 1, 5), Quaternion.identity) as Transform;
+					playerChar = Instantiate (sniper, GameObject.Find ("Player_SniperSpawnPoint").transform.position, Quaternion.identity) as Transform;
 					PlayerCharacter sniperscript = playerChar.GetComponent<SniperScript>();
 					LRWeapon = (GameObject) Instantiate (sniperLRweapon, sniperscript.RightHand.position, Quaternion.identity);
 					GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();

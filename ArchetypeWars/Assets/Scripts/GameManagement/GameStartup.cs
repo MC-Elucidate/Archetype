@@ -36,7 +36,7 @@ public class GameStartup : MonoBehaviour {
 	public void startGame() {
 		if (playerChoosing > 1) {
 			DontDestroyOnLoad (this);
-			Application.LoadLevel ("ss");
+			Application.LoadLevel ("ss 1");
 		} else
 			Debug.Log ("No character selected");
 
