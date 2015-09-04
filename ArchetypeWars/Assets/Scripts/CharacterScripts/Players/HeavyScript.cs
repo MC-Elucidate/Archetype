@@ -64,8 +64,8 @@ public class HeavyScript: PlayerCharacter {
 				Quaternion rocketRotation = Quaternion.identity;
 				rocketRotation.SetLookRotation (target - shot_source.position, Vector3.up);
 				
-				RocketScript card = Instantiate (rocketPrefab, shot_source.position, rocketRotation) as RocketScript;
-				
+				RocketScript rocket = Instantiate (rocketPrefab, shot_source.position, rocketRotation) as RocketScript;
+				rocket.damage = (int)(rocket.damage*damageMod);
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;
@@ -120,12 +120,7 @@ public class HeavyScript: PlayerCharacter {
 			Debug.Log ("Doing super");
 		}
 	}
-	
-	public override void dash()
-	{//generic dash code
-		Debug.Log ("Doing dash");
-	}
-	
+
 	public override void rotateCamera(float pitch)
 	{
 		base.rotateCamera (pitch);

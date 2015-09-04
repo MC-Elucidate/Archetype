@@ -61,7 +61,10 @@ public class SniperScript: PlayerCharacter {
 					Vector3 target = hit.point;
 					Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 					Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-	
+					if (hit.transform.gameObject.tag == "Enemy") {
+						hit.transform.gameObject.SendMessage ("receiveDamage", (int)(gunDamage*damageMod), SendMessageOptions.DontRequireReceiver);
+						hit.transform.gameObject.SendMessage ("receivePoiseDamage", (int)(poiseDamage*damageMod), SendMessageOptions.DontRequireReceiver);
+					}
 					weaponFireRateTimer = weaponFireRate;
 					spreadCount++;
 					spreadRateTimer = spreadRate;

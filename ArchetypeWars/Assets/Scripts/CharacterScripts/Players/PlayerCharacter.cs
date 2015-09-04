@@ -21,16 +21,19 @@ public class PlayerCharacter : CharacterBase {
 	public bool doubleJumping = false, wallRunning  = false, wallrunUp = false, wallrunLeft = false, wallrunRight = false, sliding = false, isGrounded = false;
 
 	//Jump variables
-	private float jumpPower = 3f, jumpGravity = 3f, jumpTime = 0.25f, currentJump = 0f;
+	protected float jumpPower = 3f, jumpGravity = 3f, jumpTime = 0.25f, currentJump = 0f;
 
 	//Slide variables
-	private float slideSpeed = 15f, slideTime = 0.75f, currentSlide = 0f;
+	protected float slideSpeed = 15f, slideTime = 0.75f, currentSlide = 0f;
 
 	//Wallrun variables
-	private float wallrunTime = 1f, currentWallrun = 0, verticalWallVelocity = 8f, diagonalWallVelocity = 15f;
+	protected float wallrunTime = 1f, currentWallrun = 0, verticalWallVelocity = 8f, diagonalWallVelocity = 15f;
 
 	//Special ability variables
-	public float special1CD, special2CD, superCD, currentSpecial1 = 0, currentSpecial2 = 0, currentSuper = 0;
+	protected float special1CD, special2CD, superCD, currentSpecial1 = 0, currentSpecial2 = 0, currentSuper = 0;
+
+	//Buffs
+	public float armourMod = 1.0f, damageMod = 1.0f;
 
 	// Use this for initialization
 	public void Start () {
@@ -68,7 +71,7 @@ public class PlayerCharacter : CharacterBase {
 	{return ammoCount;}
 
 	/*
-	 * Used to prevent the character from moveing if they are stunned/knocked down.
+	 * Used to prevent the character from moving if they are stunned/knocked down.
 	 * Sets velocity's x and z compenents to 0.
 	 */
 	private void checkStun()
@@ -79,6 +82,33 @@ public class PlayerCharacter : CharacterBase {
 		}
 	}
 
+	/*
+	 * Gives the character more resistence to damage, or a damage buff for their firearm.
+	 * Uses parameter "buff" to determine which stat to buff
+	 */
+	private void giveBuff(char buff)
+	{
+		switch (buff) {
+		case 'd': damageMod *= 1.5f;
+			break;
+		case 'a': armourMod *= 2f;
+			break;
+		}
+	}
+
+	/*
+	 * Reduces the character's armour or damage.
+	 * Uses parameter "buff" to determine which stat to debuff
+	 */
+	private void giveDebuff(char buff)
+	{
+		switch (buff) {
+		case 'd': damageMod /= 1.5f;
+			break;
+		case 'a': armourMod /= 2f;
+			break;
+		}
+	}
 
 	/*
 	 * Rotates the player's camera based on Y-axis input.
@@ -101,10 +131,15 @@ public class PlayerCharacter : CharacterBase {
 		}
 	}
 
+	/*
+	 * Used to take damage;
+	 * Decreases health by the amount received in dmg.
+	 * If health reaches 0, sets the character to a "knocked out" state.
+	 */
 	public override void receiveDamage(int dmg)
 	{
 		//Debug.Log ("ouch");
-		health -= dmg;
+		health -= (int)(dmg/armourMod);
 		if (health <= 0) {
 			alive = false;
 			freemove = false;
@@ -139,8 +174,8 @@ public class PlayerCharacter : CharacterBase {
 				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
 				if (hit.transform.gameObject.tag == "Enemy") {
-					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
-					hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
+					hit.transform.gameObject.SendMessage ("receiveDamage", (int)(gunDamage*damageMod), SendMessageOptions.DontRequireReceiver);
+					hit.transform.gameObject.SendMessage ("receivePoiseDamage", (int)(poiseDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 				}
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
@@ -149,7 +184,6 @@ public class PlayerCharacter : CharacterBase {
 				sounds.pew ();
 			} 
 		}
-		//else {}
 	}
 
 
@@ -478,5 +512,17 @@ public class PlayerCharacter : CharacterBase {
 				velocity.y += currentGravity * Time.deltaTime;
 			}
 		}
+	}
+
+	public void OnTriggerEnter(Collider coll)
+	{
+		if (coll.tag == "Forcefield")
+			giveBuff ('a');
+	}
+
+	public void OnTriggerExit(Collider coll)
+	{
+		if (coll.tag == "Forcefield")
+			giveDebuff ('a');
 	}
 }

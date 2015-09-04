@@ -5,7 +5,7 @@ public class MovementController: MonoBehaviour {
 
 	public float rotSpeed = 7f;
 
-	private float wallrunTime = 1f, currentWallrun = 0;
+	private float wallrunTime = 0.7f, currentWallrun = 0;
 
 	private CharacterController charCon;
 	private Animator anim;

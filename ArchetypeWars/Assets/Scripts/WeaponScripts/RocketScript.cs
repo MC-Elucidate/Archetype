@@ -4,7 +4,7 @@ using System.Collections;
 public class RocketScript : MonoBehaviour {
 
 	public float velocity;
-	public int damage = 120;
+	public int damage = 90;
 	public float poiseDamage = 70;
 	// Use this for initialization
 	void Start () {

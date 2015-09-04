@@ -67,11 +67,7 @@ public class CommanderScript: PlayerCharacter {
 			Debug.Log ("Doing super");
 		}
 	}
-	
-	public override void dash()
-	{//generic dash code
-		Debug.Log ("Doing dash");
-	}
+
 	
 	public override void rotateCamera(float pitch)
 	{

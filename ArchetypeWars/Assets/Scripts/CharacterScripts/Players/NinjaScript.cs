@@ -61,7 +61,7 @@ public class NinjaScript: PlayerCharacter {
 				cardRotation.SetLookRotation(target - shot_source.position, Vector3.up);
 				
 				CardScript card = Instantiate (cardPrefab, shot_source.position, cardRotation) as CardScript;
-				
+				card.damage = (int)(card.damage*damageMod);
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;
@@ -96,11 +96,7 @@ public class NinjaScript: PlayerCharacter {
 			Debug.Log ("Doing super");
 		}
 	}
-	
-	public override void dash()
-	{//generic dash code
-		Debug.Log ("Doing dash");
-	}
+
 	
 	public override void rotateCamera(float pitch)
 	{
