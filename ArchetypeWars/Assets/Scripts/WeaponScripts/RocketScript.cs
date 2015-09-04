@@ -36,4 +36,9 @@ public class RocketScript : MonoBehaviour {
 		Destroy (this.gameObject);
 	}
 
+	public void setDamage(int dmg)
+	{
+		damage = dmg;
+	}
+
 }

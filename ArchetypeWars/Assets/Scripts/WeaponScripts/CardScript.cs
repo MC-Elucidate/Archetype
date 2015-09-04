@@ -49,4 +49,9 @@ public class CardScript : MonoBehaviour {
 		transform.forward = Vector3.Reflect (transform.forward, hit.normal);
 		Debug.DrawRay (hit.point, hit.normal * 10, Color.cyan, 0.5f);
 	}
+
+	public void setDamage(int dmg)
+	{
+		damage = dmg;
+	}
 }

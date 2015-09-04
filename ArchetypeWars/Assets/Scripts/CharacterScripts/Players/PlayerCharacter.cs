@@ -151,6 +151,16 @@ public class PlayerCharacter : CharacterBase {
 		}
 	}
 
+	/*
+	 * Increases the player character's current ammo.
+	 * Caps it off at maxAmmo.
+	 */
+	private void receiveAmmo(int ammo)
+	{
+		ammoCount += ammo;
+		if (ammoCount > maxAmmo)
+			ammoCount = maxAmmo;
+	}
 
 
 	/*
@@ -518,6 +528,14 @@ public class PlayerCharacter : CharacterBase {
 	{
 		if (coll.tag == "Forcefield")
 			giveBuff ('a');
+		else if (coll.tag == "HealthPickup") {
+			receiveHealth(50);
+			coll.gameObject.SendMessage("use");
+		}
+		else if (coll.tag == "AmmoPickup") {
+			receiveAmmo(ammoPickup);
+			coll.gameObject.SendMessage("use");
+		}
 	}
 
 	public void OnTriggerExit(Collider coll)

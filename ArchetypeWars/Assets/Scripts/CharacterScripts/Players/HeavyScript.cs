@@ -23,6 +23,8 @@ public class HeavyScript: PlayerCharacter {
 		maxSpread = 12;
 		ammoCount = 10;
 		maxAmmo = 10;
+		gunDamage = 80;
+		ammoPickup = 5;
 
 		//Special cooldowns
 		special1CD = 90f;
@@ -63,9 +65,10 @@ public class HeavyScript: PlayerCharacter {
 				
 				Quaternion rocketRotation = Quaternion.identity;
 				rocketRotation.SetLookRotation (target - shot_source.position, Vector3.up);
-				
-				RocketScript rocket = Instantiate (rocketPrefab, shot_source.position, rocketRotation) as RocketScript;
-				rocket.damage = (int)(rocket.damage*damageMod);
+
+				Transform rocket;
+				rocket = Instantiate (rocketPrefab, shot_source.position, rocketRotation) as Transform;
+				rocket.gameObject.SendMessage("setDamage",(int)(gunDamage*damageMod));
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;

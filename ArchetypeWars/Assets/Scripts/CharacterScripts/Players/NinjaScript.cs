@@ -21,6 +21,7 @@ public class NinjaScript: PlayerCharacter {
 		weaponHeld = false;
 		ammoCount = 40;
 		maxAmmo = 40;
+		ammoPickup = 15;
 
 		//Special cooldowns
 		special1CD = 90f;
@@ -60,8 +61,10 @@ public class NinjaScript: PlayerCharacter {
 				Quaternion cardRotation = Quaternion.identity;
 				cardRotation.SetLookRotation(target - shot_source.position, Vector3.up);
 				
-				CardScript card = Instantiate (cardPrefab, shot_source.position, cardRotation) as CardScript;
-				card.damage = (int)(card.damage*damageMod);
+				Transform card;
+				card = Instantiate (cardPrefab, shot_source.position, cardRotation) as Transform;
+				card.gameObject.SendMessage("setDamage",(int)(gunDamage*damageMod));
+
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;

@@ -20,6 +20,7 @@ public class CommanderScript: PlayerCharacter {
 		gunDamage = 30;
 		ammoCount = 30;
 		maxAmmo = 30;
+		ammoPickup = 15;
 
 		//Special cooldowns
 		special1CD = 90f;
