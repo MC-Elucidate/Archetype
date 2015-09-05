@@ -86,6 +86,7 @@ public class SniperScript: PlayerCharacter {
 	{
 		if (currentSpecial1 <= 0) {
 			currentSpecial1 = special1CD;
+			sounds.playSpecial1Sound();
 			if (!scoped) {
 				scoped = !scoped;
 				fpcam.enabled = true;
@@ -107,6 +108,7 @@ public class SniperScript: PlayerCharacter {
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
 			Debug.Log ("Doing special2");
+			sounds.playSpecial2Sound();
 		}
 	}
 
@@ -115,6 +117,7 @@ public class SniperScript: PlayerCharacter {
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
 			Debug.Log ("Doing super");
+			sounds.playSpecial3Sound();
 		}
 	}
 

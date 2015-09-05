@@ -140,6 +140,7 @@ public class PlayerCharacter : CharacterBase {
 	{
 		//Debug.Log ("ouch");
 		health -= (int)(dmg/armourMod);
+		sounds.playHitSound();
 		if (health <= 0) {
 			alive = false;
 			freemove = false;
@@ -148,6 +149,7 @@ public class PlayerCharacter : CharacterBase {
 			velocity.x = 0;
 			velocity.y = 0;
 			velocity.z = 0;
+			sounds.playDeathSound ();
 		}
 	}
 
@@ -200,8 +202,10 @@ public class PlayerCharacter : CharacterBase {
 				melee = true;
 				weaponHeld = false;
 				SRWeapon.SetActive (true);
+				sounds.meleeSound();
 			} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo (1).IsName ("Attack" + currentMelee))) { //Post-first melee attacks, can only transition into state n+1 if we're in state n
 				currentMelee++;
+				sounds.meleeSound ();
 			}
 		}
 
@@ -274,12 +278,14 @@ public class PlayerCharacter : CharacterBase {
 			currentJump = 0f;
 			currentGravity = jumpGravity;
 			isGrounded = false;
+			sounds.playJumpSound();
 		} 
 		else if (!doubleJumping) {
 			velocity.y = jumpPower;
 			currentJump = 0f;
 			currentGravity = jumpGravity;
 			doubleJumping = true;
+			sounds.playJumpSound();
 		}
 	}
 

@@ -49,6 +49,7 @@ public class CommanderScript: PlayerCharacter {
 		if (currentSpecial1 <= 0) {
 			currentSpecial1 = special1CD;
 			Debug.Log ("Doing special1");
+			sounds.playSpecial1Sound();
 		}
 	}
 	
@@ -57,6 +58,7 @@ public class CommanderScript: PlayerCharacter {
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
 			Debug.Log ("Doing special2");
+			sounds.playSpecial2Sound();
 		}
 	}
 	
@@ -65,6 +67,7 @@ public class CommanderScript: PlayerCharacter {
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
 			Debug.Log ("Doing super");
+			sounds.playSpecial3Sound();
 		}
 	}
 
