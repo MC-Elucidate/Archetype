@@ -5,7 +5,7 @@ public class HeavyShieldScript : MonoBehaviour {
 
 	public float velocity;
 	public float lifetime = 20f;
-	//public GameObject[] players;
+	public GameObject[] players;
 
 	//Collisions cause trouble with the shooting raycasts. 
 	//We can rather store character positions here and measure distance between them in the update or once a second.
@@ -15,7 +15,7 @@ public class HeavyShieldScript : MonoBehaviour {
 	void Start () {
 		this.rigidbody.AddForce (velocity * transform.forward);
 		this.rigidbody.AddForce (100f * transform.up);
-		//players = GameObject.FindGameObjectsWithTag ("Player");
+		players = GameObject.FindGameObjectsWithTag ("Player");
 		Destroy (this.gameObject, lifetime);
 	}
 	
@@ -28,5 +28,11 @@ public class HeavyShieldScript : MonoBehaviour {
 			if ((player.transform.position - this.transform.position).magnitude <= 8)
 				Debug.Log ("Give shield buff");
 		}*/
+	}
+
+	void OnDestroy()
+	{
+		foreach (GameObject p in players)
+			p.SendMessage ("changeBuffs", "SOff");
 	}
 }

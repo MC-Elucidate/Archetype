@@ -34,6 +34,7 @@ public class PlayerCharacter : CharacterBase {
 
 	//Buffs
 	public float armourMod = 1.0f, damageMod = 1.0f;
+	private bool shieldBuff = false;
 
 	// Use this for initialization
 	public void Start () {
@@ -45,7 +46,9 @@ public class PlayerCharacter : CharacterBase {
 	public void Update () {
 		base.Update ();
 		checkStun ();
+		addBuffs ();
 	}
+
 	public void FixedUpdate(){
 		base.FixedUpdate ();
 		if (currentSpecial1 > 0)
@@ -83,30 +86,31 @@ public class PlayerCharacter : CharacterBase {
 	}
 
 	/*
-	 * Gives the character more resistence to damage, or a damage buff for their firearm.
-	 * Uses parameter "buff" to determine which stat to buff
+	 * Determines which buffs are active and increases the modifier appropriately.
 	 */
-	private void giveBuff(char buff)
+	private void addBuffs()
 	{
-		switch (buff) {
-		case 'd': damageMod *= 1.5f;
-			break;
-		case 'a': armourMod *= 2f;
-			break;
-		}
+		damageMod = 1;
+		armourMod = 1;
+
+		if (shieldBuff)
+			armourMod += 1;
+
 	}
 
 	/*
-	 * Reduces the character's armour or damage.
-	 * Uses parameter "buff" to determine which stat to debuff
+	 * Changes buff booleans to active or inactive.
+	 * Called by other game objects.
+	 * Uses "source" to determine which buff is being applied/removed.
+	 * 'S' = Heavy's Shield
 	 */
-	private void giveDebuff(char buff)
+	public void changeBuffs(string source)
 	{
-		switch (buff) {
-		case 'd': damageMod /= 1.5f;
+
+		switch (source) {
+		case "SOff": shieldBuff = false;
 			break;
-		case 'a': armourMod /= 2f;
-			break;
+
 		}
 	}
 
@@ -527,7 +531,7 @@ public class PlayerCharacter : CharacterBase {
 	public void OnTriggerEnter(Collider coll)
 	{
 		if (coll.tag == "Forcefield")
-			giveBuff ('a');
+			shieldBuff = true;
 		else if (coll.tag == "HealthPickup") {
 			receiveHealth(50);
 			coll.gameObject.SendMessage("use");
@@ -541,6 +545,6 @@ public class PlayerCharacter : CharacterBase {
 	public void OnTriggerExit(Collider coll)
 	{
 		if (coll.tag == "Forcefield")
-			giveDebuff ('a');
+			shieldBuff = false;
 	}
 }
