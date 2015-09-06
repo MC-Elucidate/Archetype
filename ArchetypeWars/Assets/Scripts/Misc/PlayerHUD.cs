@@ -22,8 +22,10 @@ public class PlayerHUD : MonoBehaviour {
 
 	public Text healthVal;			//Update the health counter on updates
 	public Text ammoVal;				//Update the ammo counter on updates
-	//public Texture2D portrait			//This one's for the character face
-
+	public Sprite heavy_portrait;
+	public Sprite commander_portrait;
+	public Sprite ninja_portrait;
+	public Sprite sniper_portrait;
 	// Use this for initialization
 	void Start () {
 
@@ -45,5 +47,21 @@ public class PlayerHUD : MonoBehaviour {
 	public void setCam()
 	{
 		gameObject.GetComponent<Canvas>().worldCamera = followcam;
+	}
+
+	public void setPortraitHeavy() {
+		this.gameObject.GetComponentInChildren<Image> ().overrideSprite = heavy_portrait;
+	}
+	
+	public void setPortraitCommander() {
+		this.gameObject.GetComponentInChildren<Image> ().overrideSprite = commander_portrait;
+	}
+	
+	public void setPortraitNinja() {
+		this.gameObject.GetComponentInChildren<Image> ().overrideSprite = ninja_portrait;
+	}
+	
+	public void setPortraitSniper() {
+		this.gameObject.GetComponentInChildren<Image> ().overrideSprite = sniper_portrait;
 	}
 }
