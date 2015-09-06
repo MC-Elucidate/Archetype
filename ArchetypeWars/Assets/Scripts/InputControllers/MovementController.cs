@@ -41,6 +41,7 @@ public class MovementController: MonoBehaviour {
 
 			//ROTATE CHARACTER LEFT/RIGHT
 			transform.Rotate (0f, yaw, 0f);
+			character.velocity = Quaternion.AngleAxis(-yaw, Vector3.up) * character.velocity;
 			character.movementUpdate (vert, hor);
 		
 			/*
@@ -68,9 +69,9 @@ public class MovementController: MonoBehaviour {
 			else if (Input.GetButtonDown (special1Tag)) //Performing special 1
 				character.special1 ();
 			else if (Input.GetButtonDown (special2Tag)) //Performing special 2
-				character.special1 ();
+				character.special2 ();
 			else if (Input.GetButtonDown (superTag)) //Performing super move
-				character.special1 ();
+				character.super ();
 			else if (Input.GetAxis (fireTag) > 0) //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
 				character.shootWeapon ();
 
@@ -155,7 +156,7 @@ public class MovementController: MonoBehaviour {
 		if (collision.gameObject.tag == "Wall" && Input.GetButton(wallrunTag) && !character.wallRunning && character.velocity.z > 0 && !character.sliding && !character.doubleJumping){
 			RaycastHit target;
 			//Debug.Log("Doublejumping: " + doubleJumping);
-			if(Physics.Raycast(transform.position + new Vector3(0, 2f, 0), transform.forward, out target, character.characterRadius))
+			if(Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.forward, out target, character.characterRadius))
 			{
 				if(target.transform.gameObject.tag == "Wall")
 				{
@@ -175,7 +176,7 @@ public class MovementController: MonoBehaviour {
 					}
 				}
 			}
-			else if (Physics.Raycast(transform.position  + new Vector3(0, 2f, 0), transform.right, out target, character.characterRadius*2))
+			else if (Physics.Raycast(transform.position  + new Vector3(0, 0.3f, 0), transform.right, out target, character.characterRadius*2))
 			{
 				if(target.transform.gameObject.tag == "Wall")
 				{
@@ -188,7 +189,7 @@ public class MovementController: MonoBehaviour {
 					transform.Rotate(0, -angle, 0);
 				}
 			}
-			else if (Physics.Raycast(transform.position  + new Vector3(0, 2f, 0), -transform.right, out target, character.characterRadius*2))
+			else if (Physics.Raycast(transform.position  + new Vector3(0, 0.3f, 0), -transform.right, out target, character.characterRadius*2))
 			{
 				character.wallRunning = character.wallrunLeft = true;
 				character.doubleJumping = true;

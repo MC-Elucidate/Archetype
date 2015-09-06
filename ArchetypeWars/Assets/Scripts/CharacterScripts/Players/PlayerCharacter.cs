@@ -14,8 +14,8 @@ public class PlayerCharacter : CharacterBase {
 
 	//Player movement variables
 	public Vector3 velocity;
-	public float globalGravity = -10f, currentGravity = -10f;
-	private float maxForwardSpeed = 10f, maxBackSpeed = -5f, maxSideSpeed = 7f, groundAcc = 20f, airAcc = 10f, airFriction = 20f;
+	public float globalGravity = -16f, currentGravity = -16f;
+	private float maxForwardSpeed = 8f, maxBackSpeed = -6f, maxSideSpeed = 7f, groundAcc = 60f, airAcc = 40f, airFriction = 40f;
 
 	//State booleans
 	public bool doubleJumping = false, wallRunning  = false, wallrunUp = false, wallrunLeft = false, wallrunRight = false, sliding = false, isGrounded = false;
@@ -24,7 +24,7 @@ public class PlayerCharacter : CharacterBase {
 	protected float jumpPower = 3f, jumpGravity = 3f, jumpTime = 0.25f, currentJump = 0f;
 
 	//Slide variables
-	protected float slideSpeed = 15f, slideTime = 0.75f, currentSlide = 0f;
+	protected float slideSpeed = 12f, slideTime = 0.75f, currentSlide = 0f;
 
 	//Wallrun variables
 	protected float wallrunTime = 1f, currentWallrun = 0, verticalWallVelocity = 8f, diagonalWallVelocity = 15f;
@@ -265,7 +265,6 @@ public class PlayerCharacter : CharacterBase {
 	 * */
 	public virtual void slide()
 	{
-
 		if (!sliding && isGrounded)
 			sliding = true;
 
@@ -351,6 +350,8 @@ public class PlayerCharacter : CharacterBase {
 		velocity.x = 0f;
 		velocity.y = verticalWallVelocity;
 		velocity.z = 0f;
+			
+		currentGravity = globalGravity;
 
 		if (!Physics.Raycast (transform.position, transform.forward, characterRadius)) { //reach top of wall
 			wallRunning = wallrunUp = false;
@@ -474,7 +475,7 @@ public class PlayerCharacter : CharacterBase {
 						if (hor == 0)
 							dx -= airFriction * Time.deltaTime;
 						else
-							dz = (hor * airAcc) * Time.deltaTime;
+							dx = (hor * airAcc) * Time.deltaTime;
 					}
 					
 					
