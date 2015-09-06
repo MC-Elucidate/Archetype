@@ -105,6 +105,8 @@ public class HeavyScript: PlayerCharacter {
 			shieldRotation.SetLookRotation (target - shot_source.position, Vector3.up);
 			
 			HeavyShieldScript shield = Instantiate (defensePrefab, RHandPos.position, shieldRotation) as HeavyShieldScript;
+
+			sounds.playSpecial1Sound();
 		}
 	}
 	
@@ -113,6 +115,7 @@ public class HeavyScript: PlayerCharacter {
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
 			Debug.Log ("Doing special2");
+			sounds.playSpecial2Sound();
 		}
 	}
 	
@@ -121,6 +124,7 @@ public class HeavyScript: PlayerCharacter {
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
 			Debug.Log ("Doing super");
+			sounds.playSpecial3Sound();
 		}
 	}
 

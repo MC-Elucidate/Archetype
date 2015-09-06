@@ -23,6 +23,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 
 	//gui
 	public RectTransform gui;
+	public RectTransform sniperscope;
 
 	// Use this for initialization
 	void Start () {
@@ -54,7 +55,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					heavyscript.shot_source = gunstats.bulletSpawn;
 
 					playergui.gameObject.GetComponent<PlayerHUD>().character = heavyscript;
-					
+					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitHeavy();
 					
 				}
 				break;
@@ -74,6 +75,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					commanderscript.shot_source = gunstats.bulletSpawn;
 
 					playergui.gameObject.GetComponent<PlayerHUD>().character = commanderscript;
+					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitCommander();
 
 				}	
 				break;
@@ -82,6 +84,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					playerChar = Instantiate (ninja, GameObject.Find ("Player_NinjaSpawnPoint").transform.position, Quaternion.identity) as Transform;
 					PlayerCharacter ninjascript = playerChar.GetComponent<NinjaScript>();
 					playergui.gameObject.GetComponent<PlayerHUD>().character = ninjascript;
+					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitNinja();
 					
 				}
 				break;
@@ -101,6 +104,11 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					sniperscript.shot_source = gunstats.bulletSpawn;
 
 					playergui.gameObject.GetComponent<PlayerHUD>().character = sniperscript;
+					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitSniper();
+					
+
+					Transform scope = Instantiate(sniperscope, new Vector3(0,0,0), Quaternion.identity) as RectTransform;
+					scope.GetComponent<Canvas>().worldCamera = GameObject.Find("Scopecam").camera;
 				}
 				break;
 
