@@ -268,15 +268,17 @@ public class PlayerCharacter : CharacterBase {
 		if (!sliding && isGrounded)
 			sliding = true;
 
-		velocity.x = 0;
-		velocity.y = 0;
-		velocity.z = slideSpeed;
+		if (sliding) {
+			velocity.x = 0;
+			velocity.y = 0;
+			velocity.z = slideSpeed;
 
+			currentSlide += Time.deltaTime;
 
-		currentSlide += Time.deltaTime;
-		if (currentSlide >= slideTime) {
-			sliding = false;
-			currentSlide = 0;
+			if (currentSlide >= slideTime) {
+				sliding = false;
+				currentSlide = 0;
+			}
 		}
 	}
 
