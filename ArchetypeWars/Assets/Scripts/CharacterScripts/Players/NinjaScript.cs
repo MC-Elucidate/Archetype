@@ -14,14 +14,14 @@ public class NinjaScript: PlayerCharacter {
 		characterRadius = 0.4f;
 
 		//Character-specific weapon stats
-		weaponRange = 100f;
+		weaponRange = 200f;
 		weaponFireRate = 0.2f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
 		weaponHeld = false;
-		ammoCount = 40;
-		maxAmmo = 40;
-		ammoPickup = 15;
+		ammoCount = 60;
+		maxAmmo = 60;
+		ammoPickup = 20;
 
 		//Special cooldowns
 		special1CD = 90f;

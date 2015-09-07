@@ -20,13 +20,14 @@ public class SniperScript: PlayerCharacter {
 		characterRadius = 0.4f;
 
 		//Character-specific weapon stats
-		weaponRange = 100f;
-		weaponFireRate = 2f;
+		weaponRange = 200f;
+		weaponFireRate = 1.6f;
 		spreadRate = 0.2f;
 		maxSpread = 8;
-		gunDamage = 80;
-		ammoCount = 14;
-		maxAmmo = 14;
+		gunDamage = 120;
+		ammoCount = 20;
+		maxAmmo = 20;
+		ammoPickup = 5;
 
 		//Special cooldowns
 		special1CD = 0f;
