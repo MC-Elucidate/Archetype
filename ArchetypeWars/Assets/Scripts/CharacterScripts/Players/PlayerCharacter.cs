@@ -391,11 +391,12 @@ public class PlayerCharacter : CharacterBase {
 	public virtual void movementUpdate(float vert, float hor)
 	{
 		float dx = 0, dy = 0, dz = 0;
-
+		/*int vertVal = 0, horVal = 0;
 		if (vert != 0)
-			vert = vert / Mathf.Abs (vert);
+			vertVal = vert / Mathf.Abs (vert);
 		if (hor != 0)
-			hor = hor / Mathf.Abs (hor);
+			horVal = hor / Mathf.Abs (hor);
+*/
 
 		//We have control over the character.
 		if (freemove) {
@@ -417,16 +418,20 @@ public class PlayerCharacter : CharacterBase {
 							dz = (vert * groundAcc) * Time.deltaTime;
 
 					} else {
-						if (vert == 0)
+						if (vert == 0 && velocity.z != 0)
+						{
 							dz -= airFriction * Time.deltaTime;
+							if (velocity.z + dz <= 0)
+							{dz = 0; velocity.z = 0;}
+						}
 						else
 							dz = (vert * airAcc) * Time.deltaTime;
 					}
 					
 	
 					velocity.z += dz;
-					if (velocity.z > maxForwardSpeed)
-						velocity.z = maxForwardSpeed;
+					if (velocity.z > maxForwardSpeed*vert)
+						velocity.z = maxForwardSpeed*vert;
 				}
 
 			} else if (velocity.z < 0) {
@@ -444,15 +449,19 @@ public class PlayerCharacter : CharacterBase {
 						else
 							dz = (vert * groundAcc) * Time.deltaTime;
 					} else {
-						if (vert == 0)
+						if (vert == 0 && velocity.z != 0)
+						{
 							dz += airFriction * Time.deltaTime;
+							if (velocity.z + dz >= 0)
+							{dz = 0; velocity.z = 0;}
+						}
 						else
 							dz = (vert * airAcc) * Time.deltaTime;
 					}
 
 					velocity.z += dz;
-					if (velocity.z < maxBackSpeed)
-						velocity.z = maxBackSpeed;
+					if (velocity.z < maxBackSpeed*-vert)
+						velocity.z = maxBackSpeed*-vert;
 				}
 			}
 
@@ -474,16 +483,20 @@ public class PlayerCharacter : CharacterBase {
 						else
 							dx = (hor * groundAcc) * Time.deltaTime;
 					} else {
-						if (hor == 0)
+						if (hor == 0 && velocity.x != 0)
+						{
 							dx -= airFriction * Time.deltaTime;
+							if (velocity.x + dx <= 0)
+							{dx = 0; velocity.x = 0;}
+						}
 						else
 							dx = (hor * airAcc) * Time.deltaTime;
 					}
 					
 					
 					velocity.x += dx;
-					if (velocity.x > maxSideSpeed)
-						velocity.x = maxSideSpeed;
+					if (velocity.x > maxSideSpeed*hor)
+						velocity.x = maxSideSpeed*hor;
 				}
 				
 			} else if (velocity.x < 0) {
@@ -501,15 +514,19 @@ public class PlayerCharacter : CharacterBase {
 						else
 							dx = (hor * groundAcc) * Time.deltaTime;
 					} else {
-						if (hor == 0)
+						if (hor == 0 && velocity.x != 0)
+						{
 							dx += airFriction * Time.deltaTime;
+							if (velocity.x + dx >= 0)
+							{dx = 0; velocity.x = 0;}
+						}
 						else
 							dx = (hor * airAcc) * Time.deltaTime;
 					}
 					
 					velocity.x += dx;
-					if (velocity.x < -maxSideSpeed)
-						velocity.x = -maxSideSpeed;
+					if (velocity.x < -maxSideSpeed*-hor)
+						velocity.x = -maxSideSpeed*-hor;
 				}
 			}
 
