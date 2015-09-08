@@ -13,14 +13,14 @@ public class CommanderScript: PlayerCharacter {
 		characterRadius = 0.4f;
 
 		//Character-specific weapon stats
-		weaponRange = 100f;
+		weaponRange = 200f;
 		weaponFireRate = 0.2f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
 		gunDamage = 30;
-		ammoCount = 30;
-		maxAmmo = 30;
-		ammoPickup = 15;
+		ammoCount = 90;
+		maxAmmo = 90;
+		ammoPickup = 30;
 
 		//Special cooldowns
 		special1CD = 90f;

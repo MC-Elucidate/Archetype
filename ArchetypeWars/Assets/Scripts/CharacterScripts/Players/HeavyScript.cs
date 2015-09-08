@@ -17,7 +17,7 @@ public class HeavyScript: PlayerCharacter {
 		characterRadius = 0.4f;
 
 		//Character-specific weapon stats
-		weaponRange = 100f;
+		weaponRange = 200f;
 		weaponFireRate = 0.8f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
