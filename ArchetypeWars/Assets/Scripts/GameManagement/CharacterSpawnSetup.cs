@@ -115,7 +115,9 @@ public class CharacterSpawnSetup : MonoBehaviour {
 			default: playerChar = null; break;
 			}
 
-			AI_Logic.threats.Add(playerChar);
+			if (playerChar != null)
+				RoundManager.players.Add(playerChar);
+
 			playerChar.gameObject.AddComponent ("Controller" + i);
 			cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();
 

@@ -75,8 +75,8 @@ public class EnemyCharacter : CharacterBase {
 				spreadRateTimer = spreadRate;
 				Debug.Log(hit.transform.gameObject);
 				if(hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "PlayerTeam"){
-					//hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
-					//hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
+					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
+					hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
 				}
 				//print ("m shooting");
 				sounds.pew();
