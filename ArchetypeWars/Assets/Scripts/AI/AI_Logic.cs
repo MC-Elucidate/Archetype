@@ -8,30 +8,47 @@ public class AI_Logic : MonoBehaviour {
 	// Use this for initialization
 	public enum FiniteState
 	{
-		Patrol, Chase, Attack
+		Patrol, Chase, Attack, Still
+	}
+
+	public enum AttackState
+	{
+		InPosition, InMotion
+	}
+
+	public enum WayPoint
+	{
+		ambush
 	}
 
 	public FiniteState mainState;
+	public AttackState attackState;
+	public WayPoint targetWayPointType;
 	EnemyMovement enemyMovement;
 	EnemyCharacter character;
+	NavMeshAgent agent;
 	public static List<Transform> threats = new List<Transform>();
 	float time = 0.0f;
-	float logicTime, visionTime, threatSpottedTimeOut;
-	public float dLogicTime, dVisionTime, dThreatSpottedTimeOut; 
+	float logicTime, visionTime, threatSpottedTimeOut, ambushTimeOut, motionTimeOut;
+	public float dLogicTime, dVisionTime, dThreatSpottedTimeOut,dAmbushTimeOut, dMotionTimeOut; 
 	//protected NavMeshAgent agent;
 	//public Transform asset; //somethin to protect or patrol around
 	//public Transform probe; //raycast point
 	private Vector3 dir;
 	public Transform threat; //the target player to attack
 	float targetOffset;
-
+	public AITacticalUnit tactics;
+	private System.Random rand;
 
 	void Start () 
 	{
-		mainState = FiniteState.Chase;
+		mainState = FiniteState.Still;
+		attackState = AttackState.InPosition;
+		targetWayPointType = WayPoint.ambush;
 
 		enemyMovement = GetComponent<EnemyMovement> ();
 		character = GetComponent<EnemyCharacter>();
+		agent = gameObject.GetComponent<NavMeshAgent> ();
 		logicTime = dLogicTime;
 		visionTime = dVisionTime;
 		threatSpottedTimeOut = dThreatSpottedTimeOut;
@@ -40,6 +57,12 @@ public class AI_Logic : MonoBehaviour {
 		//agent.speed = 1.5f;
 		dir = Vector3.zero;
 		//targetOffset = enemyChar.targetOffset;
+		ambushTimeOut = 0.0f;
+		dAmbushTimeOut = 2.0f;
+		dMotionTimeOut = 8.0f;
+		motionTimeOut = time + dMotionTimeOut;
+		tactics = RoundManager.AITactics;
+		rand = new System.Random ();
 	}
 	
 	// Update is called once per frame
@@ -79,18 +102,62 @@ public class AI_Logic : MonoBehaviour {
 				break;
 			case FiniteState.Chase:
 		{
-				//to be coded
-
-			calculateThreat();
+			
 			if((transform.position - threat.position).magnitude < character.shootingRange)
+			{
 				mainState = FiniteState.Attack;
+				agent.stoppingDistance = 0.01f;
+				int dT = rand.Next((int)dAmbushTimeOut, 10);
+				ambushTimeOut = time + dT; //randomise how long the agent stays at some ambush point
+				agent.Stop();
+
+			}
+				
 		}
 				break;
 
 			case FiniteState.Attack:
 		{
 			if((transform.position - threat.position).magnitude > character.shootingRange)
+			{
 				mainState = FiniteState.Chase;
+				agent.stoppingDistance = character.stoppingRange;
+			}
+
+			if (attackState == AttackState.InPosition)
+			{
+
+
+				if ((time > ambushTimeOut) || (character.hitCount > character.endurance)) //agent has to move away from danger zone
+				{
+					print ("Got to move away");
+					attackState = AttackState.InMotion;
+					motionTimeOut = time + dMotionTimeOut; //allows the agent to stop after some time if it failed to reach the target point
+					character.hitCount = 0;
+					Vector3 targetWayPoint = tactics.LookForAmbushPoint(transform, threat);
+					agent.SetDestination (targetWayPoint);
+					targetWayPointType = WayPoint.ambush;
+				}
+			}
+
+			else if (attackState == AttackState.InMotion)
+			{
+				print ("in motion");
+				if ((enemyMovement.agentDestReached()) || (time > motionTimeOut))
+				{
+					agent.Stop ();
+					if (targetWayPointType == AI_Logic.WayPoint.ambush) //reached an ambush point
+					{
+						attackState = AI_Logic.AttackState.InPosition;
+						int dT = rand.Next((int)dAmbushTimeOut, 10);
+						ambushTimeOut = time + dT;
+					}
+
+				}
+			}
+
+
+			time += Time.deltaTime;
 		}
 				//print("time " + time +" ;attacking");
 			/*
@@ -168,18 +235,10 @@ public class AI_Logic : MonoBehaviour {
 		return threat.position;
 	}
 
-	public Vector3 getCover()
-	{
-		return threat.position;
-	}
-
 
 	//Use this to calculate which character in the threats list to attack. 
 	//Each character will have a CharacterBase component containing their aggro.
 	//Threat level is directly proportional to a character's aggro, and inversely proportional to their distance from this AI
-	private void calculateThreat()
-	{
-		threat = threats [0];
-	}
+
 
 }

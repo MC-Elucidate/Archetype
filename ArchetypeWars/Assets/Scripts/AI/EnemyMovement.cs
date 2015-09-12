@@ -68,8 +68,15 @@ public class EnemyMovement : MonoBehaviour {
 		
 		case AI_Logic.FiniteState.Attack:
 			{
-				character.ShootWeapon (logic.threat);
+				if (logic.attackState == AI_Logic.AttackState.InPosition)
+				{
+					lookAt(logic.threat.position);
+					character.ShootWeapon (logic.threat);
 				//agent.SetDestination (logic.getCover ());
+				}
+
+				
+
 			}
 			break;
 		}
@@ -151,4 +158,27 @@ public class EnemyMovement : MonoBehaviour {
 		shootTimeOut = time + duration;
 	}
 
+	//checks if navmesh agent has reached destination
+	public bool agentDestReached()
+	{
+		bool atDestination = false;
+		if (!agent.pathPending) {
+						if (agent.remainingDistance <= agent.stoppingDistance) {
+								if (!agent.hasPath || (agent.velocity.sqrMagnitude == 0f)) { //agent has reached the target waypoint destination
+							atDestination = true;
+								}
+						}
+				}
+		return atDestination;
+	}
+
+	public void lookAt(Vector3 pos)
+	{
+		Transform targetOrientation = transform;
+		targetOrientation.LookAt(pos);
+		Vector3 rot = new Vector3(0, targetOrientation.localEulerAngles.y, 0);
+		targetOrientation.localEulerAngles = rot;
+		transform.rotation = Quaternion.Slerp(transform.rotation, targetOrientation.rotation, Time.deltaTime * 0.3f * 5.0f);
+
+	}
 }

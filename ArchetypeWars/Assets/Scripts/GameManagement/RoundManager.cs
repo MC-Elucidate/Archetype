@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RoundManager : MonoBehaviour {
 
 	//OTHER SCRIPTS
 	EnemySpawner spawner;
+	public static AITacticalUnit AITactics;
 
 	//ROUND TYPES
 	public enum Round	{Survival, CTF, PreRound};
@@ -17,6 +19,10 @@ public class RoundManager : MonoBehaviour {
 					Enemy_DoubleHealth, Enemy_ExplosiveShots	};
 
 	public static Round currentRound;
+
+	//collections
+	public static List<Transform> players = new List<Transform>();
+	public static List<Transform> enemies = new List<Transform>();
 
 	//General round vars
 	public bool alternateRound;			//alternateRound indicates that 3 affixes will be chosen for the round.
@@ -68,6 +74,7 @@ public class RoundManager : MonoBehaviour {
 	void Start () {
 
 		spawner = gameObject.GetComponent<EnemySpawner>();
+		AITactics = gameObject.GetComponent<AITacticalUnit>();
 		KillRound ();
 
 	}
@@ -84,11 +91,13 @@ public class RoundManager : MonoBehaviour {
 
 			if (reinforcementTimer <= 0 && currentRound == Round.Survival) {
 				SpawnEnemies_Survival();
+				AITactics.assignTargets();
 				reinforcementTimer = reinforcementDelay;
 			}
 
 			else if (reinforcementTimer <= 0 && currentRound == Round.CTF) {
 				SpawnEnemies_CTF();
+				AITactics.assignTargets();
 				reinforcementTimer = reinforcementDelay;
 			}
 		}

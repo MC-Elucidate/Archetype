@@ -8,20 +8,22 @@ public class EnemyCharacter : CharacterBase {
 	public float targetOffset; //offset from target's feet
 	
 	//random shooting
-	protected float sC, sT;
+	protected int shootSuccessCount = 0; //counts the number of successful shooting attempts (before shooting can be done)
 	//protected System.Random r;
 
 	//Shooting distance variables
 	public float shootingRange = 10;
 	public float stoppingRange = 5;
 
+	//agent attack/retreat attributes
+	public int rage; //how aggressive the agent is.max = 10 for now
+	public int endurance; //low endurance agent run away after a small amount of damage wss taken
+	public int hitCount; //counts how many shots the character has received
+	public float errFactor;
 
 	// Use this for initialization
 	void Start () {
 		base.Start ();
-		sT = 0; //shoot time out
-		sC = 0;
-		//r = new System.Random();
 	}
 	
 	// Update is called once per frame
@@ -42,6 +44,12 @@ public class EnemyCharacter : CharacterBase {
 		}
 	}
 
+	public override void receiveDamage(int dmg)
+	{
+		hitCount++;
+		base.receiveDamage (dmg);
+	}
+
 	public virtual void ShootWeapon(Transform target)
 	{
 		if (weaponFireRateTimer <= 0) {
@@ -49,36 +57,32 @@ public class EnemyCharacter : CharacterBase {
 			System.Random r = new System.Random();
 			RaycastHit hit;
 			//introduce random shooting
-			int shoot = r.Next(1,10);
-			//if (sT < 1)
-			if (shoot == 7)
+			int shoot = r.Next(1,20);
+			if (shoot < rage) //successful shooting attempt
+				shootSuccessCount++;
+			 
+			if (shootSuccessCount > 2) //control the occurance of shooting
 			{
-				sT += Time.deltaTime;
+				shootSuccessCount = 0;
 				//Physics.Raycast (shot_source.position, target.position + targetOffset * Vector3.up, out hit, weaponRange);
-				Physics.Raycast (shot_source.position, (target.position + new Vector3(0,1,0)) - shot_source.position, out hit, weaponRange);
-				Debug.DrawRay (shot_source.position, (target.position + new Vector3(0,1,0)) - shot_source.position, Color.green, 0.8f);
+				float distance = Vector3.Distance(target.position, transform.position);
+				float error = ((float)r.NextDouble()) * errFactor * distance/shootingRange;
+				Vector3 accuracyError =  new Vector3( error, 0, 0);//by how much does the agent miss the target.Directly proportional to the distance from target
+				Physics.Raycast (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, out hit, weaponRange);
+				Debug.DrawRay (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, Color.green, 0.8f);
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;
 				Debug.Log(hit.transform.gameObject);
 				if(hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "PlayerTeam"){
-					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
-					hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
+					//hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
+					//hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
 				}
 				//print ("m shooting");
 				sounds.pew();
 			}
 
-			//to reduce the occurance of shooting
-			if (shoot < 6) 
-			{
-				sC ++;		
-			}
-			if (sC >12)
-			{
-				sT = 0;
-				sC = 0;
-			}
+
 		} 
 	}
 
@@ -87,6 +91,7 @@ public class EnemyCharacter : CharacterBase {
 		//Not the neatest code, but this should work
 		if (RoundManager.currentRound == RoundManager.Round.Survival) {
 			RoundManager.enemyCount--;
+			RoundManager.enemies.Remove(transform);
 			Debug.Log ("Enemy kill confirmed:" + RoundManager.enemyCount + " remaining");
 		}
 
