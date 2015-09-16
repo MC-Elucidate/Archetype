@@ -2,7 +2,12 @@
 using System.Collections;
 
 public class CommanderScript: PlayerCharacter {
-
+	
+	//Buff
+	private float buffDuration = 30, currentBuff = 0;
+	
+	//Heal
+	private int healAmount = 200;
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
@@ -34,6 +39,15 @@ public class CommanderScript: PlayerCharacter {
 	}
 	public void FixedUpdate(){
 		base.FixedUpdate ();
+		if (currentBuff > 0)
+		{
+			currentBuff -= Time.fixedDeltaTime;
+			if(currentBuff <= 0)
+			{
+				foreach(Transform player in RoundManager.players)
+					player.gameObject.SendMessage("changeBuffs", "COff");
+			}
+		}
 	}
 	public override void meleeAttack()
 	{
@@ -49,7 +63,9 @@ public class CommanderScript: PlayerCharacter {
 	{
 		if (currentSpecial1 <= 0) {
 			currentSpecial1 = special1CD;
-			Debug.Log ("Doing special1");
+			currentBuff = buffDuration;
+			foreach(Transform player in RoundManager.players)
+				player.gameObject.SendMessage("changeBuffs", "COn");
 			sounds.playSpecial1Sound();
 		}
 	}
@@ -58,7 +74,8 @@ public class CommanderScript: PlayerCharacter {
 	{
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
-			Debug.Log ("Doing special2");
+			foreach(Transform player in RoundManager.players)
+				player.gameObject.SendMessage("receiveHealth", healAmount);
 			sounds.playSpecial2Sound();
 		}
 	}

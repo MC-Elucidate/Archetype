@@ -121,6 +121,7 @@ public class CharacterBase : MonoBehaviour {
 
 	public void receivePoiseDamage(float poisedmg)
 	{
+		Debug.Log ("Poise Damage");
 		if(alive){
 			currentPoise -= poisedmg;
 			if(currentPoise <= 20)
@@ -128,11 +129,12 @@ public class CharacterBase : MonoBehaviour {
 				freemove = false;
 				Debug.Log("KD");
 			}
-			else if(currentPoise <= 30 && currentPoise > 20)
+			else if(currentPoise <= 40 && currentPoise > 20)
 			{
 				freemove = false;
 				Debug.Log("Stunned");
 			}
+			anim.SetFloat("Poise", currentPoise);
 		}
 	}
 

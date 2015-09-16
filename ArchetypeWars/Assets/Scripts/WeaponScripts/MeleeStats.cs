@@ -14,4 +14,12 @@ public class MeleeStats : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Enemy") {
+			other.gameObject.SendMessage ("receiveDamage", damage);
+			other.gameObject.SendMessage ("receivePoiseDamage", poisedmg);
+		}
+	}
 }

@@ -6,6 +6,7 @@ public class PlayerCharacter : CharacterBase {
 
 	//Player Camera
 	public Camera cam;
+	public float rotSpeed = 7f;
 
 	//Player specific shooting logic
 	protected RaycastHit hit;
@@ -34,7 +35,7 @@ public class PlayerCharacter : CharacterBase {
 
 	//Buffs
 	public float armourMod = 1.0f, damageMod = 1.0f;
-	private bool shieldBuff = false;
+	private bool shieldBuff = false, commanderBuff = false;
 
 	// Use this for initialization
 	public void Start () {
@@ -96,6 +97,11 @@ public class PlayerCharacter : CharacterBase {
 		if (shieldBuff)
 			armourMod += 1;
 
+		if (commanderBuff) {
+			armourMod += 1;
+			damageMod += 1;
+		}
+
 	}
 
 	/*
@@ -109,6 +115,10 @@ public class PlayerCharacter : CharacterBase {
 
 		switch (source) {
 		case "SOff": shieldBuff = false;
+			break;
+		case "COn": commanderBuff = true;
+			break;
+		case "COff": commanderBuff = false;
 			break;
 
 		}

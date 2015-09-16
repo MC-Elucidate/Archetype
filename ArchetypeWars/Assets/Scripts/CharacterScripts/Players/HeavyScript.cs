@@ -6,6 +6,13 @@ public class HeavyScript: PlayerCharacter {
 	public Transform rocketPrefab;
 	public Transform defensePrefab;
 
+	//Taunt variables
+	private int baseAggro = 200, tauntAggro = 400;
+	private float tauntDuration = 15, currentTaunt = 0;
+
+	//Ground pound variables
+	private int gpDamage = 10, gpPoiseDamage = 90;
+
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
@@ -39,6 +46,10 @@ public class HeavyScript: PlayerCharacter {
 	}
 	public void FixedUpdate(){
 		base.FixedUpdate ();
+		if (currentTaunt > 0)
+			currentTaunt -= Time.fixedDeltaTime;
+		else
+			aggro = baseAggro;
 	}
 	public override void meleeAttack()
 	{
@@ -114,16 +125,22 @@ public class HeavyScript: PlayerCharacter {
 	{
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
-			Debug.Log ("Doing special2");
+			aggro = tauntAggro;
+			currentTaunt = tauntDuration;
 			sounds.playSpecial2Sound();
 		}
 	}
 	
 	public override void super()
 	{
+		Debug.Log ("lols");
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
-			Debug.Log ("Doing super");
+			foreach (Transform enemy in RoundManager.enemies)
+			{
+				enemy.gameObject.SendMessage("receiveDamage", gpDamage);
+				enemy.gameObject.SendMessage("receivePoiseDamage", gpPoiseDamage);
+			}
 			sounds.playSpecial3Sound();
 		}
 	}

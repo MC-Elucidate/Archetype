@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MovementController: MonoBehaviour {
 
-	public float rotSpeed = 7f;
+	//public float rotSpeed = 7f;
 
 	private float wallrunTime = 0.7f, currentWallrun = 0;
 
@@ -33,7 +33,7 @@ public class MovementController: MonoBehaviour {
 		if (!character.wallRunning && !character.sliding && character.freemove) {
 			float vert = Input.GetAxis (verticalTag);
 			float hor = Input.GetAxis (horizontalTag);
-			float yaw = Input.GetAxis (mouseXTag) * rotSpeed;
+			float yaw = Input.GetAxis (mouseXTag) * character.rotSpeed;
 
 
 			//Reset wallrun timer if we're not wallrunning
@@ -127,7 +127,7 @@ public class MovementController: MonoBehaviour {
 		charCon.Move (transform.rotation * character.velocity * Time.deltaTime);
 
 		//Camera Up/Down Movement
-		float pitch = Input.GetAxis (mouseYTag) * rotSpeed;
+		float pitch = Input.GetAxis (mouseYTag) * character.rotSpeed;
 		character.rotateCamera (pitch);
 
 

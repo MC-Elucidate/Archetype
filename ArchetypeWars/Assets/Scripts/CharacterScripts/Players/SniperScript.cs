@@ -3,13 +3,18 @@ using System.Collections;
 
 public class SniperScript: PlayerCharacter {
 
-	public float rotSpeed = 2f;
-	public float neckAngleLimit = 50f;
+	//Scope variables
+	private float rotScopeSpeed = 1f;
+	private float neckAngleLimit = 50f;
 	private float neckAngle = 0f;
-
-	public bool scoped = false;
+	private bool scoped = false;
 	public Camera tpcam;
 	public Camera fpcam;
+
+	//Ki-ball variables
+	public Transform kiballPrefab;
+
+
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
@@ -95,11 +100,13 @@ public class SniperScript: PlayerCharacter {
 				fpcam.rect = tpcam.rect;
 				neckAngle = 0f;
 				cam = fpcam;
+				rotSpeed = rotScopeSpeed;
 			} else {
 				scoped = !scoped;
 				fpcam.enabled = false;
 				tpcam.enabled = true;
 				cam = tpcam;
+				rotSpeed = 7f;
 			}
 		}
 	}
@@ -117,7 +124,25 @@ public class SniperScript: PlayerCharacter {
 	{
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
-			Debug.Log ("Doing super");
+			//Debug.Log ("Doing super");
+
+			RaycastHit hit;
+			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f, 0.666667f, 0));
+			
+			//Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+			Physics.Raycast (camRay, out hit, weaponRange);
+
+			
+			Vector3 target = hit.point;
+			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
+			Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+
+			Quaternion kiballRotation = Quaternion.identity;
+			kiballRotation.SetLookRotation (target - shot_source.position, Vector3.up);
+			
+			SniperKiballScript shield = Instantiate (kiballPrefab, RHandPos.position, kiballRotation) as SniperKiballScript;
+
+
 			sounds.playSpecial3Sound();
 		}
 	}

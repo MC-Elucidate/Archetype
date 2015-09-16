@@ -5,7 +5,7 @@ public class Pickup : MonoBehaviour {
 
 	public bool active = true;
 	public float respawnTime = 40f, respawnTimer = 0f;
-
+	public float rpm = 10;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,6 +13,7 @@ public class Pickup : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		transform.Rotate(new Vector3(0, 6*rpm*Time.deltaTime, 0));
 	}
 
 	void FixedUpdate()
