@@ -14,6 +14,7 @@ public class CharacterBase : MonoBehaviour {
 	public int currentMelee = 0;
 	protected int gunDamage;
 	public Transform shot_source;
+	public Transform weaponFlashEffect;
 
 	//IK stuff
 	public bool useIK = false;

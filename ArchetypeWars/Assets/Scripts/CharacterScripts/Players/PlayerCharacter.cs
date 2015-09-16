@@ -208,6 +208,8 @@ public class PlayerCharacter : CharacterBase {
 				spreadRateTimer = spreadRate;
 				ammoCount--;
 				sounds.pew ();
+				Transform fireParticle = Instantiate (weaponFlashEffect, shot_source.transform.position, Quaternion.identity) as Transform;
+				fireParticle.parent = this.transform;
 			} 
 		}
 	}

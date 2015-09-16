@@ -5,16 +5,16 @@ public class CardScript : MonoBehaviour {
 
 	public float velocity;	//MoveSpeed
 	public float lifetime; //Time before destruction
-	public int damage = 25;
+	public int damage = 60;
 							//Range = velocity * lifetime, of course
 	public float poiseDamage = 15;
 
+	public Transform cardExplosion;
 	// Use this for initialization
 	void Start () {
 
 		Physics.IgnoreCollision (this.collider, FindObjectOfType<NinjaScript>().gameObject.collider, true);	//I don't know how to do this any other way really.
-
-		//transform.forward = ninja.
+		Physics.IgnoreCollision (this.collider, GameObject.Find ("bigKATANA_saya").collider, true);
 	}
 	
 	// Update is called once per frame
@@ -37,6 +37,9 @@ public class CardScript : MonoBehaviour {
 			//transform.forward = other.contacts[0].normal;
 			//Debug.DrawRay(other.contacts[0].point,other.contacts[0].normal*5, Color.cyan, 0.5f);
 		}
+		else if (other.gameObject.tag == "Terrain") {
+			Destroy (this.gameObject);
+		}
 		else {}
 	}
 
@@ -53,5 +56,9 @@ public class CardScript : MonoBehaviour {
 	public void setDamage(int dmg)
 	{
 		damage = dmg;
+	}
+
+	public void OnDestroy() {
+		Instantiate (cardExplosion, transform.position, Quaternion.identity);
 	}
 }

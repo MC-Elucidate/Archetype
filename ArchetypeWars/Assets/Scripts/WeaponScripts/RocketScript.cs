@@ -6,6 +6,7 @@ public class RocketScript : MonoBehaviour {
 	public float velocity;
 	public int damage = 90;
 	public float poiseDamage = 70;
+	public Transform explosionParticles;
 	// Use this for initialization
 	void Start () {
 		Physics.IgnoreCollision (this.collider, FindObjectOfType<HeavyScript>().gameObject.collider, true);	//I don't know how to do this any other way really.
@@ -39,6 +40,10 @@ public class RocketScript : MonoBehaviour {
 	public void setDamage(int dmg)
 	{
 		damage = dmg;
+	}
+
+	public void OnDestroy() {
+		Transform explosion = Instantiate (explosionParticles, this.transform.position, Quaternion.identity) as Transform; //Edit the quaternion here to rotate the particle effect
 	}
 
 }
