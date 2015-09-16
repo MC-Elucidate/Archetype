@@ -80,8 +80,9 @@ public class EnemyCharacter : CharacterBase {
 				}
 				//print ("m shooting");
 				sounds.pew();
+				Transform fireParticle = Instantiate (weaponFlashEffect, shot_source.transform.position, Quaternion.identity) as Transform;
+				fireParticle.parent = this.transform;
 			}
-
 
 		} 
 	}
