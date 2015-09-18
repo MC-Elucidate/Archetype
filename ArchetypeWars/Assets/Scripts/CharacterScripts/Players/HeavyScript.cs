@@ -22,6 +22,7 @@ public class HeavyScript: PlayerCharacter {
 		meleeMax = 4;
 		currentMelee = 0;
 		characterRadius = 0.4f;
+		aggro = baseAggro;
 
 		//Character-specific weapon stats
 		weaponRange = 200f;

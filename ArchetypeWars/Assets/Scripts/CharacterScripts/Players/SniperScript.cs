@@ -23,6 +23,7 @@ public class SniperScript: PlayerCharacter {
 		runSpeed = 10;
 		meleeMax = 2;
 		characterRadius = 0.4f;
+		aggro = 150;
 
 		//Character-specific weapon stats
 		weaponRange = 200f;

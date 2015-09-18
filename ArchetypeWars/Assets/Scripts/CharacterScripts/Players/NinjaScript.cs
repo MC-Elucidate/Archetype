@@ -4,6 +4,12 @@ using System.Collections;
 public class NinjaScript: PlayerCharacter {
 
 	public Transform cardPrefab;
+
+	//Invis variables
+	private int baseAggro = 170, invisAggro = 0;
+	private float invisDuration = 15, currentInvis = 0;
+
+
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
@@ -12,6 +18,7 @@ public class NinjaScript: PlayerCharacter {
 		runSpeed = 16;
 		meleeMax = 7;
 		characterRadius = 0.4f;
+		aggro = baseAggro;
 
 		//Character-specific weapon stats
 		weaponRange = 200f;
@@ -35,6 +42,10 @@ public class NinjaScript: PlayerCharacter {
 	}
 	public void FixedUpdate(){
 		base.FixedUpdate ();
+		if (currentInvis > 0)
+			currentInvis -= Time.fixedDeltaTime;
+		else
+			aggro = baseAggro;
 	}
 	public override void meleeAttack()
 	{
@@ -89,7 +100,8 @@ public class NinjaScript: PlayerCharacter {
 	{
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
-			Debug.Log ("Doing special2");
+			aggro = invisAggro;
+			currentInvis = invisDuration;
 			sounds.playSpecial2Sound ();
 		}
 	}

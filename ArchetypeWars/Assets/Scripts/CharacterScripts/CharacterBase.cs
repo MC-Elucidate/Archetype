@@ -46,7 +46,7 @@ public class CharacterBase : MonoBehaviour {
 	public float runSpeed, characterRadius, floorcast = 0.12f;
 
 	//Aggro
-	protected int aggro = 0;
+	public int aggro = 0;
 
 
 	// Use this for initialization

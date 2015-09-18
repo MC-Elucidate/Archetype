@@ -16,6 +16,7 @@ public class CommanderScript: PlayerCharacter {
 		runSpeed = 12;
 		meleeMax = 3;
 		characterRadius = 0.4f;
+		aggro = 150;
 
 		//Character-specific weapon stats
 		weaponRange = 200f;

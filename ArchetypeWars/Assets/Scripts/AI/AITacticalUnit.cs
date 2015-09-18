@@ -105,19 +105,25 @@ public class AITacticalUnit : MonoBehaviour {
 
 	public void getTarget(Transform enemy)
 	{
-		float minDistance = 999.0f;
+		float priority = 999.0f;
 		int index = 0;
 
 		for (int i = 0;i < RoundManager.players.Count; i++)
 		{
-			Transform threat = RoundManager.players[i];
-			float distance = Vector3.Distance(threat.position, enemy.position);
 
-			if (distance < minDistance)
+			Transform threat = RoundManager.players[i];
+			int aggro = threat.gameObject.GetComponent<CharacterBase>().getAggro();
+			if (aggro !=0)
 			{
-				minDistance = distance; //update minimum distance
-				index = i;
+				float distance = Vector3.Distance(threat.position, enemy.position);
+				float prio = aggro/distance;
+				if (prio < priority)
+				{
+					priority = prio; //update priority
+					index = i;
+				}
 			}
+
 
 		}
 
