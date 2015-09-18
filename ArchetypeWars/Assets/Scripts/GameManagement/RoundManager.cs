@@ -92,12 +92,14 @@ public class RoundManager : MonoBehaviour {
 			if (reinforcementTimer <= 0 && currentRound == Round.Survival) {
 				SpawnEnemies_Survival();
 				AITactics.assignTargets();
+				AITactics.Strategize();
 				reinforcementTimer = reinforcementDelay;
 			}
 
 			else if (reinforcementTimer <= 0 && currentRound == Round.CTF) {
 				SpawnEnemies_CTF();
 				AITactics.assignTargets();
+				AITactics.Strategize();
 				reinforcementTimer = reinforcementDelay;
 			}
 		}

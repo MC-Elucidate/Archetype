@@ -20,6 +20,7 @@ public class EnemyCharacter : CharacterBase {
 	public int endurance; //low endurance agent run away after a small amount of damage wss taken
 	public int hitCount; //counts how many shots the character has received
 	public float errFactor;
+	public AI_Logic.Strategy strategy;
 
 	// Use this for initialization
 	void Start () {
@@ -35,14 +36,14 @@ public class EnemyCharacter : CharacterBase {
 		base.FixedUpdate ();
 	}
 
-	public void OnTriggerEnter(Collider other)
+/*	public void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "PlayerMelee") {
 			MeleeStats ms = other.gameObject.GetComponent<MeleeStats> ();
 			receiveDamage (ms.damage);
 			receivePoiseDamage(ms.poisedmg);
 		}
-	}
+	}*/
 
 	public override void receiveDamage(int dmg)
 	{
@@ -73,7 +74,7 @@ public class EnemyCharacter : CharacterBase {
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;
-				Debug.Log(hit.transform.gameObject);
+				//Debug.Log(hit.transform.gameObject);
 				if(hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "PlayerTeam"){
 					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
 					hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
@@ -93,12 +94,12 @@ public class EnemyCharacter : CharacterBase {
 		if (RoundManager.currentRound == RoundManager.Round.Survival) {
 			RoundManager.enemyCount--;
 			RoundManager.enemies.Remove(transform);
-			Debug.Log ("Enemy kill confirmed:" + RoundManager.enemyCount + " remaining");
+			//Debug.Log ("Enemy kill confirmed:" + RoundManager.enemyCount + " remaining");
 		}
 
 		else if (RoundManager.currentRound == RoundManager.Round.CTF) {
 			//Reduce attacker or defender size
-			Debug.Log ("Enemy kill confirmed");
+			//Debug.Log ("Enemy kill confirmed");
 		}
 	}
 

@@ -11,6 +11,11 @@ public class AI_Logic : MonoBehaviour {
 		Patrol, Chase, Attack, Still
 	}
 
+	public enum Strategy
+	{
+		Approach, StepBack, Sneak
+	}
+
 	public enum AttackState
 	{
 		InPosition, InMotion
@@ -107,7 +112,7 @@ public class AI_Logic : MonoBehaviour {
 			{
 				mainState = FiniteState.Attack;
 				agent.stoppingDistance = 0.01f;
-				int dT = rand.Next((int)dAmbushTimeOut, 10);
+				int dT = rand.Next((int)dAmbushTimeOut, (int)dAmbushTimeOut + 2);
 				ambushTimeOut = time + dT; //randomise how long the agent stays at some ambush point
 				agent.Stop();
 
@@ -130,11 +135,15 @@ public class AI_Logic : MonoBehaviour {
 
 				if ((time > ambushTimeOut) || (character.hitCount > character.endurance)) //agent has to move away from danger zone
 				{
-					print ("Got to move away");
+	
 					attackState = AttackState.InMotion;
 					motionTimeOut = time + dMotionTimeOut; //allows the agent to stop after some time if it failed to reach the target point
 					character.hitCount = 0;
-					Vector3 targetWayPoint = tactics.LookForAmbushPoint(transform, threat);
+					Vector3 targetWayPoint;
+					if (character.hitCount > character.endurance) //agent shot more times than it can tolerate
+						targetWayPoint = tactics.LookForAmbushPoint(Strategy.StepBack,transform, threat);
+					else //ambush timeout
+						targetWayPoint = tactics.LookForAmbushPoint(character.strategy,transform, threat);
 					agent.SetDestination (targetWayPoint);
 					targetWayPointType = WayPoint.ambush;
 				}
@@ -142,14 +151,14 @@ public class AI_Logic : MonoBehaviour {
 
 			else if (attackState == AttackState.InMotion)
 			{
-				print ("in motion");
+
 				if ((enemyMovement.agentDestReached()) || (time > motionTimeOut))
 				{
 					agent.Stop ();
 					if (targetWayPointType == AI_Logic.WayPoint.ambush) //reached an ambush point
 					{
 						attackState = AI_Logic.AttackState.InPosition;
-						int dT = rand.Next((int)dAmbushTimeOut, 10);
+						int dT = rand.Next((int)dAmbushTimeOut, (int)dAmbushTimeOut + 7);
 						ambushTimeOut = time + dT;
 					}
 

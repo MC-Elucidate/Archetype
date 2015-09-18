@@ -18,23 +18,59 @@ public class AITacticalUnit : MonoBehaviour {
 		if (time > commandTime)
 		{
 			assignTargets();
-
+			Strategize();
 		}
 
 		time += Time.deltaTime;
 	}
 
-	public Vector3 LookForAmbushPoint(Transform agent, Transform threat)
+	public Vector3 LookForAmbushPoint(AI_Logic.Strategy strategy, Transform agent, Transform threat)
 	{
+		/*Generates a waypoint for the agent to go to in order to achieve a certain strategy/goal
+		 * e.g. sneaking up on the threat;backing off to avoid more danger; approaching the threat to get better shooting accuracy
+		 **/
+		Vector3 ambushPoint = Vector3.zero;
 
-		Vector3 dP = Quaternion.AngleAxis(rand.Next(1,360), Vector3.up) * (threat.position - agent.position).normalized;
-		dP = dP * 7.0f;
-		Vector3 ambushPoint = agent.position + dP;
+		//generating an ambush point around the threat's radius
+		if (strategy == AI_Logic.Strategy.Sneak) {
+			Vector3 radius = agent.position - threat.position;
+			float theta = 5 * rand.Next(1,9); //theta E [5, 45)
+			int angleDir = rand.Next (1, 10); //random sign:- or +
+			if (angleDir < 5)
+				theta = theta * (-1);
+			
+			Vector3 dP = Quaternion.AngleAxis(theta, Vector3.up) * (-threat.forward.normalized); //find a point behind the threat
+			float rLength = 5.09f + (float)rand.Next(0, Mathf.Max ((int)radius.magnitude - 5,1));
+			dP = dP * rLength;
+			print ("radius = " + radius.magnitude);
+			ambushPoint = threat.position + dP;	
+
+		} 
+		else 
+		{
+			Vector3 radius = agent.position - threat.position;
+			Vector3 dP = Quaternion.AngleAxis(15 * rand.Next(1,24), Vector3.up) * radius.normalized; //rotate radius by random angle theta E [15,360]
+			float rLength = 1.0f;
+			if (strategy == AI_Logic.Strategy.Approach)
+			{
+				rLength = 5.09f + (float)rand.Next(0, Mathf.Max ((int)radius.magnitude - 5,1)); //reduce the radius between the agent and threat
+			}
+
+			else if (strategy == AI_Logic.Strategy.StepBack)
+			{
+				rLength =  (float) rand.Next((int)(radius.magnitude + 5), (int) (radius.magnitude + 40));
+			}
+			dP = dP * rLength;
+			print ("radius = " + radius.magnitude);
+			ambushPoint = threat.position + dP;	
+		}
+
 		return ambushPoint;
 	}
 
 	public void assignTargets()
 	{
+		//assign targets to all enemies
 		for (int i = 0;i < RoundManager.enemies.Count; i++)
 		{
 
@@ -47,6 +83,26 @@ public class AITacticalUnit : MonoBehaviour {
 		}
 	}
 
+	//Assigns strategies to agents.this includes move styles and shooting rage for difficulty purposes
+	public void Strategize()
+	{
+		for (int a = 0; a < RoundManager.enemies.Count; a++)
+		{
+			if (RoundManager.enemies[a] != null)
+			{
+				//strategies
+				int option = rand.Next (0, 10); 
+				if (option < 5)
+					RoundManager.enemies[a].GetComponent<EnemyCharacter>().strategy = AI_Logic.Strategy.Approach;
+				else
+					RoundManager.enemies[a].GetComponent<EnemyCharacter>().strategy = AI_Logic.Strategy.Sneak;
+			}
+
+
+		}
+
+	}
+
 	public void getTarget(Transform enemy)
 	{
 		float minDistance = 999.0f;
@@ -56,10 +112,6 @@ public class AITacticalUnit : MonoBehaviour {
 		{
 			Transform threat = RoundManager.players[i];
 			float distance = Vector3.Distance(threat.position, enemy.position);
-			if (threat == null)
-				print("null threat");
-			if (enemy == null)
-				print("enemy threat");
 
 			if (distance < minDistance)
 			{

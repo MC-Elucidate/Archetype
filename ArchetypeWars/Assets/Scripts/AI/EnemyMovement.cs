@@ -12,9 +12,13 @@ public class EnemyMovement : MonoBehaviour {
 
 	private float verticalVel = 0f;
 	private float slideTime = 1.1f, currentSlide = 0;
+
+	protected float xMove = 0.0f;
+	protected float zMove = 0.0f;
 	
 	protected EnemyCharacter character;
 	protected AI_Logic logic;
+
 	
 
 	//public bool vertical_Move, horizontal_Move, jump_Move, wallrun_Move, slide_Move, 
@@ -58,11 +62,7 @@ public class EnemyMovement : MonoBehaviour {
 		switch (logic.mainState) {
 		case AI_Logic.FiniteState.Chase:
 			{
-				if (!character.freemove)
-					agent.Stop ();
-				else {
-					agent.SetDestination (logic.getTarget ());
-				}
+				agent.SetDestination (logic.getTarget ());
 			}
 			break;
 		
@@ -71,7 +71,18 @@ public class EnemyMovement : MonoBehaviour {
 				if (logic.attackState == AI_Logic.AttackState.InPosition)
 				{
 					lookAt(logic.threat.position);
-					character.ShootWeapon (logic.threat);
+					if (Vector3.Distance(transform.position, logic.threat.position) < 5) //adjust this 
+					{
+					//closer to target
+						character.meleeAttack ();
+						if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+							character.meleeAttackEnd ();
+						}
+					else
+					{
+						character.ShootWeapon (logic.threat);
+					}
+
 				//agent.SetDestination (logic.getCover ());
 				}
 
@@ -81,6 +92,34 @@ public class EnemyMovement : MonoBehaviour {
 			break;
 		}
 	
+		//for animating movement
+		Vector3 moveDir = agent.velocity;
+		moveDir.y = 0;
+		
+		
+		//determine vertical and horizontal floats relative to the transform
+		float vert = 0.0f;
+		float hor = 0.0f;
+		
+		
+		if (moveDir.magnitude > 0.2f) //minimum velocity
+		{
+			moveDir.Normalize ();
+			Vector2 moveDir2d = new Vector2(moveDir.x, moveDir.z);
+			Vector2 forward2d = new Vector2(transform.forward.x, transform.forward.z);
+			Vector2 right2d = new Vector2(transform.right.x, transform.right.z);
+			
+			vert = Vector3.Dot(forward2d, moveDir2d) ;
+			hor = Vector3.Dot(right2d, moveDir2d) ;
+			
+			
+			
+		}
+
+		xMove = hor;
+		zMove = vert;
+
+
 
 	}
 
@@ -93,8 +132,10 @@ public class EnemyMovement : MonoBehaviour {
 		//anim.SetBool ("Stunned", character.stunned);
 		//anim.SetBool ("KnockedDown", character.knockedDown);
 		anim.SetFloat ("Poise", character.currentPoise);
-		//anim.SetFloat ("Vertical", zMove);
-		//anim.SetFloat ("Horizontal", xMove);
+		anim.SetFloat ("Vertical", zMove);
+		anim.SetFloat ("Horizontal", xMove);
+		anim.SetBool ("Melee", character.melee);
+		anim.SetInteger ("MeleeCount", character.currentMelee);
 	}
 
 	/*

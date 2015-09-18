@@ -24,9 +24,9 @@ public class CharacterBase : MonoBehaviour {
 	public GameObject LRWeapon;
 	protected Animator anim;
 
-	private bool an_Set = false;
-	private bool weaponDrawn = false;
-	private float an_dt = 0.0f;
+	protected bool an_Set = false;
+	protected bool weaponDrawn = false;
+	protected float an_dt = 0.0f;
 
 	//Melee stuff
 	public GameObject SRWeapon;
