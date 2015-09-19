@@ -9,6 +9,12 @@ public class NinjaScript: PlayerCharacter {
 	private int baseAggro = 170, invisAggro = 0;
 	private float invisDuration = 15, currentInvis = 0;
 
+	//Instakill variables
+	private int instakillDamage = 1000;
+	private float instakillRange = 5;
+
+	//SecondMelee
+	public GameObject SRWeapon2;
 
 	// Use this for initialization
 	protected void Start () {
@@ -25,15 +31,16 @@ public class NinjaScript: PlayerCharacter {
 		weaponFireRate = 0.2f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
-		weaponHeld = false;
+		weaponHeld = true;
 		ammoCount = 60;
 		maxAmmo = 60;
 		ammoPickup = 20;
+		SRWeapon2.SetActive (false);
 
 		//Special cooldowns
 		special1CD = 90f;
 		special2CD = 90f;
-		superCD = 90f;
+		superCD = 7f;
 	}
 	
 	// Update is called once per frame
@@ -46,10 +53,6 @@ public class NinjaScript: PlayerCharacter {
 			currentInvis -= Time.fixedDeltaTime;
 		else
 			aggro = baseAggro;
-	}
-	public override void meleeAttack()
-	{
-		base.meleeAttack ();
 	}
 
 	public override void shootWeapon()
@@ -110,17 +113,71 @@ public class NinjaScript: PlayerCharacter {
 	{
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
-			Debug.Log ("Doing super");
+			RaycastHit hit;
+			if(Physics.Raycast (transform.position + new Vector3(0, 0.5f, 0), transform.forward, out hit, instakillRange))
+			{
+				//Debug.Log("Target hit");
+				if(hit.transform.tag == "Enemy")
+				{
+					//Debug.Log("Target is enemy");
+					if(Vector3.Angle(transform.forward, hit.transform.forward) <= 70)
+					{
+						//Debug.Log("InstaFuck");
+						hit.transform.gameObject.SendMessage("receiveDamage", instakillDamage);
+					}
+				}
+			}
 			sounds.playSpecial3Sound ();
 		}
 	}
 
-	
-	public override void rotateCamera(float pitch)
-	{
-		base.rotateCamera (pitch);
-	}
 
 	public override void checkIK()
 	{}
+
+	public void OnAnimatorIK()
+	{}
+
+	public override void rotateCamera(float pitch)
+	{
+		if (pitch > 0) { // if we look up
+			if(		(cam.transform.localEulerAngles.x > 320) 	|| 	(cam.transform.localEulerAngles.x < 90)		)
+			{
+				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+			}
+		} else if (pitch < 0) { //if we look down
+			if(		(cam.transform.localEulerAngles.x > 270) 	|| 	(cam.transform.localEulerAngles.x < 40)		)
+			{
+				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+			}
+		}
+	}
+
+	public override void meleeAttack()
+	{
+		if (isGrounded) { //Can only melee on the ground
+			if (currentMelee == 0) { //First melee attack in the combo
+				currentMelee++;
+				melee = true;
+				weaponHeld = false;
+				SRWeapon.SetActive (true);
+				SRWeapon2.SetActive (true);
+				sounds.meleeSound();
+			} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo (1).IsName ("Attack" + currentMelee))) { //Post-first melee attacks, can only transition into state n+1 if we're in state n
+				currentMelee++;
+				sounds.meleeSound ();
+			}
+		}
+		
+	}
+
+	public override void meleeAttackEnd()
+	{
+		melee = false;
+		currentMelee = 0;
+		SRWeapon.SetActive (false);
+		SRWeapon2.SetActive (false);
+		weaponHeld = true;
+	}
+
 }

@@ -42,7 +42,7 @@ public class AITacticalUnit : MonoBehaviour {
 			Vector3 dP = Quaternion.AngleAxis(theta, Vector3.up) * (-threat.forward.normalized); //find a point behind the threat
 			float rLength = 5.09f + (float)rand.Next(0, Mathf.Max ((int)radius.magnitude - 5,1));
 			dP = dP * rLength;
-			print ("radius = " + radius.magnitude);
+//			print ("radius = " + radius.magnitude);
 			ambushPoint = threat.position + dP;	
 
 		} 
@@ -61,7 +61,7 @@ public class AITacticalUnit : MonoBehaviour {
 				rLength =  (float) rand.Next((int)(radius.magnitude + 5), (int) (radius.magnitude + 40));
 			}
 			dP = dP * rLength;
-			print ("radius = " + radius.magnitude);
+			//print ("radius = " + radius.magnitude);
 			ambushPoint = threat.position + dP;	
 		}
 

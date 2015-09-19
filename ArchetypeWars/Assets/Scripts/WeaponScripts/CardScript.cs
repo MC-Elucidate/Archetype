@@ -14,7 +14,7 @@ public class CardScript : MonoBehaviour {
 	void Start () {
 
 		Physics.IgnoreCollision (this.collider, FindObjectOfType<NinjaScript>().gameObject.collider, true);	//I don't know how to do this any other way really.
-		Physics.IgnoreCollision (this.collider, GameObject.Find ("bigKATANA_saya").collider, true);
+		//Physics.IgnoreCollision (this.collider, GameObject.Find ("bigKATANA_saya").collider, true);
 	}
 	
 	// Update is called once per frame

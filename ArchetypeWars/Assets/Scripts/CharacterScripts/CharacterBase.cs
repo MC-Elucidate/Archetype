@@ -98,7 +98,7 @@ public class CharacterBase : MonoBehaviour {
 
 	public virtual void meleeAttack()
 	{
-		Debug.Log ("Hyaa!");
+		//Debug.Log ("Hyaa!");
 	}
 
 	public virtual void meleeAttackEnd()
@@ -122,7 +122,7 @@ public class CharacterBase : MonoBehaviour {
 
 	public void receivePoiseDamage(float poisedmg)
 	{
-		Debug.Log ("Poise Damage");
+		//Debug.Log ("Poise Damage");
 		if(alive){
 			currentPoise -= poisedmg;
 			if(currentPoise <= 20)

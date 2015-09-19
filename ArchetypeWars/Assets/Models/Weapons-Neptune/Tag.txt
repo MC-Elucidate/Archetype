@@ -1,0 +1,7 @@
+Games: Hyperdimension Neptunia
+       Hyperdimension Neptunia Mk2
+Subject: Neptune's Weapons
+Copyright: Idea Factory, Compile Heart
+Model Ripper: Random Talking Bush
+Hosting Permissions: The Models Resource
+Notes: Special thanks to howfie for the model importing script, and chrrox for the PSSG importer for the original HDN.
