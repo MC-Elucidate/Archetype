@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyCharacter : CharacterBase {
@@ -25,6 +25,7 @@ public class EnemyCharacter : CharacterBase {
 	// Use this for initialization
 	void Start () {
 		base.Start ();
+		SRWeapon.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -101,6 +102,30 @@ public class EnemyCharacter : CharacterBase {
 			//Reduce attacker or defender size
 			//Debug.Log ("Enemy kill confirmed");
 		}
+	}
+
+	public override void meleeAttack ()
+	{
+		Debug.Log("Doing melee");
+			if (currentMelee == 0) { //First melee attack in the combo
+				currentMelee++;
+				melee = true;
+				weaponHeld = false;
+				SRWeapon.SetActive (true);
+				sounds.meleeSound();
+			} else if ((currentMelee < meleeMax) && (anim.GetCurrentAnimatorStateInfo (1).IsName ("Attack" + currentMelee))) { //Post-first melee attacks, can only transition into state n+1 if we're in state n
+				currentMelee++;
+				sounds.meleeSound ();
+			}
+		
+	}
+
+	public override void meleeAttackEnd ()
+	{
+		melee = false;
+		currentMelee = 0;
+		SRWeapon.SetActive (false);
+		weaponHeld = true;
 	}
 
 }

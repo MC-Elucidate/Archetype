@@ -14,6 +14,11 @@ public class EnemyMedium : EnemyCharacter {
 		spreadRate = 0.21f;
 		maxSpread = 12;
 		gunDamage = 3;
+
+		//Melee
+		meleeMax = 1;
+
+		SRWeapon.SetActive (false);
 	}
 	
 	// Update is called once per frame

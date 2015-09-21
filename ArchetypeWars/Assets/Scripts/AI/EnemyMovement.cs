@@ -71,13 +71,14 @@ public class EnemyMovement : MonoBehaviour {
 				if (logic.attackState == AI_Logic.AttackState.InPosition)
 				{
 					lookAt(logic.threat.position);
-					if (Vector3.Distance(transform.position, logic.threat.position) < 5) //adjust this 
+					if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+						character.meleeAttackEnd ();
+					else if (Vector3.Distance(transform.position, logic.threat.position) < 5) //adjust this 
 					{
 					//closer to target
 						character.meleeAttack ();
-						if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
-							character.meleeAttackEnd ();
-						}
+						
+					}
 					else
 					{
 						character.ShootWeapon (logic.threat);
@@ -120,12 +121,6 @@ public class EnemyMovement : MonoBehaviour {
 		zMove = vert;
 
 
-
-	}
-
-	void FixedUpdate()
-	{
-
 		anim.SetBool ("Sliding", sliding);
 		anim.SetBool ("WeaponHeld", weaponHeld);
 		anim.SetBool ("Alive", character.alive);
@@ -136,6 +131,10 @@ public class EnemyMovement : MonoBehaviour {
 		anim.SetFloat ("Horizontal", xMove);
 		anim.SetBool ("Melee", character.melee);
 		anim.SetInteger ("MeleeCount", character.currentMelee);
+	}
+
+	void FixedUpdate()
+	{
 	}
 
 	/*

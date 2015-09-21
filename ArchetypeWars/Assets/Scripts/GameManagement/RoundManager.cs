@@ -242,7 +242,7 @@ public class RoundManager : MonoBehaviour {
 		for (int i = 0; i<reinforcementSize; i++) {
 			switch(Random.Range (0,3)) {
 			case 0:
-				spawner.spawnMediumEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position);	//Spawn light enemy
+				spawner.spawnLightEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position);	//Spawn light enemy
 				break;
 			case 1:
 				spawner.spawnMediumEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position);	//Spawn medium enemy

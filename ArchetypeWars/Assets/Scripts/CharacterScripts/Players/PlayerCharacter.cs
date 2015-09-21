@@ -204,6 +204,7 @@ public class PlayerCharacter : CharacterBase {
 				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
 				if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "EnemyHead") {
+					Debug.Log ("Shooting: " + hit.transform.gameObject.tag);
 					hit.transform.gameObject.SendMessage ("receiveDamage", (int)(gunDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 					hit.transform.gameObject.SendMessage ("receivePoiseDamage", (int)(poiseDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 				}
