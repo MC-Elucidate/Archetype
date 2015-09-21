@@ -12,12 +12,13 @@ public class RoundManager : MonoBehaviour {
 	public enum Round	{Survival, CTF, PreRound};
 
 	//ROUND AFFIXES - modifiers that affect each round
-	//TODO: Add more over here once the basics are implemented. This can be pretty damn fun.
-	enum Affix	{	Player_MeleeOnly, Player_HalfHealth, Player_HalfAmmo, 
+	public enum Affix	{	Player_MeleeOnly, Player_HalfHealth, Player_HalfAmmo, 
 				 	Player_DoubleDamage, Player_FasterMovement, Player_ExplosiveShots,
 					Enemy_HalfHealth, Enemy_DoubleSpawn, Enemy_FasterMovement, 
 					Enemy_DoubleHealth, Enemy_ExplosiveShots	};
 
+	public bool gameInProgress;
+	public bool deadPlayers;
 	public static Round currentRound;
 
 	//collections
@@ -27,6 +28,10 @@ public class RoundManager : MonoBehaviour {
 	//General round vars
 	public bool alternateRound;			//alternateRound indicates that 3 affixes will be chosen for the round.
 	public int alternateRoundChance = 10;
+	public Affix affixOne;
+	public Affix affixTwo;
+	public Affix affixThree;
+
 	public float roundTimer = 0f;
 	public static int score = 0;
 
@@ -76,6 +81,7 @@ public class RoundManager : MonoBehaviour {
 		spawner = gameObject.GetComponent<EnemySpawner>();
 		AITactics = gameObject.GetComponent<AITacticalUnit>();
 		KillRound ();
+		gameInProgress = true;
 
 	}
 	
@@ -113,6 +119,20 @@ public class RoundManager : MonoBehaviour {
 			KillRound ();
 			RespawnPlayers();
 		}
+
+		foreach (Transform player in players) {
+			deadPlayers = true;
+			if (player.GetComponent<PlayerCharacter>().alive) {
+				deadPlayers = false;
+				break;
+			}
+			else
+				continue;
+		}
+
+		if (deadPlayers)
+			gameInProgress = false;
+
 	}
 
 	//========================================================================================
@@ -175,6 +195,16 @@ public class RoundManager : MonoBehaviour {
 	void RespawnPlayers() {
 		//Use this to revive all players if at least one player survives a round
 		//TODO: Implement this shit
+
+		/*
+		foreach (Transform player in players) {
+			deadPlayers = true;
+			if (!player.GetComponent<PlayerCharacter>().alive) {
+
+			}
+			else
+				continue;
+		}*/
 		
 	}
 
@@ -219,7 +249,7 @@ public class RoundManager : MonoBehaviour {
 	}*/
 
 	void KillAllEnemies() {
-		//TODO: Use this when the round ends to clear the battlefield.
+		//Use this when the round ends to clear the battlefield.
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 
@@ -307,6 +337,10 @@ public class RoundManager : MonoBehaviour {
 		ModifyAffix (affix_1);
 		ModifyAffix (affix_2);
 		ModifyAffix (affix_3);
+
+		affixOne = affix_1;
+		affixTwo = affix_2;
+		affixThree = affix_3;
 	}
 
 	void ModifyAffix(Affix thisAffix) {
@@ -375,5 +409,20 @@ public class RoundManager : MonoBehaviour {
 		System.Array A = System.Enum.GetValues(typeof(T));
 		T V = (T)A.GetValue(UnityEngine.Random.Range(0,A.Length));
 		return V;
+	}
+
+	public Round getRound() {
+		return currentRound;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void ExitGame() {
+		Destroy (GameObject.Find ("CharacterSelectManager"));
+		Screen.lockCursor = false;
+		Screen.showCursor = true;
+		Application.LoadLevel("menu");
 	}
 }

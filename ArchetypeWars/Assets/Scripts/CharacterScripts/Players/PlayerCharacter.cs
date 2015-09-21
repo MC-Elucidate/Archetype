@@ -74,6 +74,15 @@ public class PlayerCharacter : CharacterBase {
 	public int getAmmo()
 	{return ammoCount;}
 
+	public float getCooldownOne()
+	{return currentSpecial1;}
+
+	public float getCooldownTwo()
+	{return currentSpecial2;}
+
+	public float getCooldownThree()
+	{return currentSuper;}
+
 	/*
 	 * Used to prevent the character from moving if they are stunned/knocked down.
 	 * Sets velocity's x and z compenents to 0.

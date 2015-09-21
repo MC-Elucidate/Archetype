@@ -56,6 +56,9 @@ public class CharacterSpawnSetup : MonoBehaviour {
 
 					playergui.gameObject.GetComponent<PlayerHUD>().character = heavyscript;
 					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitHeavy();
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(1, "Shield Buff");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(2, "Taunt");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(3, "Ground Pound");
 					
 				}
 				break;
@@ -76,6 +79,9 @@ public class CharacterSpawnSetup : MonoBehaviour {
 
 					playergui.gameObject.GetComponent<PlayerHUD>().character = commanderscript;
 					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitCommander();
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(1, "Team Buff");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(2, "Team Heal");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(3, "TODO");
 
 				}	
 				break;
@@ -85,6 +91,9 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					PlayerCharacter ninjascript = playerChar.GetComponent<NinjaScript>();
 					playergui.gameObject.GetComponent<PlayerHUD>().character = ninjascript;
 					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitNinja();
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(1, "Team Buff");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(2, "Invisibility");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(3, "Coup de Graçe");
 					
 				}
 				break;
@@ -105,6 +114,9 @@ public class CharacterSpawnSetup : MonoBehaviour {
 
 					playergui.gameObject.GetComponent<PlayerHUD>().character = sniperscript;
 					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitSniper();
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(1, "Sniper Zoom");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(2, "Evil Laugh");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(3, "M3GA B34M");
 					
 
 					Transform scope = Instantiate(sniperscope, new Vector3(0,0,0), Quaternion.identity) as RectTransform;
