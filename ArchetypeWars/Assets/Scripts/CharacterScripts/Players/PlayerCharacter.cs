@@ -12,6 +12,9 @@ public class PlayerCharacter : CharacterBase {
 	protected RaycastHit hit;
 	protected float spreadFactor = 0.003f;
 
+	//Bullet Trail
+	public GameObject bulletTrail;
+
 
 	//Player movement variables
 	public Vector3 velocity;
@@ -156,6 +159,7 @@ public class PlayerCharacter : CharacterBase {
 		health -= (int)(dmg/armourMod);
 		sounds.playHitSound();
 		if (health <= 0) {
+			health = 0;
 			alive = false;
 			freemove = false;
 			cam.transform.parent = null;
@@ -199,10 +203,17 @@ public class PlayerCharacter : CharacterBase {
 				Vector3 target = hit.point;
 				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
-				if (hit.transform.gameObject.tag == "Enemy") {
+				if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "EnemyHead") {
 					hit.transform.gameObject.SendMessage ("receiveDamage", (int)(gunDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 					hit.transform.gameObject.SendMessage ("receivePoiseDamage", (int)(poiseDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 				}
+
+				Quaternion trailRotation = Quaternion.identity;
+				trailRotation.SetLookRotation (hit.point - shot_source.position, Vector3.up);
+				Transform trail;
+				trail = Instantiate (bulletTrail, shot_source.position, trailRotation) as Transform;
+
+
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;

@@ -27,7 +27,7 @@ public class CardScript : MonoBehaviour {
 	void OnCollisionEnter(Collision other) {
 
 		//Debug.Log ("Hit an object");
-		if (other.gameObject.tag == "Enemy") {
+		if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyHead") {
 			other.gameObject.SendMessage("receiveDamage", damage);//Do damage
 			other.gameObject.SendMessage("receivePoiseDamage", poiseDamage);
 			Destroy (this.gameObject);
