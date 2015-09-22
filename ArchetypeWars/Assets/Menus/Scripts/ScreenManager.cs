@@ -127,4 +127,8 @@ public class ScreenManager : MonoBehaviour {
 		//So here we set the current Selected to null, so the provided gameObject becomes the Last Selected in the EventSystem.
 		//EventSystem.current.SetSelectedGameObject(null);
 	}
+
+	public void quitGame() {
+		Application.Quit ();
+	}
 }
