@@ -5,7 +5,8 @@ public class Controller1 : MovementController {
 
 	// Use this for initialization
 	protected void Start () {
-
+		//Sets variables for player 1
+		//Will allow the input controller to know which gamepad's input to use for this character.
 		base.Start();
 		verticalTag = "Vertical 1";
 		horizontalTag = "Horizontal 1";

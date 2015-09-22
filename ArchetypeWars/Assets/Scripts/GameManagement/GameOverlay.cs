@@ -3,15 +3,19 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 
-public class GameOverlay : MonoBehaviour {
+/*
+ * Sets values on GUI to round information. Used for entire screen. Not just a single character.
+ * */
 
+public class GameOverlay : MonoBehaviour {
+	
 	public Transform gameManager;
 	public RoundManager rounds;
 
 	public Text roundType;			
 	public Text roundTimer;
 	public Text score;
-	public Text alternateRound;			
+	public Text alternateRound;
 	public Text affix1;			
 	public Text affix2;
 	public Text affix3;	
@@ -33,6 +37,7 @@ public class GameOverlay : MonoBehaviour {
 
 	public void UpdateOverlay() {
 
+		//Set round type and timer.
 		roundType.text = rounds.getRound().ToString();
 		roundTimer.text = System.String.Format("{0}:{1}", (int)rounds.roundTimer/60, ((int)rounds.roundTimer%60).ToString("D2"));
 		score.text = System.String.Format ("SCORE: {0}", rounds.getScore().ToString());

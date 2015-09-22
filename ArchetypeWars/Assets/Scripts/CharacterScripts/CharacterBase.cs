@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CharacterBase : MonoBehaviour {
 
+	//health
 	protected int maxHealth;
 	public int health;
 
@@ -23,9 +24,10 @@ public class CharacterBase : MonoBehaviour {
 	public Transform LHandPos,RHandPos, RightHand;
 	public GameObject LRWeapon;
 	protected Animator anim;
-
-	protected bool an_Set = false;
 	protected bool weaponDrawn = false;
+
+	//Used to make drawing and concealing weapon look smooth. Not used at the moment
+	protected bool an_Set = false;
 	protected float an_dt = 0.0f;
 
 	//Melee stuff
@@ -52,32 +54,35 @@ public class CharacterBase : MonoBehaviour {
 	// Use this for initialization
 	public void Start () {
 		anim = gameObject.GetComponent<Animator> ();
-		//anim.SetLayerWeight (0, 0.5f);
 		sounds = gameObject.GetComponent<SoundPool> ();
 	}
 	
 	// Update is called once per frame
 	public void Update () {
 
+		
+		//Used to control when the next bullet can be fired. Sort of a cooldown for firing.
 		if (weaponFireRateTimer>0)
 			weaponFireRateTimer -= Time.deltaTime;
 
+		//Used to control when bullet spread is decreased after releasing the fire button.
 		if (spreadRateTimer>0)
 			spreadRateTimer -= Time.deltaTime;
 
+		//Prevents bullet spread from going too crazy
 		if (spreadCount > maxSpread)
 			spreadCount = maxSpread;
 
+		//Decreases spread after some time of not firing.
 		if (spreadRateTimer <= 0) {
 			if (spreadCount>0)
 			{
-				//Debug.Log ("Counting down spread");
 				spreadCount--;
 				spreadRateTimer=spreadRate;
 			}
 		}
 
-
+		//Restores poise and the ability to move after being stunned or knocked down.
 		if (currentPoise < 25.0 && !anim.GetCurrentAnimatorStateInfo (0).IsTag ("NoFreeMove")) {
 			currentPoise = 75;
 			freemove = true;
@@ -90,28 +95,44 @@ public class CharacterBase : MonoBehaviour {
 
 	public void FixedUpdate()
 	{
-		//Increase Poise over time. 1 second = 10 poise;
-		currentPoise += Time.fixedDeltaTime*10;
+		//Increase Poise over time. 1 second = 15 poise;
+		currentPoise += Time.fixedDeltaTime*15;
 		if (currentPoise > maxPoise)
 			currentPoise = maxPoise;
 	}
 
+	
+	/*
+	 * Performs melee attack.
+	 * To be overridden.
+	 * */
 	public virtual void meleeAttack()
 	{
 		//Debug.Log ("Hyaa!");
 	}
 
+	/*
+	 * Ends melee attack.
+	 * To be overridden.
+	 * */
 	public virtual void meleeAttackEnd()
 	{
 	}
 
+	/*
+	 * Fires weapon.
+	 * To be overridden.
+	 * */
 	public virtual void shootWeapon() {
 	}
 
-
+	/*
+	 * Receives damage.
+	 * Sets character to dead state if health reaches 0.
+	 * Prevents character from moving if dead.
+	 * */
 	public virtual void receiveDamage(int dmg)
 	{
-		//Debug.Log ("ouch");
 		health -= dmg;
 		if (health <= 0) {
 			alive = false;
@@ -120,25 +141,34 @@ public class CharacterBase : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * Receives poise damage.
+	 * Puts character in stunned or knocked down state if poise damage exceeds certain threshold.
+	 * */
 	public void receivePoiseDamage(float poisedmg)
 	{
-		//Debug.Log ("Poise Damage");
 		if(alive){
 			currentPoise -= poisedmg;
+			//Knocked down
 			if(currentPoise <= 20)
 			{
 				freemove = false;
-				Debug.Log("KD");
+				//Debug.Log("KD");
 			}
+			//Stunned
 			else if(currentPoise <= 40 && currentPoise > 20)
 			{
 				freemove = false;
-				Debug.Log("Stunned");
+				//Debug.Log("Stunned");
 			}
 			anim.SetFloat("Poise", currentPoise);
 		}
 	}
 
+	/*
+	 * Receives health.
+	 * Adds 'up' amount of health and prevents it from going over a limit.
+	 * */
 	public void receiveHealth(int up)
 	{
 		health += up;
@@ -146,16 +176,23 @@ public class CharacterBase : MonoBehaviour {
 			health = maxHealth;
 	}
 
+	/*
+	 * Returns aggro value.
+	 * Used by AI to determine target.
+	 * */
 	public int getAggro()
 	{
 		return aggro;
 	}
 
-
+	/*
+	 * Positions hands on gun so it appears that the character is holding the weapon.
+	 * */
 	void OnAnimatorIK()
 	{
 		if (useIK)
 		{
+			//Attach left hand
 			if (leftHandIK)
 			{
 				anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
@@ -163,7 +200,8 @@ public class CharacterBase : MonoBehaviour {
 				
 				
 			}
-			
+
+			//Attach right hand
 			if (rightHandIK)
 			{
 				anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
@@ -174,7 +212,10 @@ public class CharacterBase : MonoBehaviour {
 		}
 	}
 
-	
+	/*
+	 * Checks if the gun is held.
+	 * Gun is not held when doing a melee, and held in every other circumstance.
+	 * */
 	public virtual void checkIK()
 	{
 		if (weaponHeld == true)
@@ -184,16 +225,15 @@ public class CharacterBase : MonoBehaviour {
 			if (animPlayingState.IsName("Aim"))
 			{
 				float playbackTime = animPlayingState.normalizedTime % 1;
-				
-				if ((an_dt > 0.01f) && (an_Set == false))
+
+				if ((an_dt > 0.01f) && (an_Set == false)) //Smoothing for when to equip the gun
 				{
-					
+					//Positions gun correctly
 					LRWeapon.SetActive (true);
 					LRWeapon.transform.localPosition = Vector3.zero;
 					LRWeapon.transform.localRotation = Quaternion.identity;
 					LRWeapon.transform.Rotate(220, 0, -90);
 					LRWeapon.transform.RotateAround (RHandPos.position, transform.right, 75);
-					//print ("Gun withdrawn");
 					
 					an_Set = true;
 					weaponDrawn = true;
@@ -208,15 +248,14 @@ public class CharacterBase : MonoBehaviour {
 		
 		if (weaponHeld == false)
 		{
+			//hides weapon
 			if (weaponDrawn)
 			{
-				//anim.SetLayerWeight(1, 0f);
 				LRWeapon.SetActive (false);
 				useIK = false;
 				an_Set = false;
 				an_dt = 0f;
 				weaponDrawn = false;
-				//print ("Gun put away");
 			}
 			
 		}

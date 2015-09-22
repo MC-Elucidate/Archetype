@@ -6,6 +6,7 @@ public class PlayerCharacter : CharacterBase {
 
 	//Player Camera
 	public Camera cam;
+	public float defaultRotationSpeed = 7f;
 	public float rotSpeed = 7f;
 
 	//Player specific shooting logic
@@ -44,6 +45,7 @@ public class PlayerCharacter : CharacterBase {
 	public void Start () {
 		base.Start ();
 		SRWeapon.SetActive (false); //Hide melee weapon and turnoff collision
+		rotSpeed = defaultRotationSpeed;
 	}
 	
 	// Update is called once per frame
@@ -55,6 +57,8 @@ public class PlayerCharacter : CharacterBase {
 
 	public void FixedUpdate(){
 		base.FixedUpdate ();
+
+		//Updates cooldowns every fixed time step
 		if (currentSpecial1 > 0)
 			currentSpecial1 -= Time.fixedDeltaTime;
 		if (currentSpecial2 > 0)
@@ -77,12 +81,24 @@ public class PlayerCharacter : CharacterBase {
 	public int getAmmo()
 	{return ammoCount;}
 
+	/*
+	 * Used to get the cooldown for special ability 1.
+	 * Used for the HUD
+	 */
 	public float getCooldownOne()
 	{return currentSpecial1;}
 
+	/*
+	 * Used to get the cooldown for special ability 2.
+	 * Used for the HUD
+	 */
 	public float getCooldownTwo()
 	{return currentSpecial2;}
 
+	/*
+	 * Used to get the cooldown for special ability 3 (super).
+	 * Used for the HUD
+	 */
 	public float getCooldownThree()
 	{return currentSuper;}
 
@@ -139,6 +155,9 @@ public class PlayerCharacter : CharacterBase {
 	/*
 	 * Rotates the player's camera based on Y-axis input.
 	 * Locks the camera to 40 degrees up and down.
+	 * Rotates the character's weapon and hands up and down as well.
+	 * Allows some error margin so the camera would not get stuck if it were to exceed the boundaries.
+	 * Necessary because of high mouse sensitivity.
 	 * */
 	public virtual void rotateCamera(float pitch)
 	{
@@ -159,14 +178,16 @@ public class PlayerCharacter : CharacterBase {
 
 	/*
 	 * Used to take damage;
-	 * Decreases health by the amount received in dmg.
+	 * Decreases health by the amount received in dmg. Applies armour modifier as well.
 	 * If health reaches 0, sets the character to a "knocked out" state.
 	 */
 	public override void receiveDamage(int dmg)
 	{
-		//Debug.Log ("ouch");
+		if(health>0)
+			sounds.playHitSound();
+
 		health -= (int)(dmg/armourMod);
-		sounds.playHitSound();
+
 		if (health <= 0) {
 			health = 0;
 			alive = false;
@@ -206,18 +227,20 @@ public class PlayerCharacter : CharacterBase {
 				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0.666667f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0));
 				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
 				Physics.Raycast (camRay, out hit, weaponRange);
-				
-				//Debug.Log ("Shooting at " + hit.transform.gameObject.name);
-				
+
 				Vector3 target = hit.point;
 				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+
+				//Deal damage if we hit an enemy's body or head
 				if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "EnemyHead") {
 					Debug.Log ("Shooting: " + hit.transform.gameObject.tag);
 					hit.transform.gameObject.SendMessage ("receiveDamage", (int)(gunDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 					hit.transform.gameObject.SendMessage ("receivePoiseDamage", (int)(poiseDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 				}
 
+
+				//Create bullet trail
 				Quaternion trailRotation = Quaternion.identity;
 				trailRotation.SetLookRotation (hit.point - shot_source.position, Vector3.up);
 				Transform trail;
@@ -339,7 +362,7 @@ public class PlayerCharacter : CharacterBase {
 
 	/*
 	 * Function called when the player holds the jump button while jumping.
-	 * Handles accelrated vertical movement. (Also used for sniper's parasol glide)
+	 * Handles accelrated vertical movement.
 	 * */
 	public virtual void jumpHold()
 	{
@@ -351,6 +374,10 @@ public class PlayerCharacter : CharacterBase {
 	 
 	}
 
+	/*
+	 * Function called when the player releases the jump button.
+	 * Sets gravity to default value.
+	 * */
 	public virtual void jumpEnd()
 	{
 		currentGravity = globalGravity;
@@ -358,14 +385,14 @@ public class PlayerCharacter : CharacterBase {
 
 	/*
 	 * Function called when the player is diagonally wallrunning.
-	 * Used to determine vertical velocity
+	 * Used to determine vertical and horizontal velocity.
 	 * */
 	public virtual void wallrunDiagonal()
 	{
 		currentGravity = globalGravity;
 		velocity.y += currentGravity * Time.deltaTime;
 		velocity.z = diagonalWallVelocity;
-		if (wallrunRight) { //Check if wall ends.
+		if (wallrunRight) { //Check if right wall ends.
 			if (!Physics.Raycast (transform.position, transform.right, characterRadius)) {
 				wallrunEnd();
 			}
@@ -378,7 +405,7 @@ public class PlayerCharacter : CharacterBase {
 
 	/*
 	 * Function called when the player is vertically wallrunning.
-	 * Used to determine vertical velocity
+	 * Used to determine vertical velocity.
 	 * */
 	public virtual void wallrunVertical()
 	{
@@ -388,10 +415,11 @@ public class PlayerCharacter : CharacterBase {
 			
 		currentGravity = globalGravity;
 
-		if (!Physics.Raycast (transform.position, transform.forward, characterRadius)) { //reach top of wall
+
+		//If the top of the wall is reached while wall running, give a little boost.
+		if (!Physics.Raycast (transform.position, transform.forward, characterRadius)) {
 			wallRunning = wallrunUp = false;
 			velocity.y = jumpPower*2;
-			//currentWallrun = 0;
 		}
 	}
 
@@ -407,30 +435,21 @@ public class PlayerCharacter : CharacterBase {
 
 
 
-
-
-
-
-
-
-
-
-
 	/*
 	 * Function called when the player is moving.
 	 * Calculates velocity based on input and gravity.
 	 * Adjusts velocity to give a sense of momentum.
+	 * Based on the rigidbody component in unity, but not nearly as complex and modified to give controlled characters a better feel.
+	 * Allows the user to walk by slightly tilting an analogue stick, or accelerate to max velocity by holding the analogue stick fully.
+	 * Uses friction to slow the character down when nothing is pressed.
+	 * Gives a slower acceleration in the air than on the ground.
+	 * Allows for different forward, back, and sideways speeds.
+	 * Gets vertical input vert and horizontal input hor to determine the velocity.
 	 * */
 	public virtual void movementUpdate(float vert, float hor)
 	{
 		float dx = 0, dy = 0, dz = 0;
-		/*int vertVal = 0, horVal = 0;
-		if (vert != 0)
-			vertVal = vert / Mathf.Abs (vert);
-		if (hor != 0)
-			horVal = hor / Mathf.Abs (hor);
-*/
-
+		
 		//We have control over the character.
 		if (freemove) {
 
@@ -565,7 +584,7 @@ public class PlayerCharacter : CharacterBase {
 
 			//End X Change
 
-			//Set Y Component
+			//Set Y Component (Gravity)
 			if (isGrounded) {
 				velocity.y = 0;
 				doubleJumping = false;
@@ -587,6 +606,11 @@ public class PlayerCharacter : CharacterBase {
 		}
 	}
 
+
+	/*
+	 * Used when interacting with various triggers in the world.
+	 * Detects Heavy's forcefield, health pickups, and ammo pickups.
+	 * */
 	public void OnTriggerEnter(Collider coll)
 	{
 		if (coll.tag == "Forcefield")
@@ -601,6 +625,10 @@ public class PlayerCharacter : CharacterBase {
 		}
 	}
 
+	/*
+	 * Called when a trigger is left.
+	 * Used to detect when we leave the forcefield.
+	 * */
 	public void OnTriggerExit(Collider coll)
 	{
 		if (coll.tag == "Forcefield")

@@ -26,6 +26,9 @@ public class EnemySpawner : MonoBehaviour {
 	
 	}
 
+	/*
+	 * Spawns a light class enemy at the given location.
+	 * */
 	public Transform spawnLightEnemy(Vector3 spawnPoint)
 	{
 		Transform enemy = Instantiate(lightEnemy, spawnPoint, Quaternion.identity) as Transform;
@@ -43,6 +46,9 @@ public class EnemySpawner : MonoBehaviour {
 		return enemy;
 	}
 
+	/*
+	 * Spawns a medium class enemy at the given location.
+	 * */
 	public Transform spawnMediumEnemy(Vector3 spawnPoint)
 	{
 		Transform enemy = Instantiate(mediumEnemy, spawnPoint, Quaternion.identity) as Transform;
@@ -60,6 +66,9 @@ public class EnemySpawner : MonoBehaviour {
 		return enemy;
 	}
 
+	/*
+	 * Spawns a heavy class enemy at the given location.
+	 * */
 	public Transform spawnHeavyEnemy(Vector3 spawnPoint)
 	{
 		Transform enemy = Instantiate(heavyEnemy, spawnPoint, Quaternion.identity) as Transform;

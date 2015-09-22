@@ -7,6 +7,7 @@ public class TrailScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//Sets velocity in the direction that the bllet is facing(moving)
 		this.rigidbody.AddForce (velocity * transform.forward);
 		Destroy (gameObject, lifetime);
 	}

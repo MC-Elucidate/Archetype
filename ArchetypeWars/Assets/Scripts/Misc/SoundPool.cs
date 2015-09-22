@@ -9,13 +9,10 @@ public class SoundPool : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		try {
+		//Uses to audio sources so that voices and weapon sounds can play at the same time.
 		voice = GetComponents<AudioSource> () [0];
 		weapons = GetComponents<AudioSource> () [1];
-		}
-		catch(System.IndexOutOfRangeException) {
-			Debug.Log ("Someone still needs an audio source\nCheck the enemy prefabs");
-		}
+
 	}
 	
 	// Update is called once per frame
@@ -23,55 +20,83 @@ public class SoundPool : MonoBehaviour {
 	
 	}
 
+	/*
+	 * Plays the weapon fire sound
+	 */
 	public void pew()
 	{
 		weapons.clip = weaponLRSound;
 		weapons.Play();
 	}
 
+	/*
+	 * Plays the melee swing sound
+	 */
 	public void meleeSound()
 	{
 		weapons.clip = weaponSRSound;
 		weapons.Play();
 	}
 
+	/*
+	 * Plays the jump sound
+	 */
 	public void playJumpSound()
 	{
 		voice.clip = jumpSound;
 		voice.Play();
 	}
 
+	/*
+	 * Plays the sound when the character takes damage
+	 */
 	public void playHitSound()
 	{
 		voice.clip = hitSound;
 		voice.Play();
 	}
 
+	/*
+	 * Plays the sound for the first special ability
+	 */
 	public void playSpecial1Sound()
 	{
 		voice.clip = special1Sound;
 		voice.Play();
 	}
 
+	/*
+	 * Plays the sound for the second special ability
+	 */
 	public void playSpecial2Sound()
 	{
 		voice.clip = special2Sound;
 		voice.Play();
 	}
 
+	/*
+	 * Plays the sound for the third special ability (super)
+	 */
 	public void playSpecial3Sound()
 	{
 		voice.clip = special3Sound;
 		voice.Play();
 	}
 
+
+	/*
+	 * Plays the sound for when the character's health reaches 0
+	 */
 	public void playDeathSound()
 	{
 		voice.clip = deathSound;
 		voice.Play();
 	}
 
-	public void playContextSound()	//This sound is for things like the commander's melee heal, or if another player has a specific interaction
+	/*
+	 * An extra sound for special context situations. varies between characters.
+	 */
+	public void playContextSound()
 	{
 		voice.clip = contextSound;
 		voice.Play();

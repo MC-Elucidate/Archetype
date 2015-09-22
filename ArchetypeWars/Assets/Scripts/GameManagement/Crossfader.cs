@@ -30,6 +30,10 @@ public class Crossfader : MonoBehaviour {
 	}
 	
 	void Update() {
+
+		//Transitions BGM from combat music to down-time music.
+		//Uses crossfade to transition between tracks.
+
 		if (RoundManager.currentRound == RoundManager.Round.Survival && combatAudio.volume < targetVolume)
 		{
 			combatAudio.volume += fadeFactor * Time.deltaTime;
@@ -55,6 +59,5 @@ public class Crossfader : MonoBehaviour {
 			lowkeyAudio.time = 2.944f;
 
 	}
-		// crossfade sound2 to sound1 in 0.6f seconds
-		//CrossFade(audio2, audio1, 0.6f);
+		
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class MeleeStats : MonoBehaviour {
 
 	public int damage;
-	public float poisedmg = 90;
+	public float poisedmg = 30;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,8 +17,8 @@ public class MeleeStats : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
+		//Deals damage to enemy actors if the melee weapon collides with them.
 		if (other.tag == "Enemy") {
-			//Debug.Log ("Smack");
 			other.gameObject.SendMessage ("receiveDamage", damage);
 			other.gameObject.SendMessage ("receivePoiseDamage", poisedmg);
 		}

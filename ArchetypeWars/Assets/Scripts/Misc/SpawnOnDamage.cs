@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+//=================================================
+//NOT USED AT THE MOMENT
+//=================================================
+
+
 public class SpawnOnDamage : MonoBehaviour {
+
+
 
 	public GameObject hole;
 	public float dThresh; //how much damage taken before the object breaks or explodes

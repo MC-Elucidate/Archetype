@@ -17,6 +17,7 @@ public class MeleeStatsEnemy : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other)
 	{
+		//Deals damage to player actors if the melee weapon collides with them.
 		if (other.tag == "Player") {
 			other.gameObject.SendMessage ("receiveDamage", damage);
 			other.gameObject.SendMessage ("receivePoiseDamage", poisedmg);

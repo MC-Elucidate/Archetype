@@ -3,14 +3,14 @@ using System.Collections;
 
 public class MovementController: MonoBehaviour {
 
-	//public float rotSpeed = 7f;
-
+	//Wallrun restrictions
 	private float wallrunTime = 0.7f, currentWallrun = 0;
 
 	private CharacterController charCon;
 	private Animator anim;
 	private PlayerCharacter character;
 
+	//Tags set by base class to handle which player is being used
 	protected string verticalTag, horizontalTag, mouseXTag, jumpTag, wallrunTag, slideTag, mouseYTag, fireTag, special1Tag, special2Tag, superTag, meleeTag;
 
 	// Use this for initialization
@@ -70,7 +70,7 @@ public class MovementController: MonoBehaviour {
 				character.special1 ();
 			else if (Input.GetButtonDown (special2Tag)) //Performing special 2
 				character.special2 ();
-			else if (Input.GetButtonDown (superTag)) //Performing super move
+			else if (Input.GetButtonDown (superTag) || Input.GetAxis (fireTag) < 0) //Performing super move
 				character.super ();
 			else if (Input.GetAxis (fireTag) > 0) //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
 				character.shootWeapon ();
@@ -99,15 +99,6 @@ public class MovementController: MonoBehaviour {
 
 				character.wallrunDiagonal ();
 
-				/*
-				if (Input.GetButtonDown (jumpTag) && !doubleJumping) { //Jump off wall. Allows player to leap in direction being held. Uses double jump
-					zMove = Input.GetAxis (verticalTag) * jumpPower * speed;
-					xMove = Input.GetAxis (horizontalTag) * jumpPower * speed;
-					verticalVel = jumpPower;
-					wallRunning = wallrunLeft = wallrunRight = false;
-					currentWallrun = 0f;
-					doubleJumping = true;
-				}*/
 
 				if (Input.GetButtonUp (wallrunTag)) { //Release wallrun button. Ends wallrun. Begins freefall
 					character.wallrunEnd ();
@@ -117,20 +108,20 @@ public class MovementController: MonoBehaviour {
 					currentWallrun = 0;
 				}
 			}
-		} else if (character.sliding) {
+		} else if (character.sliding) { //if we're sliding
 			character.slide ();
-		} else if (!character.alive) {
+		} else if (!character.alive) { //if we're dead
 			character.movementUpdate(0, 0);
 		}
 		 
-
+		//Move character corresponding to the velocity vector
 		charCon.Move (transform.rotation * character.velocity * Time.deltaTime);
 
 		//Camera Up/Down Movement
 		float pitch = Input.GetAxis (mouseYTag) * character.rotSpeed;
 		character.rotateCamera (pitch);
 
-
+		//Set animator variables
 		anim.SetBool ("Sliding", character.sliding);
 		anim.SetBool ("WeaponHeld", character.weaponHeld);
 		anim.SetBool ("Wallrunning", character.wallRunning);
@@ -151,11 +142,12 @@ public class MovementController: MonoBehaviour {
 	/*
 	* Method called when the character collides with an object.
 	* Used to determine if we should wallrun, and which direction we should wallrun in.
+	* Checks first if we should wallrun straight up, then right, then left.
+	* Only wallruns if we encounter an object tagged as "Wall".
 	*/
 	protected void OnControllerColliderHit(ControllerColliderHit collision) {
 		if (collision.gameObject.tag == "Wall" && Input.GetButton(wallrunTag) && !character.wallRunning && character.velocity.z > 0 && !character.sliding && !character.doubleJumping){
 			RaycastHit target;
-			//Debug.Log("Doublejumping: " + doubleJumping);
 			if(Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.forward, out target, character.characterRadius))
 			{
 				if(target.transform.gameObject.tag == "Wall")
@@ -165,11 +157,9 @@ public class MovementController: MonoBehaviour {
 					character.isGrounded = false;
 					character.velocity.y = 1f;
 					float angle = Vector3.Angle(transform.forward, target.normal);
-					//Debug.Log(wallRunning);
 					angle -= 180;
 					transform.Rotate(0, -angle, 0);
 					angle = Vector3.Angle(transform.forward, target.normal) - 180;
-					//Debug.DrawRay(transform.position + new Vector3(0, 1, 0), (transform.position + new Vector3(0,1,0)) - target.point, Color.blue, 0.8f);
 					if(angle != 180)
 					{
 						transform.Rotate(0, angle, 0);

@@ -8,6 +8,11 @@ public class CommanderScript: PlayerCharacter {
 	
 	//Heal
 	private int healAmount = 200;
+
+	//Rage Attack
+	private int rageDamage = 100, ragePoiseDamage = 15;
+	private float rageRadius = 10f;
+
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
@@ -21,8 +26,8 @@ public class CommanderScript: PlayerCharacter {
 		//Character-specific weapon stats
 		weaponRange = 200f;
 		weaponFireRate = 0.1f;
-		spreadRate = 0.07f;
-		maxSpread = 12;
+		spreadRate = 0.14f;
+		maxSpread = 24;
 		gunDamage = 16;
 		ammoCount = 120;
 		maxAmmo = 120;
@@ -39,8 +44,11 @@ public class CommanderScript: PlayerCharacter {
 	protected void Update () {
 		base.Update ();
 	}
+
 	public void FixedUpdate(){
 		base.FixedUpdate ();
+
+		//Uses FixedUpdate to countdown to the time where the Buff from her special will be turned off for all players.
 		if (currentBuff > 0)
 		{
 			currentBuff -= Time.fixedDeltaTime;
@@ -51,18 +59,31 @@ public class CommanderScript: PlayerCharacter {
 			}
 		}
 	}
+
+	/*
+	 * Performs a melee attack. Uses base class method
+	*/
 	public override void meleeAttack()
 	{
 		base.meleeAttack ();
 	}
 
+	/*
+	 * Fires weapon. Uses base class method
+	*/
 	public override void shootWeapon()
 	{
 		base.shootWeapon ();
 	}
 
+
+	/*
+	 * Applies a buff to all players.
+	 * Increases their damage and armour
+	*/
 	public override void special1()
 	{
+		//Checks cooldown.
 		if (currentSpecial1 <= 0) {
 			currentSpecial1 = special1CD;
 			currentBuff = buffDuration;
@@ -71,9 +92,13 @@ public class CommanderScript: PlayerCharacter {
 			sounds.playSpecial1Sound();
 		}
 	}
-	
+
+	/*
+	 * Heals all players.
+	*/
 	public override void special2()
 	{
+		//Checks cooldown.
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
 			foreach(Transform player in RoundManager.players)
@@ -81,17 +106,30 @@ public class CommanderScript: PlayerCharacter {
 			sounds.playSpecial2Sound();
 		}
 	}
-	
+
+	/*
+	 * Deals damage to all enemies in an area around the commander.
+	 */
 	public override void super()
 	{
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
-			Debug.Log ("Doing super");
+			Collider[] hitColliders = Physics.OverlapSphere (transform.position, rageRadius);
+			foreach(Collider coll in hitColliders)
+			{
+				if(coll.tag == "Enemy")
+				{
+					coll.gameObject.SendMessage("receiveDamage", rageDamage);
+					coll.gameObject.SendMessage("receivePoiseDamage", ragePoiseDamage);
+				}
+			}
 			sounds.playSpecial3Sound();
 		}
 	}
 
-	
+	/*
+	 * Rotates camera. Uses base class method.
+	*/
 	public override void rotateCamera(float pitch)
 	{
 		base.rotateCamera (pitch);

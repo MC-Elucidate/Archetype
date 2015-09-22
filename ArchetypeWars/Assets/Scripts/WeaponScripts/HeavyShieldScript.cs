@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+/*
+ * Acts as a trigger that, when entered, gives a buff to the players. Code for buff is in player class
+ * When left, Buff is removed.
+ * Buff is aso removed when the forcefield expires.
+ * */
 public class HeavyShieldScript : MonoBehaviour {
 
 	public float velocity;
 	public float lifetime = 20f;
 	public GameObject[] players;
 
-	//Collisions cause trouble with the shooting raycasts. 
-	//We can rather store character positions here and measure distance between them in the update or once a second.
-	//If they're less than the sphere of influence's distance, then give them a buff. 
 
 	// Use this for initialization
 	void Start () {
@@ -21,13 +24,7 @@ public class HeavyShieldScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*
-		foreach (GameObject player in players) {
-		
-			//Debug.Log (player.name + " is " + (player.transform.position - this.transform.position).magnitude + " units away from the shield");
-			if ((player.transform.position - this.transform.position).magnitude <= 8)
-				Debug.Log ("Give shield buff");
-		}*/
+
 	}
 
 	void OnDestroy()

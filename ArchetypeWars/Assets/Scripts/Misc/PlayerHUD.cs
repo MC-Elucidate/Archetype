@@ -2,6 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/*
+ * Sets values on GUI to corresponding character's information.
+ * */
+
 public class PlayerHUD : MonoBehaviour {
 
 	/// <summary>
@@ -43,8 +47,11 @@ public class PlayerHUD : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+		//Shows player health and ammo
 		healthVal.text = character.getHealth ().ToString ();
 		ammoVal.text = character.getAmmo().ToString();
+
+		//Shows abilities' cooldowns
 		if (character.getCooldownOne () <= 0)
 			cooldownOneVal.text = "Ready!";
 		else
@@ -61,11 +68,15 @@ public class PlayerHUD : MonoBehaviour {
 			cooldownThreeVal.text = Mathf.Round (character.getCooldownThree()).ToString();
 	}
 
+
 	public void setCam()
 	{
 		gameObject.GetComponent<Canvas>().worldCamera = followcam;
 	}
 
+	/*
+ 	* Sets portraits for the characters
+ 	* */
 	public void setPortraitHeavy() {
 		this.gameObject.GetComponentInChildren<Image> ().overrideSprite = heavy_portrait;
 	}
@@ -82,6 +93,9 @@ public class PlayerHUD : MonoBehaviour {
 		this.gameObject.GetComponentInChildren<Image> ().overrideSprite = sniper_portrait;
 	}
 
+	/*
+ 	* Sets the names of the abilities
+ 	* */
 	public void setCooldownName(int cooldown, string name) {
 		switch (cooldown) {
 		case 1:

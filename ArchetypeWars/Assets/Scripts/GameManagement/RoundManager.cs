@@ -93,7 +93,6 @@ public class RoundManager : MonoBehaviour {
 			roundTimer -= Time.deltaTime;
 			reinforcementTimer -= Time.deltaTime;
 
-			//Which spawn logic do we want?
 
 			if (reinforcementTimer <= 0 && currentRound == Round.Survival) {
 				SpawnEnemies_Survival();
@@ -139,19 +138,23 @@ public class RoundManager : MonoBehaviour {
 	//ROUND CONTROL METHODS
 	//========================================================================================
 
+	/*
+	 * Starts a break round between survival rounds.
+	 * */
 	void KillRound(){
 	
 		currentRound = Round.PreRound;
 		roundTimer = 10f;
 		ResetConditions ();
 		KillAllEnemies ();
-		Debug.Log ("Killing round. 10 seconds to new round");
+		//Debug.Log ("Killing round. 10 seconds to new round");
 	}
 
+	/*
+	 * Starts a new round. Currently on survival implemented.
+	 * */
 	void NewRound(){
 
-		//Spawns one enemy for testing purposes
-		//spawner.spawnMediumEnemy (new Vector3(10, 1, 10f));
 
 		reinforcementTimer = reinforcementDelay;	//Making sure this variable starts the same for
 
@@ -168,7 +171,7 @@ public class RoundManager : MonoBehaviour {
 			roundTimer = 120f;
 			enemyCount = 10;
 			reinforcementTimer = 0;
-			Debug.Log ("New round initiated. Current round is Survival Mode. Get ready to die!");
+			//Debug.Log ("New round initiated. Current round is Survival Mode. Get ready to die!");
 			break;
 
 		case 1:	//TODO: CTF
@@ -176,6 +179,9 @@ public class RoundManager : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * Checks if the victory conditions for the round have been met
+	 * */
 	bool CheckVictory() {
 
 		if (currentRound == Round.Survival) {
@@ -192,9 +198,12 @@ public class RoundManager : MonoBehaviour {
 		return false;
 	}
 
+	/*
+	 * Respawns all player characters.
+	 * */
 	void RespawnPlayers() {
 		//Use this to revive all players if at least one player survives a round
-		//TODO: Implement this shit
+		//TODO: Implement this
 
 		/*
 		foreach (Transform player in players) {
@@ -208,6 +217,10 @@ public class RoundManager : MonoBehaviour {
 		
 	}
 
+	/*
+	 * Resets all conditions between rounds.
+	 * Resets affixes and timers.
+	 * */
 	void ResetConditions() {
 
 		//Use this to set all the round conditions to 0 in the pre-round
@@ -234,6 +247,9 @@ public class RoundManager : MonoBehaviour {
 		enemy_explosiveShots = false;
 	}
 		
+	/*
+	 * Add points to the total score.
+	 * */
 	public void AddScore(int points) {						//addScore for anything rewards, like round survival or kills
 		score += points;
 	}
@@ -242,12 +258,11 @@ public class RoundManager : MonoBehaviour {
 	//SURVIVAL MODE-SPECIFIC METHODS
 	//========================================================================================
 
-	/* //DEPRECATED
-	public void KillConfirmEnemy() {
-		//Use this method to decrement the enemyCount in Survival Mode
-		enemyCount--;
-	}*/
 
+	/*
+	 * Kill all enemies in the scene.
+	 * Used at the end of a round.
+	 * */
 	void KillAllEnemies() {
 		//Use this when the round ends to clear the battlefield.
 
@@ -259,9 +274,11 @@ public class RoundManager : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * Spawns enemies for survival mode.
+	 * */
 	void SpawnEnemies_Survival() {
 
-		//Debug.Log ("Spawning enemies");
 		int currentForceSize = GameObject.FindGameObjectsWithTag("Enemy").Length;
 		
 		reinforcementSize = Random.Range (3, 7);	//3 to 6 enemies spawned at a time
@@ -283,7 +300,7 @@ public class RoundManager : MonoBehaviour {
 			}
 		}
 
-		Debug.Log("Current enemies on the battlefield: " + GameObject.FindGameObjectsWithTag("Enemy").Length);
+		//Debug.Log("Current enemies on the battlefield: " + GameObject.FindGameObjectsWithTag("Enemy").Length);
 	}
 
 	//========================================================================================
@@ -297,7 +314,7 @@ public class RoundManager : MonoBehaviour {
 
 	void SpawnEnemies_CTF() {
 	
-		Debug.Log ("Later");
+		//Debug.Log ("Later");
 	}
 
 	//========================================================================================
@@ -308,10 +325,13 @@ public class RoundManager : MonoBehaviour {
 	//ALTERNATE ROUND METHOD
 	//========================================================================================
 
+	/*
+	 * Changes affixes for a new round.
+	 * */
 	void SetAlternateRound() {
 		//This method will modify the affixes based on the Affixes drawn from the list
 
-		Debug.Log ("Alternate Round selected!");
+		//Debug.Log ("Alternate Round selected!");
 
 		//AFFIX 1
 		Affix affix_1 = GetRandomEnum<Affix>();
@@ -343,6 +363,9 @@ public class RoundManager : MonoBehaviour {
 		affixThree = affix_3;
 	}
 
+	/*
+	 * Makes changes to appropriate actors in the scene based on affixes selected.
+	 * */
 	void ModifyAffix(Affix thisAffix) {
 
 		//Modify the correct multiplier using this method
@@ -404,6 +427,9 @@ public class RoundManager : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * Chooses random affix.
+	 * */
 	static T GetRandomEnum<T>()
 	{
 		System.Array A = System.Enum.GetValues(typeof(T));
@@ -411,14 +437,23 @@ public class RoundManager : MonoBehaviour {
 		return V;
 	}
 
+	/*
+	 * returns current round type
+	 * */
 	public Round getRound() {
 		return currentRound;
 	}
 
+	/*
+	 * returns current score
+	 * */
 	public int getScore() {
 		return score;
 	}
 
+	/*
+	 * Ends game. Returns to main menu
+	 * */
 	public void ExitGame() {
 		Destroy (GameObject.Find ("CharacterSelectManager"));
 		Screen.lockCursor = false;

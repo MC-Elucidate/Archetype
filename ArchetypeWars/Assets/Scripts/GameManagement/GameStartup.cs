@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * Keeps information of character from player select that can be loaded in the main gameplay scene.
+ * */
+
 public class GameStartup : MonoBehaviour {
 
 	private int char1;
@@ -33,6 +37,9 @@ public class GameStartup : MonoBehaviour {
 		}
 	}
 
+	/*
+ 	* Starts game if at least one character is chosen.
+ 	* */
 	public void startGame() {
 		if (playerChoosing > 1) {
 			DontDestroyOnLoad (this);
@@ -44,6 +51,9 @@ public class GameStartup : MonoBehaviour {
 
 	}
 
+	/*
+ 	* Sets status of character to "selected". They cannot be selected again until deselected.
+ 	* */
 	public void selectCharacter(int charNo) {
 		//Select open character
 		switch (charNo) {
@@ -53,14 +63,11 @@ public class GameStartup : MonoBehaviour {
 				
 				char1 = playerChoosing; //Set currently selecting player as that character
 				playerChoices[playerChoosing] = charNo; //Set currently choosing player to the character selected
-				
-				//Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
+
 				
 				//Next player chooses
 				playerChoosing++;
-				
-				//Debug.Log("Player 1 selected");
-				//Debug.Log(playerChoosing);
+
 			}
 			//Can't select character
 			else{
@@ -100,8 +107,6 @@ public class GameStartup : MonoBehaviour {
 				//Next player chooses
 				playerChoosing++;
 				
-				//Debug.Log("Player 1 selected");
-				//Debug.Log(playerChoosing);
 			}
 			else{
 				Debug.Log ("This player has already been chosen");
@@ -131,73 +136,17 @@ public class GameStartup : MonoBehaviour {
 		}
 
 
-		/*
-		else  if (charNo == 2) {
-			if (char2_selected==false) {
-				char2_selected = !char2_selected;
-				playerChoices[playerChoosing] = charNo;
-				Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
-				playerChoosing++;
-				//Debug.Log("Player 2 selected");
-				Debug.Log(playerChoosing);
-			}
-			else if (char2_selected==true) {
-				char2_selected = !char2_selected;
-				playerChoices[playerChoosing] = 0;
-				Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
-				playerChoosing--;
-				//Debug.Log("Player 2 deselected");
-				Debug.Log(playerChoosing);
-			}
-		}
 
-		else  if (charNo == 3) {
-			if (char3_selected==false) {
-				char3_selected = !char3_selected;
-				playerChoices[playerChoosing] = charNo;
-				Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
-				playerChoosing++;
-				//Debug.Log("Player 3 selected");
-				Debug.Log(playerChoosing);
-			}
-			else if (char3_selected==true) {
-				char3_selected = !char3_selected;
-				playerChoices[playerChoosing] = 0;
-				Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
-				playerChoosing--;
-				//Debug.Log("Player 3 deselected");
-				Debug.Log(playerChoosing);
-			}
-		}
-
-		else  if (charNo == 4) {
-			if (char4_selected==false) {
-				char4_selected = !char4_selected;
-				playerChoices[playerChoosing] = charNo;
-				Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
-				playerChoosing++;
-				//Debug.Log("Player 4 selected");
-				Debug.Log(playerChoosing);
-			}
-			else if (char4_selected==true) {
-				char4_selected = !char4_selected;
-				playerChoices[playerChoosing] = 0;
-				Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
-				playerChoosing--;
-				//Debug.Log("Player 4 deselected");
-				Debug.Log(playerChoosing);
-			}
-		}
-		*/
 	}
 
+	/*
+ 	* Deselects last character selected.
+ 	* */
 	public void cancelLastCharacterSelect() {
 
 		//Use this function when the player presses Circle or some shit
 
 		if (playerChoosing>1) {						//If at least player1 has chosen...
-
-			//Debug.Log("Player " + (playerChoosing-1) + " is deselecting character " + playerChoices[playerChoosing-1]);
 
 			switch (playerChoices[playerChoosing-1]) {	//Set the character they chose before as -1
 				case 1:

@@ -33,6 +33,10 @@ public class EnemyMedium : EnemyCharacter {
 		base.OnDestroy();
 	}
 
+	/*
+	 * Overrides base method.
+	 * Works mostly the same, but a simplefied version to rotate the gun to face the player.
+	 * */
 	public override void checkIK()
 	{
 		if (weaponHeld == true)
@@ -50,11 +54,6 @@ public class EnemyMedium : EnemyCharacter {
 					
 					LRWeapon.transform.localPosition = Vector3.zero;
 					LRWeapon.transform.localEulerAngles = new Vector3(350, 70,137);
-					//LRWeapon.transform.Rotate(220, 0, 180);
-					//LRWeapon.transform.RotateAround (RHandPos.position, Vector3.up, 90); 
-					//LRWeapon.transform.Rotate(0, 20, 0);
-					//LRWeapon.transform.RotateAround (RHandPos.position, stransform.right, 90); 
-					//print ("Gun withdrawn");
 					an_Set = true;
 					weaponDrawn = true;
 					useIK = true;
@@ -69,13 +68,11 @@ public class EnemyMedium : EnemyCharacter {
 		{
 			if (weaponDrawn)
 			{
-				//anim.SetLayerWeight(1, 0f);
 				LRWeapon.SetActive (false);
 				useIK = false;
 				an_Set = false;
 				an_dt = 0f;
 				weaponDrawn = false;
-				//print ("Gun put away");
 			}
 			
 		}

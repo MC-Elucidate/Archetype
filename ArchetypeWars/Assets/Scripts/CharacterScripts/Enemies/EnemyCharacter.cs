@@ -9,7 +9,6 @@ public class EnemyCharacter : CharacterBase {
 	
 	//random shooting
 	protected int shootSuccessCount = 0; //counts the number of successful shooting attempts (before shooting can be done)
-	//protected System.Random r;
 
 	//Shooting distance variables
 	public float shootingRange = 10;
@@ -37,15 +36,10 @@ public class EnemyCharacter : CharacterBase {
 		base.FixedUpdate ();
 	}
 
-/*	public void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == "PlayerMelee") {
-			MeleeStats ms = other.gameObject.GetComponent<MeleeStats> ();
-			receiveDamage (ms.damage);
-			receivePoiseDamage(ms.poisedmg);
-		}
-	}*/
-
+	/*
+	 * Used to receive damage.
+	 * Increases hitcount for the AI to respond to taking damage and then calls base method to apply damage.
+	 * */
 	public override void receiveDamage(int dmg)
 	{
 		hitCount++;

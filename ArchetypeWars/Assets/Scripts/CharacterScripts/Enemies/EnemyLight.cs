@@ -33,12 +33,18 @@ public class EnemyLight : EnemyCharacter {
 		base.OnDestroy();
 	}
 
+	/*
+	 * Overrides all IK methods as the melee class requires no IK
+	 * */
 	public override void checkIK()
 	{}
 	
 	public void OnAnimatorIK()
 	{}
 
+	/*
+	 * Overrides the shoot method as the melee class doesn't fire projectiles.
+	 * */
 	public override void shootWeapon ()
 	{
 

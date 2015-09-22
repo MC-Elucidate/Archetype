@@ -10,6 +10,7 @@ public class SniperKiballScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//Sets velocity when its created in the direction it is created facing.
 		this.rigidbody.AddForce (velocity * transform.forward);
 		Destroy (this.gameObject, lifetime);
 	}
@@ -20,6 +21,7 @@ public class SniperKiballScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		//Applies damage to every enemy passed through
 		if(other.tag == "Enemy")
 			other.gameObject.SendMessage ("receiveDamage", damage);
 
