@@ -13,7 +13,7 @@ public class EnemyMedium : EnemyCharacter {
 		weaponFireRate = 0.2f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
-		gunDamage = 3;
+		gunDamage = 16;
 
 		//Melee
 		meleeMax = 1;

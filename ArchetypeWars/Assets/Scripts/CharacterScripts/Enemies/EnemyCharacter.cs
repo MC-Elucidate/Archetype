@@ -11,8 +11,8 @@ public class EnemyCharacter : CharacterBase {
 	protected int shootSuccessCount = 0; //counts the number of successful shooting attempts (before shooting can be done)
 
 	//Shooting distance variables
-	public float shootingRange = 10;
-	public float stoppingRange = 5;
+	public float shootingRange = 25;
+	public float stoppingRange = 8;
 
 	//agent attack/retreat attributes
 	public int rage; //how aggressive the agent is.max = 10 for now
@@ -65,7 +65,7 @@ public class EnemyCharacter : CharacterBase {
 				float error = ((float)r.NextDouble()) * errFactor * distance/shootingRange;
 				Vector3 accuracyError =  new Vector3( error, 0, 0);//by how much does the agent miss the target.Directly proportional to the distance from target
 				Physics.Raycast (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, out hit, weaponRange);
-				Debug.DrawRay (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, Color.green, 0.8f);
+				//Debug.DrawRay (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, Color.green, 0.8f);
 				weaponFireRateTimer = weaponFireRate;
 				spreadCount++;
 				spreadRateTimer = spreadRate;

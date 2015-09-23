@@ -190,6 +190,7 @@ public class PlayerCharacter : CharacterBase {
 
 		if (health <= 0) {
 			health = 0;
+			aggro = 0;
 			alive = false;
 			freemove = false;
 			cam.transform.parent = null;

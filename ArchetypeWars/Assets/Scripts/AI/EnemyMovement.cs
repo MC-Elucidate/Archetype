@@ -17,14 +17,18 @@ public class EnemyMovement : MonoBehaviour {
 	protected float zMove = 0.0f;
 	
 	protected EnemyCharacter character;
+
+	//AI control unit for each agent
 	protected AI_Logic logic;
 
 	
 
-	//public bool vertical_Move, horizontal_Move, jump_Move, wallrun_Move, slide_Move, 
 	public bool fire_Move, special1_Move;
-	protected float time,shootTimeOut; //time and timeout floats
+	protected float time,shootTimeOut; //attributes to keep track of time and time outs
 	protected bool rotated = false; //check if rotation was set somewhere else
+
+	//Melee cooldowns
+	private float meleeCooldown = 3, currentMeleeTime = 0;
 
 	void Start () 
 	{
@@ -44,20 +48,9 @@ public class EnemyMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		/*
-		//Debug.DrawRay (transform.position + Vector3.up , 30 *transform.forward, Color.red);
-		if (rotated == false) //avoid rotation fighting among code sections changing the rotation
-		{
-			//match the nav agent's rotation
-			transform.rotation = Quaternion.Slerp (transform.rotation, agent.transform.rotation, 2.0f * Time.deltaTime);
-		}
-		/*
-		 * Vector3 moveDir = agent.transform.position - transform.position;
-		moveDir.y = 0;
-		moveDir.Normalize ();
-		//print (moveDir);
-		charCon.Move (speed * moveDir * Time.deltaTime);
-		*/
+		//Update melee cooldown
+		if (currentMeleeTime > 0)
+			currentMeleeTime -= Time.deltaTime;
 
 		switch (logic.mainState) {
 		case AI_Logic.FiniteState.Chase:
@@ -73,10 +66,11 @@ public class EnemyMovement : MonoBehaviour {
 					lookAt(logic.threat.position);
 					if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
 						character.meleeAttackEnd ();
-					else if (Vector3.Distance(transform.position, logic.threat.position) < 5) //adjust this 
+					else if (Vector3.Distance(transform.position, logic.threat.position) < 3 && currentMeleeTime <= 0) //adjust this 
 					{
 					//closer to target
 						character.meleeAttack ();
+						currentMeleeTime = meleeCooldown;
 						
 					}
 					else
@@ -124,8 +118,6 @@ public class EnemyMovement : MonoBehaviour {
 		anim.SetBool ("Sliding", sliding);
 		anim.SetBool ("WeaponHeld", weaponHeld);
 		anim.SetBool ("Alive", character.alive);
-		//anim.SetBool ("Stunned", character.stunned);
-		//anim.SetBool ("KnockedDown", character.knockedDown);
 		anim.SetFloat ("Poise", character.currentPoise);
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
@@ -212,6 +204,8 @@ public class EnemyMovement : MonoBehaviour {
 		return atDestination;
 	}
 
+	/*Changes the agent's rotation to look towards pos
+		 */
 	public void lookAt(Vector3 pos)
 	{
 		Transform targetOrientation = transform;

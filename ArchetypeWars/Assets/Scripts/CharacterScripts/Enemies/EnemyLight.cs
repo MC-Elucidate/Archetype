@@ -17,7 +17,9 @@ public class EnemyLight : EnemyCharacter {
 		
 		//Melee
 		meleeMax = 1;
-		
+		shootingRange = 3;
+		stoppingRange = 1;
+
 		SRWeapon.SetActive (false);
 	}
 	

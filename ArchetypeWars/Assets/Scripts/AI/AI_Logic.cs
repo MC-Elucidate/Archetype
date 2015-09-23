@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 public class AI_Logic : MonoBehaviour {
-
-	// Use this for initialization
+	
+	//enums
 	public enum FiniteState
 	{
 		Patrol, Chase, Attack, Still
@@ -18,7 +18,7 @@ public class AI_Logic : MonoBehaviour {
 
 	public enum AttackState
 	{
-		InPosition, InMotion
+		InPosition, InMotion, Confused
 	}
 
 	public enum WayPoint
@@ -26,6 +26,7 @@ public class AI_Logic : MonoBehaviour {
 		ambush
 	}
 
+	//attributes
 	public FiniteState mainState;
 	public AttackState attackState;
 	public WayPoint targetWayPointType;
@@ -34,11 +35,8 @@ public class AI_Logic : MonoBehaviour {
 	NavMeshAgent agent;
 	public static List<Transform> threats = new List<Transform>();
 	float time = 0.0f;
-	float logicTime, visionTime, threatSpottedTimeOut, ambushTimeOut, motionTimeOut;
-	public float dLogicTime, dVisionTime, dThreatSpottedTimeOut,dAmbushTimeOut, dMotionTimeOut; 
-	//protected NavMeshAgent agent;
-	//public Transform asset; //somethin to protect or patrol around
-	//public Transform probe; //raycast point
+	float logicTime, visionTime, threatSpottedeltaTimeimeOut, ambushTimeOut, motionTimeOut;
+	public float delta_LogicTime, delta_VisionTime, deltaTime_ThreatSpottedTimemeOut,delta_AmbushTimeOut, delta_MotionTimeOut; 
 	private Vector3 dir;
 	public Transform threat; //the target player to attack
 	float targetOffset;
@@ -47,6 +45,10 @@ public class AI_Logic : MonoBehaviour {
 
 	void Start () 
 	{
+		/**Gets called by unity when the script is initialized
+		 * */
+
+		//initialization
 		mainState = FiniteState.Still;
 		attackState = AttackState.InPosition;
 		targetWayPointType = WayPoint.ambush;
@@ -54,18 +56,15 @@ public class AI_Logic : MonoBehaviour {
 		enemyMovement = GetComponent<EnemyMovement> ();
 		character = GetComponent<EnemyCharacter>();
 		agent = gameObject.GetComponent<NavMeshAgent> ();
-		logicTime = dLogicTime;
-		visionTime = dVisionTime;
-		threatSpottedTimeOut = dThreatSpottedTimeOut;
+		logicTime = delta_LogicTime;
+		visionTime = delta_VisionTime;
+		threatSpottedeltaTimeimeOut = deltaTime_ThreatSpottedTimemeOut;
 		threat = null;
-		//agent = enemyMovement.agent;
-		//agent.speed = 1.5f;
 		dir = Vector3.zero;
-		//targetOffset = enemyChar.targetOffset;
 		ambushTimeOut = 0.0f;
-		dAmbushTimeOut = 2.0f;
-		dMotionTimeOut = 8.0f;
-		motionTimeOut = time + dMotionTimeOut;
+		delta_AmbushTimeOut = 2.0f;
+		delta_MotionTimeOut = 8.0f;
+		motionTimeOut = time + delta_MotionTimeOut;
 		tactics = RoundManager.AITactics;
 		rand = new System.Random ();
 	}
@@ -73,47 +72,32 @@ public class AI_Logic : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		/*Gets called by unity once per frame
+		 */
+			logicTime += delta_LogicTime;
+			if ((threat == null) && (attackState != AttackState.Confused)) //the threats are in cloak mode
+			{
+				attackState = AttackState.Confused;
+			}
+		if ((threat != null) && (attackState == AttackState.Confused))//there's at least one threat not in cloak mode
+			{
+			attackState = AttackState.InPosition;
+			int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 7);
+			ambushTimeOut = time + deltaTime;
 
-		//Debug.DrawRay (probe.position , enemyChar.visionRadius * dir.normalized , Color.red);
-			logicTime += dLogicTime;
-
+			}
 
 			switch (mainState)
 			{
-			case FiniteState.Patrol:
-
-		/*		bool threatSpotted = false;
-				if (time > visionTime)
-				{
-					visionTime += dVisionTime;
-
-					threat = LookForThreat ();
-					if (threat != null )//threat was found
-					{
-						mainState = FiniteState.Attack;
-						agent.SetDestination(threat.position);
-						print("time: " + time +" ;chasing the threat");
-						threatSpotted = true;
-						threatSpottedTimeOut = time + dThreatSpottedTimeOut;
-					}
-				}
-
-				if (!threatSpotted)
-				{
-					Vector3 patrolPoint = asset.position;
-					agent.SetDestination(patrolPoint);
-					print("time: " + time +" ;patrolling around the asset");
-				}*/
-				break;
 			case FiniteState.Chase:
 		{
 			
-			if((transform.position - threat.position).magnitude < character.shootingRange)
+			if((transform.position - threat.position).magnitude < character.shootingRange) //threat is within shooting range
 			{
 				mainState = FiniteState.Attack;
 				agent.stoppingDistance = 0.01f;
-				int dT = rand.Next((int)dAmbushTimeOut, (int)dAmbushTimeOut + 2);
-				ambushTimeOut = time + dT; //randomise how long the agent stays at some ambush point
+				int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 2);
+				ambushTimeOut = time + deltaTime; //randomise how long the agent stays at some ambush point
 				agent.Stop();
 
 			}
@@ -123,7 +107,7 @@ public class AI_Logic : MonoBehaviour {
 
 			case FiniteState.Attack:
 		{
-			if((transform.position - threat.position).magnitude > character.shootingRange)
+			if((transform.position - threat.position).magnitude > character.shootingRange) //threat is too far to shoot at
 			{
 				mainState = FiniteState.Chase;
 				agent.stoppingDistance = character.stoppingRange;
@@ -133,17 +117,17 @@ public class AI_Logic : MonoBehaviour {
 			{
 
 
-				if ((time > ambushTimeOut) || (character.hitCount > character.endurance)) //agent has to move away from danger zone
+				if ((time > ambushTimeOut) || (character.hitCount > character.endurance)) //agent has to move away from danger zone or it's time to re position
 				{
 	
 					attackState = AttackState.InMotion;
-					motionTimeOut = time + dMotionTimeOut; //allows the agent to stop after some time if it failed to reach the target point
+					motionTimeOut = time + delta_MotionTimeOut; //allows the agent to stop after some time if it failed to reach the target point
 					character.hitCount = 0;
 					Vector3 targetWayPoint;
 					if (character.hitCount > character.endurance) //agent shot more times than it can tolerate
-						targetWayPoint = tactics.LookForAmbushPoint(Strategy.StepBack,transform, threat);
+						targetWayPoint = tactics.LookForAmbushPoint(Strategy.StepBack,transform, threat); //agent has to move away from danger
 					else //ambush timeout
-						targetWayPoint = tactics.LookForAmbushPoint(character.strategy,transform, threat);
+						targetWayPoint = tactics.LookForAmbushPoint(character.strategy,transform, threat); //find a point to allow the agent's strategy
 					agent.SetDestination (targetWayPoint);
 					targetWayPointType = WayPoint.ambush;
 				}
@@ -158,8 +142,8 @@ public class AI_Logic : MonoBehaviour {
 					if (targetWayPointType == AI_Logic.WayPoint.ambush) //reached an ambush point
 					{
 						attackState = AI_Logic.AttackState.InPosition;
-						int dT = rand.Next((int)dAmbushTimeOut, (int)dAmbushTimeOut + 7);
-						ambushTimeOut = time + dT;
+						int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 7);//how long should the agent hold the ambush position
+						ambushTimeOut = time + deltaTime;
 					}
 
 				}
@@ -168,86 +152,18 @@ public class AI_Logic : MonoBehaviour {
 
 			time += Time.deltaTime;
 		}
-				//print("time " + time +" ;attacking");
-			/*
-				if (time > visionTime)
-				{
-					visionTime += dVisionTime;
-					
-					Transform threatT = LookForThreat ();
-					if (threatT != null )//threat was found
-					{
-						threat = threatT; //update the threat transform
-						threatSpottedTimeOut += dThreatSpottedTimeOut; //postpone time out
-						print ("saw her");
-						enemyMovement.Shoot(7.0f);
-					}
-					else
-					{
-						print ("couldnt see her");
-					}
-
-				}
-
-				agent.SetDestination(threat.position); ///always follow the threat in the attack state
-				if (time > threatSpottedTimeOut) //the threat has been out of sight for a while
-				{
-					mainState = FiniteState.Patrol;
-					visionTime = time + dVisionTime;
-					print("time: " + time +" ;time to patrol");
-				}
-*/
-				break;
+		break;
 				
-			}
+	}
 		time += Time.deltaTime;
 
-
-
 	}
 
-	/*
-	protected Transform LookForThreat() //Checks if any of the players are visible to the agent and returns the index of the closest player
-	{
-		foreach (Transform threat in threats)
-		{
-			dir = threat.position + targetOffset * Vector3.up - probe.position; //direction to the threat.offset from the threat's feet
-			//print ("threat distance: " + dir.magnitude + " radius: " + enemyChar.visionRadius);
-			if (dir.magnitude < enemyChar.visionRadius) //threat within vision radius
-			{
-				//print ("closer");
-				if (Mathf.Abs(Vector3.Angle (dir.normalized, transform.forward)) < enemyChar.visionField) //threat within agent's field of vision
-				{
-					//print ("within the field");
-					RaycastHit hit;
-					if (Physics.Raycast(probe.position , dir, out hit, enemyChar.visionRadius))
-					{
-						//print ("hit something");
-						if (hit.collider.gameObject.tag == threat.gameObject.tag)
-						{
-							//print ("saw the threat");
-							return threat;
-
-						}
-					}
-				}
-			}
-
-		}
-
-		return null;
-	}*/
-
-	//Function to determine which character this AI chases and attacks
 	public Vector3 getTarget()
 	{
+		/*Determines which character this AI chases and attacks
+		 * */
 		return threat.position;
 	}
-
-
-	//Use this to calculate which character in the threats list to attack. 
-	//Each character will have a CharacterBase component containing their aggro.
-	//Threat level is directly proportional to a character's aggro, and inversely proportional to their distance from this AI
-
-
+	
 }

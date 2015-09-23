@@ -121,6 +121,10 @@ public class NinjaScript: PlayerCharacter {
 			aggro = invisAggro;
 			currentInvis = invisDuration;
 			sounds.playSpecial2Sound ();
+
+			//Tells AI module to recheck targets immediately after turning invisible.
+			RoundManager.AITactics.assignTargets();
+			RoundManager.AITactics.Strategize();
 		}
 	}
 
