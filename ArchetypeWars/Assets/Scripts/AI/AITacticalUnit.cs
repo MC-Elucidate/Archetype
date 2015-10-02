@@ -2,11 +2,17 @@ using UnityEngine;
 using System.Collections;
 
 public class AITacticalUnit : MonoBehaviour {
-
+	//NB: Changes made: strategize() - Added rage adjustment.you can randomize the value or use a constant
+	//also added static attributes to the class
+	
 	//initialization
 	private float time = 0.0f;
 	private float commandTime,delta_CommandTime = 12.0f; //command agents when the time is right
 	private System.Random rand;
+
+	//static attributes
+	public static int maximum_rage = 20;
+	public static float minimum_melee_distance = 3.0f;
 
 	void Start () {
 		/**Gets called by unity when the script is initialized
@@ -97,6 +103,8 @@ public class AITacticalUnit : MonoBehaviour {
 		{
 			if (RoundManager.enemies[a] != null)
 			{
+				//rage
+				RoundManager.enemies[a].GetComponent<EnemyCharacter>().rage = 14;
 				//strategies
 				int option = rand.Next (0, 10); 
 				if (option < 5)
