@@ -8,7 +8,7 @@ public class CharacterBase : MonoBehaviour {
 	public int health;
 
 	//Weapon stuff
-	protected float weaponRange = 100f, weaponFireRate, weaponFireRateTimer = 0f, spreadRate, spreadRateTimer = 0f, meleeFireRate, meleeFireRateTimer = 0f;
+	protected float weaponRange = 500f, weaponFireRate, weaponFireRateTimer = 0f, spreadRate, spreadRateTimer = 0f, meleeFireRate, meleeFireRateTimer = 0f;
 	protected int ammoCount, maxAmmo, ammoPickup; 			//ammoPickup = how much ammo you get back from pickup
 	protected int spreadCount = 0, maxSpread;				//Accuracy value (pixel range from centre)
 	protected int meleeMax;

@@ -26,7 +26,7 @@ public class HeavyScript: PlayerCharacter {
 		aggro = baseAggro;
 
 		//Character-specific weapon stats
-		weaponRange = 200f;
+		weaponRange = 500f;
 		weaponFireRate = 0.8f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
@@ -77,9 +77,10 @@ public class HeavyScript: PlayerCharacter {
 				
 				//Determine direction that we're aiming in.
 				RaycastHit hit;
-				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0.666667f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0));
-				
-				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
+				//Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0.666667f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0));
+				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0));
+
+				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.2f);
 				Physics.Raycast (camRay, out hit, weaponRange);
 
 				Vector3 target = hit.point;
@@ -92,6 +93,7 @@ public class HeavyScript: PlayerCharacter {
 				Transform rocket;
 				rocket = Instantiate (rocketPrefab, shot_source.position, rocketRotation) as Transform;
 				rocket.gameObject.SendMessage("setDamage",(int)(gunDamage*damageMod));
+				Debug.DrawRay (shot_source.position, hit.point * 10f, Color.green, 0.2f);
 
 				//Handles accuracy and fire rate
 				weaponFireRateTimer = weaponFireRate;
@@ -117,7 +119,8 @@ public class HeavyScript: PlayerCharacter {
 
 			//Determine direction to deploy the object.
 			RaycastHit hit;
-			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f, 0.666667f, 0));
+			//Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f, 0.666667f, 0));
+			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f, 0.5f, 0));
 
 			Physics.Raycast (camRay, out hit, weaponRange);
 

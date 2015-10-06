@@ -161,16 +161,18 @@ public class PlayerCharacter : CharacterBase {
 	 * */
 	public virtual void rotateCamera(float pitch)
 	{
+		Vector3 cameraPivotPoint = transform.position;
+		cameraPivotPoint.y += 0.8f;
 		if (pitch > 0) { // if we look up
-			if(		(cam.transform.localEulerAngles.x > 320) 	|| 	(cam.transform.localEulerAngles.x < 90)		)
+			if(		(cam.transform.localEulerAngles.x > 295) 	|| 	(cam.transform.localEulerAngles.x < 90)		)
 			{
-				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+				cam.transform.RotateAround (cameraPivotPoint, transform.right, -pitch);
 				LRWeapon.transform.RotateAround (RHandPos.position, transform.right, -pitch);
 			}
 		} else if (pitch < 0) { //if we look down
-			if(		(cam.transform.localEulerAngles.x > 270) 	|| 	(cam.transform.localEulerAngles.x < 40)		)
+			if(		(cam.transform.localEulerAngles.x > 270) 	|| 	(cam.transform.localEulerAngles.x < 65)		)
 			{
-				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+				cam.transform.RotateAround (cameraPivotPoint, transform.right, -pitch);
 				LRWeapon.transform.RotateAround (RHandPos.position, transform.right, -pitch);
 			}
 		}
