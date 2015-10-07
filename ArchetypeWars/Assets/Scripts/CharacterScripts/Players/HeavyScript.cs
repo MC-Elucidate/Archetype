@@ -26,7 +26,7 @@ public class HeavyScript: PlayerCharacter {
 		aggro = baseAggro;
 
 		//Character-specific weapon stats
-		weaponRange = 500f;
+		weaponRange = 2000f;
 		weaponFireRate = 0.8f;
 		spreadRate = 0.21f;
 		maxSpread = 12;

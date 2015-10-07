@@ -227,13 +227,14 @@ public class PlayerCharacter : CharacterBase {
 		if (ammoCount > 0) {
 			if (weaponFireRateTimer <= 0) {
 				
-				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0.666667f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0));
+				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0.5f + Random.Range (-spreadCount * spreadFactor, spreadCount * spreadFactor), 0));
 				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
 				Physics.Raycast (camRay, out hit, weaponRange);
 
 				Vector3 target = hit.point;
 				Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
 				Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+				//Debug.Log ("Shooting: " + hit.transform.gameObject.name);
 
 				//Deal damage if we hit an enemy's body or head
 				if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "EnemyHead") {
