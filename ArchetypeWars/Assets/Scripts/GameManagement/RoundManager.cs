@@ -34,6 +34,7 @@ public class RoundManager : MonoBehaviour {
 
 	public float roundTimer = 0f;
 	public static int score = 0;
+	public int roundCounter = 0;
 
 	public Transform[] spawnPoints;
 	public float reinforcementDelay = 6f;
@@ -155,7 +156,7 @@ public class RoundManager : MonoBehaviour {
 	 * */
 	void NewRound(){
 
-
+		++roundCounter;
 		reinforcementTimer = reinforcementDelay;	//Making sure this variable starts the same for
 
 		if (Random.Range (0, 101) > (100 - alternateRoundChance))
@@ -168,8 +169,9 @@ public class RoundManager : MonoBehaviour {
 
 		case 0:	//SURVIVAL
 			currentRound = Round.Survival;
-			roundTimer = 120f;
-			enemyCount = 10;
+			roundTimer = 120f + 10 * roundCounter;
+			enemyCount = 10 + Random.Range (1,4) * roundCounter;
+			maxReinforcements = 15 + Random.Range (1,3) * roundCounter;
 			reinforcementTimer = 0;
 			//Debug.Log ("New round initiated. Current round is Survival Mode. Get ready to die!");
 			break;
