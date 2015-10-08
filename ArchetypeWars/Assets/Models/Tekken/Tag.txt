@@ -1,0 +1,6 @@
+Game: Hyperdimension Neptunia Victory
+Subject: Tekken (Kuma)
+Copyright: Idea Factory, Compile Heart, Namco-Bandai
+Model Ripper: Random Talking Bush
+Hosting Permissions: The Models Resource
+Notes: Special thanks to howfie for the model importing script.

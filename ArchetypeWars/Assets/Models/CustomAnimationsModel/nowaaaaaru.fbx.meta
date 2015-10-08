@@ -1,0 +1,1176 @@
+fileFormatVersion: 2
+guid: 279356c05204b8f4b86b73fbda8efdab
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Armature|F_hair_01
+    100004: Armature|F_hair_02
+    100006: Armature|head
+    100008: Armature|L_A_hair_01
+    100010: Armature|L_arm
+    100012: Armature|L_B_hair_01
+    100014: Armature|L_B_hair_02
+    100016: Armature|L_B_skirt_01
+    100018: Armature|L_B_skirt_02
+    100020: Armature|L_bust_up
+    100022: Armature|L_elbow
+    100024: Armature|L_elbow_hojo_02
+    100026: Armature|L_F_skirt_01
+    100028: Armature|L_F_skirt_02
+    100030: Armature|L_foot_01
+    100032: Armature|L_hand
+    100034: Armature|L_index_01
+    100036: Armature|L_index_02
+    100038: Armature|L_index_03
+    100040: Armature|L_leg_01
+    100042: Armature|L_leg_02
+    100044: Armature|L_middle_01
+    100046: Armature|L_middle_02
+    100048: Armature|L_middle_03
+    100050: Armature|L_pinkey_01
+    100052: Armature|L_pinkey_02
+    100054: Armature|L_pinkey_03
+    100056: Armature|L_ring_01
+    100058: Armature|L_ring_02
+    100060: Armature|L_ring_03
+    100062: Armature|L_shoulder
+    100064: Armature|L_skirt_01
+    100066: Armature|L_skirt_02
+    100068: Armature|L_sub_elbow
+    100070: Armature|L_sub_shoulder
+    100072: Armature|L_thumb_01
+    100074: Armature|L_thumb_02
+    100076: Armature|L_thumb_03
+    100078: Armature|L_toe
+    100080: Armature|L_twin_01
+    100082: Armature|L_twin_02
+    100084: Armature|L_twin_03
+    100086: Armature|L_twin_04
+    100088: Armature|L_twin_05
+    100090: Armature|L_twin_06
+    100092: Armature|neck
+    100094: Armature|R_A_hair_01
+    100096: Armature|R_arm
+    100098: Armature|R_B_hair_01
+    100100: Armature|R_B_hair_02
+    100102: Armature|R_B_skirt_01
+    100104: Armature|R_B_skirt_02
+    100106: Armature|R_bust_up
+    100108: Armature|R_elbow
+    100110: Armature|R_elbow_hojo_02
+    100112: Armature|R_F_skirt_01
+    100114: Armature|R_F_skirt_02
+    100116: Armature|R_foot_01
+    100118: Armature|R_hand
+    100120: Armature|R_index_01
+    100122: Armature|R_index_02
+    100124: Armature|R_index_03
+    100126: Armature|R_leg_01
+    100128: Armature|R_leg_02
+    100130: Armature|R_middle_01
+    100132: Armature|R_middle_02
+    100134: Armature|R_middle_03
+    100136: Armature|R_pinkey_01
+    100138: Armature|R_pinkey_02
+    100140: Armature|R_pinkey_03
+    100142: Armature|R_ring_01
+    100144: Armature|R_ring_02
+    100146: Armature|R_ring_03
+    100148: Armature|R_shoulder
+    100150: Armature|R_skirt_01
+    100152: Armature|R_skirt_02
+    100154: Armature|R_sub_elbow
+    100156: Armature|R_sub_shoulder
+    100158: Armature|R_thumb_01
+    100160: Armature|R_thumb_02
+    100162: Armature|R_thumb_03
+    100164: Armature|R_toe
+    100166: Armature|R_twin_01
+    100168: Armature|R_twin_02
+    100170: Armature|R_twin_03
+    100172: Armature|R_twin_04
+    100174: Armature|R_twin_05
+    100176: Armature|R_twin_06
+    100178: Armature|root
+    100180: Armature|spine_00
+    100182: Armature|spine_01
+    100184: Armature|spine_02
+    100186: Camera
+    100188: Lamp
+    100190: NoireSchool
+    100192: //RootNode
+    400000: Armature
+    400002: Armature|F_hair_01
+    400004: Armature|F_hair_02
+    400006: Armature|head
+    400008: Armature|L_A_hair_01
+    400010: Armature|L_arm
+    400012: Armature|L_B_hair_01
+    400014: Armature|L_B_hair_02
+    400016: Armature|L_B_skirt_01
+    400018: Armature|L_B_skirt_02
+    400020: Armature|L_bust_up
+    400022: Armature|L_elbow
+    400024: Armature|L_elbow_hojo_02
+    400026: Armature|L_F_skirt_01
+    400028: Armature|L_F_skirt_02
+    400030: Armature|L_foot_01
+    400032: Armature|L_hand
+    400034: Armature|L_index_01
+    400036: Armature|L_index_02
+    400038: Armature|L_index_03
+    400040: Armature|L_leg_01
+    400042: Armature|L_leg_02
+    400044: Armature|L_middle_01
+    400046: Armature|L_middle_02
+    400048: Armature|L_middle_03
+    400050: Armature|L_pinkey_01
+    400052: Armature|L_pinkey_02
+    400054: Armature|L_pinkey_03
+    400056: Armature|L_ring_01
+    400058: Armature|L_ring_02
+    400060: Armature|L_ring_03
+    400062: Armature|L_shoulder
+    400064: Armature|L_skirt_01
+    400066: Armature|L_skirt_02
+    400068: Armature|L_sub_elbow
+    400070: Armature|L_sub_shoulder
+    400072: Armature|L_thumb_01
+    400074: Armature|L_thumb_02
+    400076: Armature|L_thumb_03
+    400078: Armature|L_toe
+    400080: Armature|L_twin_01
+    400082: Armature|L_twin_02
+    400084: Armature|L_twin_03
+    400086: Armature|L_twin_04
+    400088: Armature|L_twin_05
+    400090: Armature|L_twin_06
+    400092: Armature|neck
+    400094: Armature|R_A_hair_01
+    400096: Armature|R_arm
+    400098: Armature|R_B_hair_01
+    400100: Armature|R_B_hair_02
+    400102: Armature|R_B_skirt_01
+    400104: Armature|R_B_skirt_02
+    400106: Armature|R_bust_up
+    400108: Armature|R_elbow
+    400110: Armature|R_elbow_hojo_02
+    400112: Armature|R_F_skirt_01
+    400114: Armature|R_F_skirt_02
+    400116: Armature|R_foot_01
+    400118: Armature|R_hand
+    400120: Armature|R_index_01
+    400122: Armature|R_index_02
+    400124: Armature|R_index_03
+    400126: Armature|R_leg_01
+    400128: Armature|R_leg_02
+    400130: Armature|R_middle_01
+    400132: Armature|R_middle_02
+    400134: Armature|R_middle_03
+    400136: Armature|R_pinkey_01
+    400138: Armature|R_pinkey_02
+    400140: Armature|R_pinkey_03
+    400142: Armature|R_ring_01
+    400144: Armature|R_ring_02
+    400146: Armature|R_ring_03
+    400148: Armature|R_shoulder
+    400150: Armature|R_skirt_01
+    400152: Armature|R_skirt_02
+    400154: Armature|R_sub_elbow
+    400156: Armature|R_sub_shoulder
+    400158: Armature|R_thumb_01
+    400160: Armature|R_thumb_02
+    400162: Armature|R_thumb_03
+    400164: Armature|R_toe
+    400166: Armature|R_twin_01
+    400168: Armature|R_twin_02
+    400170: Armature|R_twin_03
+    400172: Armature|R_twin_04
+    400174: Armature|R_twin_05
+    400176: Armature|R_twin_06
+    400178: Armature|root
+    400180: Armature|spine_00
+    400182: Armature|spine_01
+    400184: Armature|spine_02
+    400186: Camera
+    400188: Lamp
+    400190: NoireSchool
+    400192: //RootNode
+    4300000: NoireSchool
+    7400000: Armature|ArmMove
+    7400002: Armature|ArmMove.001
+    7400004: Scene
+    9500000: //RootNode
+    13700000: NoireSchool
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human:
+    - boneName: Armature|root
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_leg_01
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_leg_01
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_leg_02
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_leg_02
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_foot_01
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_foot_01
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|spine_00
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|spine_02
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_shoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_shoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_arm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_arm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_elbow
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_elbow
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_toe
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_toe
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_B_hair_01
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_B_hair_01
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|F_hair_01
+      humanName: Jaw
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_thumb_01
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_thumb_02
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_thumb_03
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_index_01
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_index_02
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_index_03
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_middle_01
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_middle_02
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_middle_03
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_ring_01
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_ring_02
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_ring_03
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_pinkey_01
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_pinkey_02
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|L_pinkey_03
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_thumb_01
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_thumb_02
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_thumb_03
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_index_01
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_index_02
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_index_03
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_middle_01
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_middle_02
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_middle_03
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_ring_01
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_ring_02
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_ring_03
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_pinkey_01
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_pinkey_02
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Armature|R_pinkey_03
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: nowaaaaaru(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
+      scale: {x: .0253999997, y: .0253999997, z: .0253999997}
+      transformModified: 1
+    - name: Armature|root
+      position: {x: -0, y: -.0109674996, z: .346560001}
+      rotation: {x: -5.3385083e-08, y: .707106888, z: -.707106769, w: 5.33850759e-08}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|spine_00
+      position: {x: 3.37862766e-10, y: -.0255799852, z: .00386469951}
+      rotation: {x: .999611378, y: -9.58235491e-10, z: -1.19108726e-07, w: .0278771315}
+      scale: {x: 1, y: .99999994, z: .999953032}
+      transformModified: 1
+    - name: Armature|spine_01
+      position: {x: 1.42108544e-16, y: .0267245285, z: 1.7881393e-09}
+      rotation: {x: .127623141, y: -4.44875997e-10, z: -1.12144134e-08, w: .991822779}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|spine_02
+      position: {x: -6.03961332e-16, y: .0157199204, z: -5.96046412e-09}
+      rotation: {x: .994995058, y: -3.31774296e-11, z: -8.73204158e-08, w: .0999244973}
+      scale: {x: 1, y: 1, z: 1.00000119}
+      transformModified: 1
+    - name: Armature|neck
+      position: {x: -1.16970544e-09, y: -.080102995, z: -.0133798718}
+      rotation: {x: .998507738, y: 5.59211618e-12, z: -8.7104965e-08, w: .0546110459}
+      scale: {x: 1, y: 1, z: .999994218}
+      transformModified: 1
+    - name: Armature|head
+      position: {x: 3.73034925e-16, y: .0249719825, z: 1.7881393e-09}
+      rotation: {x: .998507798, y: -3.77311411e-11, z: -8.71090933e-08, w: -.054609973}
+      scale: {x: 1, y: 1.00000012, z: 1.00003457}
+      transformModified: 1
+    - name: Armature|F_hair_01
+      position: {x: -.000623176282, y: -.0614369996, z: .0418826491}
+      rotation: {x: .043938268, y: .0106413253, z: .0106413495, w: .998920918}
+      scale: {x: 1.00000012, y: .99999994, z: .99999994}
+      transformModified: 1
+    - name: Armature|F_hair_02
+      position: {x: 2.60770316e-09, y: .0154532371, z: -7.37607442e-09}
+      rotation: {x: -.0439382605, y: -.0106415069, z: -.010641342, w: .998920918}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_twin_01
+      position: {x: -.0307847001, y: -.0688999966, z: -.0334442481}
+      rotation: {x: -.417159259, y: .241503134, z: .241506472, w: .84221673}
+      scale: {x: 1, y: 1.00000012, z: 1}
+      transformModified: 1
+    - name: Armature|R_twin_02
+      position: {x: 1.66893006e-08, y: .037500076, z: -5.24520871e-08}
+      rotation: {x: .298821747, y: -.151672095, z: -.109810799, w: .935757875}
+      scale: {x: .999999881, y: 1.00000012, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_twin_03
+      position: {x: -9.53674295e-09, y: .0491398424, z: 5.96046412e-09}
+      rotation: {x: .00358524197, y: .0198561139, z: .0269349236, w: .999433577}
+      scale: {x: .99999994, y: 1.00000012, z: .99999994}
+      transformModified: 1
+    - name: Armature|R_twin_04
+      position: {x: 1.43051144e-08, y: .0602151006, z: 1.66893006e-08}
+      rotation: {x: -.0526912361, y: -.0419505499, z: -.0726797804, w: .995078623}
+      scale: {x: 1.00000012, y: 1.00000012, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|R_twin_05
+      position: {x: -1.19209282e-08, y: .0470641926, z: 2.62260436e-08}
+      rotation: {x: .0656860173, y: -.0953030959, z: -.123403691, w: .985583186}
+      scale: {x: 1, y: 1.00000012, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_twin_06
+      position: {x: -1.16229053e-08, y: .0584072918, z: -2.98023217e-10}
+      rotation: {x: .115016393, y: .0209023952, z: .0209013149, w: .992923677}
+      scale: {x: 1, y: 1, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_A_hair_01
+      position: {x: -.0293645971, y: -.0232069604, z: .0247192513}
+      rotation: {x: -1.05879118e-22, y: -1.08991287e-14, z: -2.11216136e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_B_hair_01
+      position: {x: -.0323116928, y: -.0171599668, z: .0103910519}
+      rotation: {x: .0440424234, y: -.238628045, z: -.238628402, w: .940304995}
+      scale: {x: .999999821, y: .999999762, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_B_hair_02
+      position: {x: 2.74181353e-08, y: .0153552918, z: -2.98023206e-09}
+      rotation: {x: -.0440430492, y: .238631412, z: .238628224, w: .940304101}
+      scale: {x: .999999762, y: .999999821, z: 1}
+      transformModified: 1
+    - name: Armature|L_B_hair_01
+      position: {x: .0323117003, y: -.0171599649, z: .0103910454}
+      rotation: {x: .0440427549, y: .238640368, z: .238640696, w: .940298676}
+      scale: {x: .999999881, y: .999999881, z: .999999702}
+      transformModified: 1
+    - name: Armature|L_B_hair_02
+      position: {x: -1.37090677e-08, y: .0153543791, z: -1.19209287e-09}
+      rotation: {x: -.0440434515, y: -.238643736, z: -.238640547, w: .940297842}
+      scale: {x: .999999881, y: .999999762, z: .999999881}
+      transformModified: 1
+    - name: Armature|L_A_hair_01
+      position: {x: .0293646026, y: -.0232089832, z: .0247192457}
+      rotation: {x: -1.05879118e-22, y: -1.08991287e-14, z: -2.11216136e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_twin_01
+      position: {x: .0307846963, y: -.0689019784, z: -.0334443487}
+      rotation: {x: -.417139232, y: -.241498083, z: -.241501272, w: .842229605}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_twin_02
+      position: {x: 1.19209282e-08, y: .0375012495, z: 5.96046412e-09}
+      rotation: {x: .298802942, y: .151665345, z: .109808072, w: .935765266}
+      scale: {x: .999999881, y: .999999881, z: .999999881}
+      transformModified: 1
+    - name: Armature|L_twin_03
+      position: {x: 1.43051144e-08, y: .0491407141, z: 2.26497647e-08}
+      rotation: {x: .00358712464, y: -.01985473, z: -.0269335136, w: .999433637}
+      scale: {x: .999999881, y: 1.00000012, z: 1}
+      transformModified: 1
+    - name: Armature|L_twin_04
+      position: {x: 4.76837148e-09, y: .0602159873, z: -3.33786012e-08}
+      rotation: {x: -.0527036004, y: .0419424139, z: .0726725161, w: .995078862}
+      scale: {x: 1, y: 1, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|L_twin_05
+      position: {x: -5.96046412e-09, y: .0470624454, z: 4.76837148e-09}
+      rotation: {x: .0656932071, y: .095307827, z: .12341021, w: .985581458}
+      scale: {x: .99999994, y: .99999994, z: .99999994}
+      transformModified: 1
+    - name: Armature|L_twin_06
+      position: {x: -9.83476589e-09, y: .0584074184, z: 1.2516975e-08}
+      rotation: {x: .115017183, y: -.0209040456, z: -.0209029, w: .992923558}
+      scale: {x: 1, y: .999999881, z: .999999821}
+      transformModified: 1
+    - name: Armature|R_shoulder
+      position: {x: -.0117595, y: -.0670440271, z: -.0174591001}
+      rotation: {x: -.438830018, y: .496244133, z: .496244133, w: .561169982}
+      scale: {x: 1, y: .999999881, z: 1}
+      transformModified: 1
+    - name: Armature|R_arm
+      position: {x: 6.70552225e-10, y: .0323772058, z: 7.20843687e-08}
+      rotation: {x: -.426497608, y: .473583966, z: .519713461, w: -.568960428}
+      scale: {x: 1.00000024, y: 1.00000012, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_elbow
+      position: {x: -.0839094967, y: 9.73939905e-07, z: -2.77560939e-05}
+      rotation: {x: 6.98491931e-10, y: 2.7581118e-06, z: 2.09547579e-09, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_hand
+      position: {x: -.0817249194, y: 3.4794212e-08, z: 2.81381599e-05}
+      rotation: {x: 1.39698386e-09, y: 8.70786607e-08, z: 1.72585715e-08, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_index_01
+      position: {x: -.0307690501, y: .000463939534, z: .00782117434}
+      rotation: {x: -.486049533, y: .499804795, z: .499805868, w: .513950527}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_index_02
+      position: {x: -1.00582831e-09, y: .0136553394, z: -4.55416727e-09}
+      rotation: {x: -.00946141966, y: .00946045574, z: .00017453247, w: .999910474}
+      scale: {x: 1, y: .99999994, z: 1}
+      transformModified: 1
+    - name: Armature|R_index_03
+      position: {x: 5.96046434e-10, y: .00701826625, z: 1.26380471e-08}
+      rotation: {x: .495510221, y: -.499980062, z: -.499980032, w: .504489362}
+      scale: {x: .999999881, y: 1.00000012, z: 1}
+      transformModified: 1
+    - name: Armature|R_middle_01
+      position: {x: -.0285670608, y: .000463941804, z: .000821855618}
+      rotation: {x: -.488626927, y: .49987036, z: .499870837, w: .511373162}
+      scale: {x: .99999994, y: .99999994, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_middle_02
+      position: {x: 6.70552225e-10, y: .016748324, z: 4.88013008e-09}
+      rotation: {x: -.00781022292, y: .00780882593, z: .000116701915, w: .999939024}
+      scale: {x: .999999881, y: .999999881, z: .99999994}
+      transformModified: 1
+    - name: Armature|R_middle_03
+      position: {x: -0, y: .00884820055, z: -1.847744e-08}
+      rotation: {x: .496436626, y: -.499987453, z: -.499987483, w: .503563046}
+      scale: {x: 1, y: 1.00000024, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|R_ring_01
+      position: {x: -.0274870675, y: .00119194319, z: -.00654648244}
+      rotation: {x: -.487011075, y: .499830663, z: .499831796, w: .512988985}
+      scale: {x: .999999881, y: 1, z: .99999994}
+      transformModified: 1
+    - name: Armature|R_ring_02
+      position: {x: 1.86264515e-09, y: .0146279167, z: 6.72414879e-09}
+      rotation: {x: -.00905782357, y: .00905667525, z: .00015335661, w: .999917984}
+      scale: {x: 1.00000012, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_ring_03
+      position: {x: -2.98023217e-10, y: .00814030878, z: 1.01327897e-08}
+      rotation: {x: .49606812, y: -.499984652, z: -.499984682, w: .503931642}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_pinkey_01
+      position: {x: -.0256540682, y: .00333095179, z: -.0132462792}
+      rotation: {x: -.485100925, y: .499777794, z: .499778092, w: .514899135}
+      scale: {x: .99999994, y: .99999994, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_pinkey_02
+      position: {x: 1.00582831e-09, y: .0127516873, z: 1.73598522e-08}
+      rotation: {x: -.00978255738, y: .00978188496, z: .000195972025, w: .999904275}
+      scale: {x: 1, y: .999999881, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_pinkey_03
+      position: {x: -8.94069652e-10, y: .00645634439, z: -9.23872001e-09}
+      rotation: {x: .494883031, y: -.499974102, z: -.499974132, w: .505116403}
+      scale: {x: 1.00000012, y: 1.00000024, z: 1}
+      transformModified: 1
+    - name: Armature|R_thumb_01
+      position: {x: -.00914705545, y: .00476498064, z: .00855936762}
+      rotation: {x: -.194538862, y: .596436143, z: .662038565, w: .410028696}
+      scale: {x: 1.00000012, y: 1.00000048, z: 1}
+      transformModified: 1
+    - name: Armature|R_thumb_02
+      position: {x: -4.76837148e-09, y: .0120925447, z: -9.23872001e-09}
+      rotation: {x: -.0194497909, y: .082448408, z: -.0307822861, w: .995929956}
+      scale: {x: 1.00000012, y: 1.00000012, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|R_thumb_03
+      position: {x: 1.34110445e-09, y: .0104665225, z: 7.24568938e-09}
+      rotation: {x: -.405696452, y: .545637846, z: .545638084, w: -.489866108}
+      scale: {x: 1, y: .999999762, z: .999999821}
+      transformModified: 1
+    - name: Armature|R_sub_elbow
+      position: {x: -.0580129549, y: 3.78489489e-08, z: 1.18368862e-05}
+      rotation: {x: 1.16415322e-09, y: -4.62223187e-33, z: 1.53086148e-08, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_sub_shoulder
+      position: {x: -2.32830644e-09, y: -1.24797221e-08, z: 1.63912772e-09}
+      rotation: {x: 6.98491931e-10, y: 2.8447248e-06, z: 4.0163286e-09, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_elbow_hojo_02
+      position: {x: -.0735925063, y: -1.80676576e-08, z: -5.32357371e-05}
+      rotation: {x: 6.98491931e-10, y: 2.7581118e-06, z: 2.09547579e-09, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_shoulder
+      position: {x: .0117594982, y: -.067042999, z: -.017459061}
+      rotation: {x: -.438830882, y: -.496244252, z: -.496244162, w: .561169147}
+      scale: {x: .999999881, y: .999999762, z: .999999881}
+      transformModified: 1
+    - name: Armature|L_arm
+      position: {x: -2.16066831e-09, y: .0323772989, z: 2.46614213e-08}
+      rotation: {x: .464558035, y: .505989611, z: .487621218, w: .538874805}
+      scale: {x: .999999642, y: .999999702, z: .999999762}
+      transformModified: 1
+    - name: Armature|L_elbow
+      position: {x: .0839094222, y: 4.85219065e-09, z: -2.77681647e-05}
+      rotation: {x: 1.39698397e-09, y: -2.80048698e-06, z: 2.79396728e-09, w: 1}
+      scale: {x: 1, y: .99999994, z: 1}
+      transformModified: 1
+    - name: Armature|L_hand
+      position: {x: .0817249641, y: 3.82284639e-08, z: 2.81223656e-05}
+      rotation: {x: 1.86264515e-09, y: -9.31322575e-10, z: -3.84170562e-09, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_middle_01
+      position: {x: .0285670552, y: .000463951234, z: .000821854628}
+      rotation: {x: -.488626242, y: -.499870807, z: -.49987033, w: .511373878}
+      scale: {x: .999999881, y: .999999762, z: .999999821}
+      transformModified: 1
+    - name: Armature|L_middle_02
+      position: {x: -1.34110445e-09, y: .0167483389, z: 5.58793545e-09}
+      rotation: {x: -.00781020196, y: -.0078090271, z: -.000116708361, w: .999939024}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_middle_03
+      position: {x: -1.04308129e-09, y: .00884821732, z: -1.56462185e-08}
+      rotation: {x: .496436715, y: .499987453, z: .499987364, w: .503563106}
+      scale: {x: 1, y: 1.00000012, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|L_ring_01
+      position: {x: .0274870433, y: .00119194645, z: -.00654651504}
+      rotation: {x: -.487011373, y: -.499830365, z: -.499832094, w: .512988687}
+      scale: {x: .999999821, y: .999999821, z: .999999821}
+      transformModified: 1
+    - name: Armature|L_ring_02
+      position: {x: -5.96046434e-10, y: .0146279531, z: -1.24424693e-08}
+      rotation: {x: -.00905782636, y: -.00905676838, z: -.000153356741, w: .999917984}
+      scale: {x: .999999821, y: 1, z: .999999881}
+      transformModified: 1
+    - name: Armature|L_ring_03
+      position: {x: 5.96046434e-10, y: .00814024545, z: 7.82310938e-10}
+      rotation: {x: .496068239, y: .499984711, z: .499984622, w: .503931522}
+      scale: {x: .999999881, y: 1, z: .999999881}
+      transformModified: 1
+    - name: Armature|L_pinkey_01
+      position: {x: .0256550275, y: .00333092036, z: -.0132462122}
+      rotation: {x: -.485098302, y: -.499777615, z: -.499778152, w: .514901698}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_pinkey_02
+      position: {x: -0, y: .0127506591, z: -8.71717898e-09}
+      rotation: {x: -.00994476397, y: -.00994416513, z: -.000197566158, w: .999901116}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_pinkey_03
+      position: {x: 1.7881393e-09, y: .00645629736, z: -1.2814998e-08}
+      rotation: {x: .495042682, y: .499975592, z: .499975562, w: .50495702}
+      scale: {x: .999999762, y: .999999642, z: .999999762}
+      transformModified: 1
+    - name: Armature|L_thumb_01
+      position: {x: .00914703868, y: .00476498157, z: .00855936576}
+      rotation: {x: .191583246, y: .610190153, z: .6379776, w: -.428892225}
+      scale: {x: 1.00000024, y: 1.00000036, z: 1}
+      transformModified: 1
+    - name: Armature|L_thumb_02
+      position: {x: -3.57627861e-09, y: .0120925624, z: 2.98023217e-10}
+      rotation: {x: -.0194516089, y: -.0824489817, z: .0307836588, w: .995929837}
+      scale: {x: 1, y: .999999762, z: 1}
+      transformModified: 1
+    - name: Armature|L_thumb_03
+      position: {x: -1.19209287e-09, y: .0104665719, z: 5.3644178e-09}
+      rotation: {x: .405694693, y: .545639336, z: .545639515, w: .48986432}
+      scale: {x: .999999881, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_index_01
+      position: {x: .0307690278, y: .000463932287, z: .00782117434}
+      rotation: {x: -.486049533, y: -.499804735, z: -.499805927, w: .513950527}
+      scale: {x: .99999994, y: .99999994, z: .99999994}
+      transformModified: 1
+    - name: Armature|L_index_02
+      position: {x: -0, y: .0136553384, z: 1.24424693e-08}
+      rotation: {x: -.00946141127, y: -.00946055073, z: -.000174530593, w: .999910474}
+      scale: {x: .999999821, y: .999999881, z: 1}
+      transformModified: 1
+    - name: Armature|L_index_03
+      position: {x: 1.19209287e-09, y: .00701828767, z: 1.33737919e-08}
+      rotation: {x: .49551034, y: .499980122, z: .499979973, w: .504489243}
+      scale: {x: 1.00000012, y: 1.00000012, z: 1}
+      transformModified: 1
+    - name: Armature|L_sub_elbow
+      position: {x: .0580129661, y: 2.64728435e-08, z: 1.18267535e-05}
+      rotation: {x: 1.86264515e-09, y: -9.31322575e-10, z: -3.84170562e-09, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_sub_shoulder
+      position: {x: 2.56765631e-08, y: 7.28294225e-09, z: -8.94069652e-10}
+      rotation: {x: 1.39698397e-09, y: -2.80048698e-06, z: 2.79396728e-09, w: 1}
+      scale: {x: 1, y: .99999994, z: 1}
+      transformModified: 1
+    - name: Armature|L_elbow_hojo_02
+      position: {x: .073588416, y: 9.01520192e-09, z: -2.77680156e-05}
+      rotation: {x: 1.39698397e-09, y: -2.80048698e-06, z: 2.79396728e-09, w: 1}
+      scale: {x: 1, y: .99999994, z: 1}
+      transformModified: 1
+    - name: Armature|L_bust_up
+      position: {x: .0264305007, y: -.0327650346, z: .0290734079}
+      rotation: {x: -5.68434189e-14, y: 1.30607178e-14, z: 2.38859056e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_bust_up
+      position: {x: -.0264305975, y: -.0327630118, z: .0290735047}
+      rotation: {x: -5.68434189e-14, y: 1.30607178e-14, z: 2.38859056e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_F_skirt_01
+      position: {x: -.0282201953, y: .000425033562, z: .0317860097}
+      rotation: {x: .118610777, y: .0548209846, z: .054820966, w: .98990953}
+      scale: {x: 1.00000012, y: .99999994, z: 1}
+      transformModified: 1
+    - name: Armature|R_F_skirt_02
+      position: {x: 2.6822089e-09, y: .0324345753, z: -4.17232515e-09}
+      rotation: {x: -.118610799, y: -.0548209548, z: -.0548209585, w: .98990953}
+      scale: {x: 1, y: .999999881, z: 1}
+      transformModified: 1
+    - name: Armature|R_skirt_01
+      position: {x: -.0499393977, y: .000425033562, z: .000310403499}
+      rotation: {x: -.0500415675, y: .154307634, z: .154307589, w: .974614918}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_skirt_02
+      position: {x: 9.23872001e-09, y: .0330673605, z: 1.19209287e-09}
+      rotation: {x: .0500415638, y: -.154307589, z: -.154307634, w: .974614918}
+      scale: {x: .999999881, y: 1, z: .999999762}
+      transformModified: 1
+    - name: Armature|R_B_skirt_01
+      position: {x: -.0250713006, y: .000677986129, z: -.0358067974}
+      rotation: {x: -.167420551, y: .0492205471, z: .0492205471, w: .98342514}
+      scale: {x: .99999994, y: .99999994, z: .99999994}
+      transformModified: 1
+    - name: Armature|R_B_skirt_02
+      position: {x: 2.6822089e-09, y: .033089336, z: -8.3446503e-09}
+      rotation: {x: .167420641, y: -.0492205061, z: -.0492205396, w: .98342514}
+      scale: {x: .99999994, y: .999999762, z: .99999994}
+      transformModified: 1
+    - name: Armature|R_leg_01
+      position: {x: -.025887996, y: .0195250325, z: .00124050048}
+      rotation: {x: -.0303202644, y: 3.16331672e-08, z: -9.59566981e-10, w: .999540269}
+      scale: {x: 1, y: .999999881, z: 1}
+      transformModified: 1
+    - name: Armature|R_leg_02
+      position: {x: 1.06347209e-09, y: .138027757, z: -1.20985957e-10}
+      rotation: {x: -.0426606908, y: 7.47324513e-09, z: 1.21011086e-08, w: .999089658}
+      scale: {x: 1, y: .999999881, z: .999999881}
+      transformModified: 1
+    - name: Armature|R_foot_01
+      position: {x: 2.48817716e-10, y: .137293845, z: 8.67723324e-11}
+      rotation: {x: .326070517, y: -7.26344584e-09, z: -3.3352336e-08, w: .945345461}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|R_toe
+      position: {x: 1.05755427e-09, y: .0587604716, z: 2.03968331e-09}
+      rotation: {x: -.256254435, y: -1.71904868e-09, z: 2.28582078e-08, w: .966609359}
+      scale: {x: 1, y: .999999762, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|L_F_skirt_01
+      position: {x: .0282202028, y: .000425987237, z: .0317860954}
+      rotation: {x: .118611217, y: -.0548225567, z: -.0548225902, w: .989909291}
+      scale: {x: 1, y: .99999994, z: 1}
+      transformModified: 1
+    - name: Armature|L_F_skirt_02
+      position: {x: -2.98023206e-09, y: .0324335508, z: 1.49011612e-08}
+      rotation: {x: -.118611172, y: .0548225828, z: .0548225902, w: .989909291}
+      scale: {x: .99999994, y: .99999994, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|L_skirt_01
+      position: {x: .0499393977, y: .000426025392, z: .000310395553}
+      rotation: {x: -.0500442758, y: -.154314533, z: -.154314548, w: .974612534}
+      scale: {x: 1, y: .99999994, z: .99999994}
+      transformModified: 1
+    - name: Armature|L_skirt_02
+      position: {x: -1.19209282e-08, y: .0330664404, z: -1.7881393e-09}
+      rotation: {x: .0500442684, y: .154314578, z: .154314533, w: .974612534}
+      scale: {x: 1, y: 1.00000012, z: 1.00000012}
+      transformModified: 1
+    - name: Armature|L_B_skirt_01
+      position: {x: .0250712968, y: .000677986129, z: -.0358068012}
+      rotation: {x: -.167420596, y: -.0492204763, z: -.0492204726, w: .98342514}
+      scale: {x: 1, y: .999999821, z: .99999994}
+      transformModified: 1
+    - name: Armature|L_B_skirt_02
+      position: {x: 3.57627861e-09, y: .0330893397, z: -1.14738938e-08}
+      rotation: {x: .167420611, y: .0492204987, z: .0492205061, w: .98342514}
+      scale: {x: 1, y: .999999702, z: 1}
+      transformModified: 1
+    - name: Armature|L_leg_01
+      position: {x: .025887996, y: .0195250325, z: .00124049513}
+      rotation: {x: -.0303202253, y: 3.1633153e-08, z: -9.59565316e-10, w: .999540269}
+      scale: {x: 1, y: .999999881, z: 1}
+      transformModified: 1
+    - name: Armature|L_leg_02
+      position: {x: 3.44765794e-09, y: .138027757, z: 1.20985097e-10}
+      rotation: {x: -.0426607244, y: -8.25272473e-09, z: -4.60878535e-09, w: .999089658}
+      scale: {x: 1, y: .999999881, z: .999999881}
+      transformModified: 1
+    - name: Armature|L_foot_01
+      position: {x: -1.0929323e-09, y: .137293965, z: -2.67304762e-10}
+      rotation: {x: .326070398, y: 1.25780026e-08, z: -2.1826537e-08, w: .945345521}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature|L_toe
+      position: {x: 1.05754827e-09, y: .0587604828, z: -9.96602578e-10}
+      rotation: {x: -.256254405, y: -1.71904868e-09, z: 2.28582078e-08, w: .966609418}
+      scale: {x: 1, y: .999999881, z: 1}
+      transformModified: 1
+    - name: Camera
+      position: {x: -.074811317, y: .0534366518, z: .0650763959}
+      rotation: {x: .210611343, y: .905240178, z: -.0892816931, w: -.358066887}
+      scale: {x: 1, y: .999999881, z: .99999994}
+      transformModified: 1
+    - name: Lamp
+      position: {x: -.0407624505, y: .0590386204, z: -.010054539}
+      rotation: {x: .169075698, y: -.755880415, z: .272171348, w: .570947528}
+      scale: {x: .999999881, y: .999999762, z: .999999881}
+      transformModified: 1
+    - name: NoireSchool
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  additionalBone: 0
+  userData: 
