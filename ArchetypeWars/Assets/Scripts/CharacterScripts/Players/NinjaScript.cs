@@ -27,7 +27,7 @@ public class NinjaScript: PlayerCharacter {
 		aggro = baseAggro;
 
 		//Character-specific weapon stats
-		weaponRange = 200f;
+		weaponRange = 2000f;
 		weaponFireRate = 0.2f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
@@ -70,7 +70,7 @@ public class NinjaScript: PlayerCharacter {
 				//Determines direction to throw cards. Draws a ray from the crosshair on screen to straight ahead.
 				//Then marks first object hit as the target destination of the card.
 				RaycastHit hit;
-				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor),  0.666667f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor), 0));
+				Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor),  0.5f + Random.Range (-spreadCount*spreadFactor,spreadCount*spreadFactor), 0));
 				Debug.DrawRay (camRay.origin, camRay.direction * 10f, Color.yellow, 0.1f);
 				Physics.Raycast (camRay, out hit, weaponRange);
 
@@ -172,15 +172,17 @@ public class NinjaScript: PlayerCharacter {
 	 * */
 	public override void rotateCamera(float pitch)
 	{
+		Vector3 cameraPivotPoint = transform.position;
+		cameraPivotPoint.y += 0.8f;
 		if (pitch > 0) { // if we look up
-			if(		(cam.transform.localEulerAngles.x > 320) 	|| 	(cam.transform.localEulerAngles.x < 90)		)
+			if(		(cam.transform.localEulerAngles.x > 295) 	|| 	(cam.transform.localEulerAngles.x < 90)		)
 			{
-				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+				cam.transform.RotateAround (cameraPivotPoint, transform.right, -pitch);
 			}
 		} else if (pitch < 0) { //if we look down
-			if(		(cam.transform.localEulerAngles.x > 270) 	|| 	(cam.transform.localEulerAngles.x < 40)		)
+			if(		(cam.transform.localEulerAngles.x > 270) 	|| 	(cam.transform.localEulerAngles.x < 65)		)
 			{
-				cam.transform.RotateAround (transform.position, transform.right, -pitch);
+				cam.transform.RotateAround (cameraPivotPoint, transform.right, -pitch);
 			}
 		}
 	}

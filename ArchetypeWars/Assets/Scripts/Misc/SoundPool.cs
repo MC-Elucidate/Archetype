@@ -44,6 +44,7 @@ public class SoundPool : MonoBehaviour {
 	public void playJumpSound()
 	{
 		voice.clip = jumpSound;
+		if (Random.Range (1, 101) > 50)	//50% chance to Jampu!
 		voice.Play();
 	}
 
@@ -53,7 +54,8 @@ public class SoundPool : MonoBehaviour {
 	public void playHitSound()
 	{
 		voice.clip = hitSound;
-		voice.Play();
+		if (Random.Range (1, 101) > 70)	//30% chance to AITTA!!!
+			voice.Play();
 	}
 
 	/*

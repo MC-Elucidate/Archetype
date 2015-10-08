@@ -29,7 +29,7 @@ public class SniperScript: PlayerCharacter {
 		aggro = 150;
 
 		//Character-specific weapon stats
-		weaponRange = 200f;
+		weaponRange = 2000f;
 		weaponFireRate = 1.6f;
 		spreadRate = 0.2f;
 		maxSpread = 8;
@@ -157,7 +157,7 @@ public class SniperScript: PlayerCharacter {
 			//Determine direction to travel in.
 			//Casts ray from crosshair to first target hit.
 			RaycastHit hit;
-			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f, 0.666667f, 0));
+			Ray camRay = cam.ViewportPointToRay (new Vector3 (0.5f, 0.5f, 0));
 			Physics.Raycast (camRay, out hit, weaponRange);
 			Vector3 target = hit.point;
 			Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
