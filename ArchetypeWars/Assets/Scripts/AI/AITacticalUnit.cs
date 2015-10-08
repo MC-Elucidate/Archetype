@@ -2,9 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class AITacticalUnit : MonoBehaviour {
-	//NB: Changes made: strategize() - Added rage adjustment.you can randomize the value or use a constant
-	//also added static attributes to the class
-	
+
 	//initialization
 	private float time = 0.0f;
 	private float commandTime,delta_CommandTime = 12.0f; //command agents when the time is right
@@ -12,7 +10,7 @@ public class AITacticalUnit : MonoBehaviour {
 
 	//static attributes
 	public static int maximum_rage = 20;
-	public static float minimum_melee_distance = 3.0f;
+	public static float minimum_melee_distance = 3;
 
 	void Start () {
 		/**Gets called by unity when the script is initialized
@@ -34,8 +32,25 @@ public class AITacticalUnit : MonoBehaviour {
 
 		time += Time.deltaTime;
 	}
-
+//merge it with the current LookForAmbushPoint
 	public Vector3 LookForAmbushPoint(AI_Logic.Strategy strategy, Transform agent, Transform threat)
+	{
+		Vector2 computationVector = Vector3.zero;
+		for (int a = 0; a < RoundManager.enemies.Count; a++)
+		{
+			computationVector.x += agent.transform.position.x - RoundManager.enemies[a].transform.position.x ;
+			computationVector.y += agent.transform.position.y - RoundManager.enemies[a].transform.position.y;
+		}
+
+		computationVector.x /= RoundManager.enemies.Count;
+		computationVector.y /= RoundManager.enemies.Count;
+
+		Vector3 waypoint = new Vector3(computationVector.x, computationVector.y, agent.transform.position.z) * -5;
+		return waypoint;
+
+	}
+
+	public Vector3 LookForAmbushPoint(AI_Logic.Strategy strategy, Transform agent, Transform threat, int a)
 	{
 		/*Generates a waypoint for the agent to go to in order to achieve a certain strategy/goal
 		 * e.g. sneaking up on the threat;backing off to avoid more danger; approaching the threat to get better shooting accuracy

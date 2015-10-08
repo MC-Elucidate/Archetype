@@ -138,18 +138,6 @@ public class PlayerCharacter : CharacterBase {
 		}
 	}
 
-	/*
-	 * Sets freemove to true and re-equips weapon
-	 * */
-	public void enableFreemove()
-	{
-		Debug.Log ("freemove");
-		freemove = true;
-		weaponHeld = true;
-
-		if (currentPoise<50)
-			currentPoise = 50;
-	}
 
 	/*
 	 * Determines which buffs are active and increases the modifier appropriately.

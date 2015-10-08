@@ -87,6 +87,8 @@ public class CharacterBase : MonoBehaviour {
 	
 	}
 
+
+
 	public void FixedUpdate()
 	{
 		//Increase Poise over time. 1 second = 15 poise;
@@ -105,6 +107,19 @@ public class CharacterBase : MonoBehaviour {
 		//Debug.Log ("Hyaa!");
 	}
 
+
+/*
+	 * Sets freemove to true and re-equips weapon
+	 * */
+	public void enableFreemove()
+	{
+		Debug.Log ("freemove");
+		freemove = true;
+		weaponHeld = true;
+		
+		if (currentPoise<50)
+			currentPoise = 50;
+	}
 	/*
 	 * Ends melee attack.
 	 * To be overridden.
@@ -128,11 +143,12 @@ public class CharacterBase : MonoBehaviour {
 	public virtual void receiveDamage(int dmg)
 	{
 		health -= dmg;
-		if (health <= 0) {
+		if (health <= 0 && alive) {
 			alive = false;
 			Destroy (this.gameObject, 2.0f);
 			freemove = false;
 			currentPoise = 100;
+			gameObject.tag = "DeadCharacter";
 		}
 	}
 

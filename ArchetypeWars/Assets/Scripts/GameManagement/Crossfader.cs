@@ -52,11 +52,11 @@ public class Crossfader : MonoBehaviour {
 				combatAudio.volume = 0;
 		}
 
-		if (combatAudio.time >= 119.827f)
-			combatAudio.time = 62.802f;
+		if (combatAudio.time >= 124.666f)
+			combatAudio.time = 22.597f;
 
-		if (lowkeyAudio.time >= 118.982f)
-			lowkeyAudio.time = 2.944f;
+		if (lowkeyAudio.time >= 80.110f)
+			lowkeyAudio.time = 0.110f;
 
 	}
 		
