@@ -67,11 +67,11 @@ public class MovementController: MonoBehaviour {
 			else if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
 				character.meleeAttackEnd ();
 			else if (Input.GetButtonDown (special1Tag)) //Performing special 1
-				character.special1 ();
+				character.specialMove (1);
 			else if (Input.GetButtonDown (special2Tag)) //Performing special 2
-				character.special2 ();
+				character.specialMove (2);
 			else if (Input.GetButtonDown (superTag) || Input.GetAxis (fireTag) < 0) //Performing super move
-				character.super ();
+				character.specialMove (3);
 			else if (Input.GetAxis (fireTag) > 0) //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
 				character.shootWeapon ();
 
@@ -122,7 +122,7 @@ public class MovementController: MonoBehaviour {
 		character.rotateCamera (pitch);
 
 		//Set animator variables
-		anim.SetBool ("Sliding", character.sliding);
+		/*anim.SetBool ("Sliding", character.sliding);
 		anim.SetBool ("WeaponHeld", character.weaponHeld);
 		anim.SetBool ("Wallrunning", character.wallRunning);
 		anim.SetBool ("Melee", character.melee);
@@ -131,7 +131,7 @@ public class MovementController: MonoBehaviour {
 		anim.SetFloat ("Vertical", character.velocity.z);
 		anim.SetFloat ("Horizontal", character.velocity.x);
 		anim.SetFloat ("UpDown", character.velocity.y);
-		anim.SetFloat ("Poise", character.currentPoise);
+		anim.SetFloat ("Poise", character.currentPoise);*/
 	}
 
 	protected void FixedUpdate()

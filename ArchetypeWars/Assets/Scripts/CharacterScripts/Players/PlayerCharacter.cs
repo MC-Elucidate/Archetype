@@ -53,6 +53,16 @@ public class PlayerCharacter : CharacterBase {
 		base.Update ();
 		checkStun ();
 		addBuffs ();
+		anim.SetBool ("Sliding", sliding);
+		anim.SetBool ("WeaponHeld", weaponHeld);
+		anim.SetBool ("Wallrunning", wallRunning);
+		anim.SetBool ("Melee", melee);
+		anim.SetBool ("Alive", alive);
+		anim.SetInteger ("MeleeCount", currentMelee);
+		anim.SetFloat ("Vertical", (velocity.z/maxForwardSpeed));
+		anim.SetFloat ("Horizontal", (velocity.x/maxSideSpeed));
+		anim.SetFloat ("UpDown", velocity.y);
+		anim.SetFloat ("Poise", currentPoise);
 	}
 
 	public void FixedUpdate(){
@@ -112,6 +122,33 @@ public class PlayerCharacter : CharacterBase {
 			velocity.x = 0;
 			velocity.z = 0;
 		}
+	}
+
+	/*
+	 * Checks cooldown of special move.
+	 * Plays special animation if cooldown is 0.
+	 * 
+	 * */
+	public void specialMove(int move)
+	{
+		switch (move) {
+		case 1: if(currentSpecial1 <= 0) special1(); break;
+		case 2: if(currentSpecial2 <= 0) special2(); break;
+		case 3: if(currentSuper <= 0){ weaponHeld = false; super(); anim.SetTrigger("SuperTrigger"); }break;
+		}
+	}
+
+	/*
+	 * Sets freemove to true and re-equips weapon
+	 * */
+	public void enableFreemove()
+	{
+		Debug.Log ("freemove");
+		freemove = true;
+		weaponHeld = true;
+
+		if (currentPoise<50)
+			currentPoise = 50;
 	}
 
 	/*

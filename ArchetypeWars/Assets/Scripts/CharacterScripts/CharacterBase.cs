@@ -82,12 +82,6 @@ public class CharacterBase : MonoBehaviour {
 			}
 		}
 
-		//Restores poise and the ability to move after being stunned or knocked down.
-		if (currentPoise < 5.0 && !anim.GetCurrentAnimatorStateInfo (0).IsTag ("NoFreeMove")) {
-			currentPoise = 40;
-			freemove = true;
-		} else if (currentPoise > 40.0 && alive)
-			freemove = true;
 
 		checkIK ();
 	
@@ -138,6 +132,7 @@ public class CharacterBase : MonoBehaviour {
 			alive = false;
 			Destroy (this.gameObject, 2.0f);
 			freemove = false;
+			currentPoise = 100;
 		}
 	}
 
@@ -162,6 +157,8 @@ public class CharacterBase : MonoBehaviour {
 				//Debug.Log("Stunned");
 			}
 			anim.SetFloat("Poise", currentPoise);
+			if(currentPoise < 0)
+				currentPoise = 10;
 		}
 	}
 
