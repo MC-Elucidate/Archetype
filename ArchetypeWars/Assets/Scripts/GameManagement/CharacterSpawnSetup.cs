@@ -132,9 +132,6 @@ public class CharacterSpawnSetup : MonoBehaviour {
 			default: playerChar = null; break;
 			}
 
-			if (playerChar != null)
-				RoundManager.players.Add(playerChar);
-
 			//Adds controller to character for the appropriate player number
 			playerChar.gameObject.AddComponent ("Controller" + i);
 			cam[i-1] = playerChar.gameObject.GetComponentInChildren<Camera> ();

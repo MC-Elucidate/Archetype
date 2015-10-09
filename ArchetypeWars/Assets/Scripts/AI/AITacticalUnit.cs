@@ -10,7 +10,7 @@ public class AITacticalUnit : MonoBehaviour {
 
 	//static attributes
 	public static int maximum_rage = 20;
-	public static float minimum_melee_distance = 3;
+	public static float minimum_melee_distance = 2;
 
 	void Start () {
 		/**Gets called by unity when the script is initialized
@@ -32,24 +32,27 @@ public class AITacticalUnit : MonoBehaviour {
 
 		time += Time.deltaTime;
 	}
-//merge it with the current LookForAmbushPoint
+
+	//Ambush Point determination function for Gun-based classes
 	public Vector3 LookForAmbushPoint(AI_Logic.Strategy strategy, Transform agent, Transform threat)
 	{
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 		Vector2 computationVector = Vector3.zero;
-		for (int a = 0; a < RoundManager.enemies.Count; a++)
+		for (int a = 0; a < enemies.Length; a++)
 		{
-			computationVector.x += agent.transform.position.x - RoundManager.enemies[a].transform.position.x ;
-			computationVector.y += agent.transform.position.y - RoundManager.enemies[a].transform.position.y;
+			computationVector.x += agent.transform.position.x - enemies[a].transform.position.x ;
+			computationVector.y += agent.transform.position.y - enemies[a].transform.position.y;
 		}
 
-		computationVector.x /= RoundManager.enemies.Count;
-		computationVector.y /= RoundManager.enemies.Count;
+		computationVector.x /= enemies.Length;
+		computationVector.y /= enemies.Length;
 
 		Vector3 waypoint = new Vector3(computationVector.x, computationVector.y, agent.transform.position.z) * -5;
 		return waypoint;
 
 	}
 
+	//Ambush Point determination function for Melee-based classes
 	public Vector3 LookForAmbushPoint(AI_Logic.Strategy strategy, Transform agent, Transform threat, int a)
 	{
 		/*Generates a waypoint for the agent to go to in order to achieve a certain strategy/goal
@@ -96,13 +99,14 @@ public class AITacticalUnit : MonoBehaviour {
 	{
 		/*Assigns targets to all the enemies in the scene
 		 * */
-		for (int i = 0;i < RoundManager.enemies.Count; i++)
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		for (int i = 0;i < enemies.Length; i++)
 		{
 
-			if (RoundManager.enemies[i] != null)
+			if (enemies[i] != null)
 			{
-				getTarget(RoundManager.enemies[i]);
-				RoundManager.enemies[i].GetComponent<AI_Logic>().mainState = AI_Logic.FiniteState.Chase;
+				getTarget(enemies[i].transform);
+				enemies[i].GetComponent<AI_Logic>().mainState = AI_Logic.FiniteState.Chase;
 
 			}
 		}
@@ -114,18 +118,19 @@ public class AITacticalUnit : MonoBehaviour {
 	{
 		/*Assigns strategies to agents.this includes move styles and shooting rage for difficulty purposes
 		 * */
-		for (int a = 0; a < RoundManager.enemies.Count; a++)
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		for (int a = 0; a < enemies.Length; a++)
 		{
-			if (RoundManager.enemies[a] != null)
+			if (enemies[a] != null)
 			{
 				//rage
-				RoundManager.enemies[a].GetComponent<EnemyCharacter>().rage = 14;
+				enemies[a].GetComponent<EnemyCharacter>().rage = 14;
 				//strategies
 				int option = rand.Next (0, 10); 
 				if (option < 5)
-					RoundManager.enemies[a].GetComponent<EnemyCharacter>().strategy = AI_Logic.Strategy.Approach;
+					enemies[a].GetComponent<EnemyCharacter>().strategy = AI_Logic.Strategy.Approach;
 				else
-					RoundManager.enemies[a].GetComponent<EnemyCharacter>().strategy = AI_Logic.Strategy.Sneak;
+					enemies[a].GetComponent<EnemyCharacter>().strategy = AI_Logic.Strategy.Sneak;
 			}
 
 
@@ -138,13 +143,15 @@ public class AITacticalUnit : MonoBehaviour {
 		/*Assigns a target to a specific enemy agent according to the aggro values of the threas(players) and the the relative position of the agent and the closest threat(player)
 		 */
 
+		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+
 		float priority = 999.0f;
 		int index = -1;
 
-		for (int i = 0;i < RoundManager.players.Count; i++)
+		for (int i = 0;i < players.Length; i++)
 		{
 			//searching for the most suitable threat.priority is directly proportional to the threat's aggro and inversely proportional to the distance between threat and agent
-			Transform threat = RoundManager.players[i];
+			Transform threat = players[i].transform;
 			int aggro = threat.gameObject.GetComponent<CharacterBase>().getAggro();
 			if (aggro !=0)//aggro == 0 is when the threat is in cloak mode,so the agent does not follow or attack it
 			{
@@ -165,7 +172,7 @@ public class AITacticalUnit : MonoBehaviour {
 		} 
 		else 
 		{
-			enemy.GetComponent<AI_Logic>().threat = RoundManager.players[index]; //choose the most suitable player to be the threat
+			enemy.GetComponent<AI_Logic>().threat = players[index].transform; //choose the most suitable player to be the threat
 		}
 		
 

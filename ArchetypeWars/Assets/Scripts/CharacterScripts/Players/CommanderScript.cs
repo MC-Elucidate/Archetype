@@ -54,8 +54,9 @@ public class CommanderScript: PlayerCharacter {
 			currentBuff -= Time.fixedDeltaTime;
 			if(currentBuff <= 0)
 			{
-				foreach(Transform player in RoundManager.players)
-					player.gameObject.SendMessage("changeBuffs", "COff");
+				GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+				foreach(GameObject player in players)
+					player.SendMessage("changeBuffs", "COff");
 			}
 		}
 	}
@@ -87,8 +88,9 @@ public class CommanderScript: PlayerCharacter {
 		if (currentSpecial1 <= 0) {
 			currentSpecial1 = special1CD;
 			currentBuff = buffDuration;
-			foreach(Transform player in RoundManager.players)
-				player.gameObject.SendMessage("changeBuffs", "COn");
+			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+			foreach(GameObject player in players)
+				player.SendMessage("changeBuffs", "COn");
 			sounds.playSpecial1Sound();
 		}
 	}
@@ -101,8 +103,9 @@ public class CommanderScript: PlayerCharacter {
 		//Checks cooldown.
 		if (currentSpecial2 <= 0) {
 			currentSpecial2 = special2CD;
-			foreach(Transform player in RoundManager.players)
-				player.gameObject.SendMessage("receiveHealth", healAmount);
+			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+			foreach(GameObject player in players)
+				player.SendMessage("receiveHealth", healAmount);
 			sounds.playSpecial2Sound();
 		}
 	}

@@ -21,9 +21,6 @@ public class RoundManager : MonoBehaviour {
 	public bool deadPlayers;
 	public static Round currentRound;
 
-	//collections
-	public static List<Transform> players = new List<Transform>();
-	public static List<Transform> enemies = new List<Transform>();
 
 	//General round vars
 	public bool alternateRound;			//alternateRound indicates that 3 affixes will be chosen for the round.
@@ -120,7 +117,9 @@ public class RoundManager : MonoBehaviour {
 			RespawnPlayers();
 		}
 
-		foreach (Transform player in players) {
+
+		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+		foreach (GameObject player in players) {
 			deadPlayers = true;
 			if (player.GetComponent<PlayerCharacter>().alive) {
 				deadPlayers = false;

@@ -74,7 +74,7 @@ public class EnemyCharacter : CharacterBase {
 					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
 					hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
 				}
-				//print ("m shooting");
+
 				sounds.pew();
 				Transform fireParticle = Instantiate (weaponFlashEffect, shot_source.transform.position, Quaternion.identity) as Transform;
 				fireParticle.parent = this.transform;
@@ -88,7 +88,6 @@ public class EnemyCharacter : CharacterBase {
 		//Not the neatest code, but this should work
 		if (RoundManager.currentRound == RoundManager.Round.Survival) {
 			RoundManager.enemyCount--;
-			RoundManager.enemies.Remove(transform);
 			//Debug.Log ("Enemy kill confirmed:" + RoundManager.enemyCount + " remaining");
 		}
 

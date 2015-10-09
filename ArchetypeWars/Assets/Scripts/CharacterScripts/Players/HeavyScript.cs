@@ -165,10 +165,11 @@ public class HeavyScript: PlayerCharacter {
 		if (currentSuper <= 0) {
 			currentSuper = superCD;
 			//Send damage and poise damage to all enemies in the scene.
-			foreach (Transform enemy in RoundManager.enemies)
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+			foreach (GameObject enemy in enemies)
 			{
-				enemy.gameObject.SendMessage("receiveDamage", gpDamage);
-				enemy.gameObject.SendMessage("receivePoiseDamage", gpPoiseDamage);
+				enemy.SendMessage("receiveDamage", gpDamage);
+				enemy.SendMessage("receivePoiseDamage", gpPoiseDamage);
 			}
 			sounds.playSpecial3Sound();
 		}

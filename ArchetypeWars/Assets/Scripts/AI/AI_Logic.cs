@@ -74,87 +74,90 @@ public class AI_Logic : MonoBehaviour {
 	{
 		/*Gets called by unity once per frame
 		 */
-			logicTime += delta_LogicTime;
-			if ((threat == null) && (attackState != AttackState.Confused)) //the threats are in cloak mode
-			{
-				attackState = AttackState.Confused;
-			}
-		if ((threat != null) && (attackState == AttackState.Confused))//there's at least one threat not in cloak mode
-			{
+		logicTime += delta_LogicTime;
+			
+		//the threats are in cloak mode
+		if ((threat == null) && (attackState != AttackState.Confused))
+		{
+			attackState = AttackState.Confused;
+		}
+			
+		//there's at least one threat not in cloak mode
+		if ((threat != null) && (attackState == AttackState.Confused))
+		{
 			attackState = AttackState.InPosition;
 			int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 7);
 			ambushTimeOut = time + deltaTime;
-
-			}
-
-			switch (mainState)
-			{
-			case FiniteState.Chase:
-		{
-			
-			if((transform.position - threat.position).magnitude < character.shootingRange) //threat is within shooting range
-			{
-				mainState = FiniteState.Attack;
-				agent.stoppingDistance = 0.01f;
-				int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 2);
-				ambushTimeOut = time + deltaTime; //randomise how long the agent stays at some ambush point
-				agent.Stop();
-
-			}
-				
 		}
-				break;
+
+		switch (mainState)
+		{
+			case FiniteState.Chase:
+			{
+			
+				if((transform.position - threat.position).magnitude < character.shootingRange) //threat is within shooting range
+				{
+					mainState = FiniteState.Attack;
+					agent.stoppingDistance = 0.01f;
+					int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 2);
+					ambushTimeOut = time + deltaTime; //randomise how long the agent stays at some ambush point
+					agent.Stop();
+	
+				}
+				
+			}
+			break;
 
 			case FiniteState.Attack:
-		{
-			if((transform.position - threat.position).magnitude > character.shootingRange) //threat is too far to shoot at
 			{
-				mainState = FiniteState.Chase;
-				agent.stoppingDistance = character.stoppingRange;
-			}
-
-			if (attackState == AttackState.InPosition)
-			{
-
-
-				if ((time > ambushTimeOut) || (character.hitCount > character.endurance)) //agent has to move away from danger zone or it's time to re position
+				if((transform.position - threat.position).magnitude > character.shootingRange) //threat is too far to shoot at
 				{
-	
-					attackState = AttackState.InMotion;
-					motionTimeOut = time + delta_MotionTimeOut; //allows the agent to stop after some time if it failed to reach the target point
-					character.hitCount = 0;
-					Vector3 targetWayPoint;
-					if (character.hitCount > character.endurance) //agent shot more times than it can tolerate
-						targetWayPoint = tactics.LookForAmbushPoint(Strategy.StepBack,transform, threat); //agent has to move away from danger
-					else //ambush timeout
-						targetWayPoint = tactics.LookForAmbushPoint(character.strategy,transform, threat); //find a point to allow the agent's strategy
-					agent.SetDestination (targetWayPoint);
-					targetWayPointType = WayPoint.ambush;
+					mainState = FiniteState.Chase;
+					agent.stoppingDistance = character.stoppingRange;
 				}
-			}
 
-			else if (attackState == AttackState.InMotion)
-			{
-
-				if ((enemyMovement.agentDestReached()) || (time > motionTimeOut))
+				if (attackState == AttackState.InPosition)
 				{
-					agent.Stop ();
-					if (targetWayPointType == AI_Logic.WayPoint.ambush) //reached an ambush point
+
+
+					if ((time > ambushTimeOut) || (character.hitCount > character.endurance)) //agent has to move away from danger zone or it's time to re position
 					{
-						attackState = AI_Logic.AttackState.InPosition;
-						int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 7);//how long should the agent hold the ambush position
-						ambushTimeOut = time + deltaTime;
+		
+						attackState = AttackState.InMotion;
+						motionTimeOut = time + delta_MotionTimeOut; //allows the agent to stop after some time if it failed to reach the target point
+						character.hitCount = 0;
+						Vector3 targetWayPoint;
+						if (character.hitCount > character.endurance) //agent shot more times than it can tolerate
+							targetWayPoint = tactics.LookForAmbushPoint(Strategy.StepBack,transform, threat); //agent has to move away from danger
+						else //ambush timeout
+							targetWayPoint = tactics.LookForAmbushPoint(character.strategy,transform, threat); //find a point to allow the agent's strategy
+						agent.SetDestination (targetWayPoint);
+						targetWayPointType = WayPoint.ambush;
 					}
-
 				}
+
+				else if (attackState == AttackState.InMotion)
+				{
+
+					if ((enemyMovement.agentDestReached()) || (time > motionTimeOut))
+					{
+						agent.Stop ();
+						if (targetWayPointType == AI_Logic.WayPoint.ambush) //reached an ambush point
+						{
+							attackState = AI_Logic.AttackState.InPosition;
+							int deltaTime = rand.Next((int)delta_AmbushTimeOut, (int)delta_AmbushTimeOut + 7);//how long should the agent hold the ambush position
+							ambushTimeOut = time + deltaTime;
+						}
+	
+					}
+				}
+	
+
+				time += Time.deltaTime;
 			}
-
-
-			time += Time.deltaTime;
-		}
-		break;
+			break;
 				
-	}
+		}
 		time += Time.deltaTime;
 
 	}

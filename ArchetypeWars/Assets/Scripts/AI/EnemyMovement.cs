@@ -8,12 +8,11 @@ public class EnemyMovement : MonoBehaviour {
 	private NavMeshAgent agent;
 	protected Animator anim;
 	// Use this for initialization
-	private bool sliding = false, isGrounded = false;
+	private bool isGrounded = false;
 	public bool weaponHeld = true;
-	public float slidespeed = 1.5f;
 
-	private float verticalVel = 0f;
-	private float slideTime = 1.1f, currentSlide = 0;
+	//private float verticalVel = 0f;
+	private float meleeTime = 7f, currentMelee = 0;
 
 	//change in position attributes
 	protected float xMove = 0.0f;
@@ -28,7 +27,6 @@ public class EnemyMovement : MonoBehaviour {
 	
 
 
-	public bool fire_Move, special1_Move;
 	protected float time,shootTimeOut; //attributes to keep track of time and time outs
 	protected bool rotated = false; //check if rotation was set somewhere else
 
@@ -44,7 +42,6 @@ public class EnemyMovement : MonoBehaviour {
 		shootTimeOut = 0.0f;
 
 		agent.stoppingDistance = character.stoppingRange;
-		fire_Move = false;
 		rand = new System.Random ();
 
 	}
@@ -52,77 +49,62 @@ public class EnemyMovement : MonoBehaviour {
 	void Update () {
 		/*Gets called by unity once per frame
 		 */
-		switch (logic.mainState) {
-		case AI_Logic.FiniteState.Chase:
-			{
-				if (agent.updateRotation == false)
+		if (currentMelee > 0)
+			currentMelee -= Time.fixedDeltaTime;
+
+		if (character.freemove) {
+			switch (logic.mainState) {
+			case AI_Logic.FiniteState.Chase:
 				{
-					agent.updateRotation = true;
-				}
-				agent.SetDestination (logic.getTarget ());
-				
-			}
-			break;
-		
-		case AI_Logic.FiniteState.Attack:
-			{
-				if (agent.updateRotation == true)
-				{
-					agent.updateRotation = false;
+					if (agent.updateRotation == false) {
+						agent.updateRotation = true;
+					}
+					agent.SetDestination (logic.getTarget ());
 					
 				}
-				lookAt(logic.threat.position);
-				
-				if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+				break;
+			
+			case AI_Logic.FiniteState.Attack:
+				{
+					if (agent.updateRotation == true) {
+						agent.updateRotation = false;
+						
+					}
+					lookAt (logic.threat.position);
+					float dist = (float)Vector3.Distance (transform.position, logic.threat.position);
+					if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
 						character.meleeAttackEnd ();
-				
-				else if ((float)Vector3.Distance(transform.position, logic.threat.position) < AITacticalUnit.minimum_melee_distance) //very close to target 
-				{
-					character.meleeAttack ();
-				}
-				else
-				{
-					character.ShootWeapon (logic.threat);
-				}
-
-				if (logic.attackState == AI_Logic.AttackState.InPosition) //agent positioned at some waypoint
-				{
-					
-					
-
-
-				}
-				else if (logic.attackState == AI_Logic.AttackState.InMotion) //agent moving to some waypoint
-				{
-				if (agent.velocity.magnitude == 0)//agent has been paused
-					{
-						int randResumingChoice = rand.Next(1, 60);
-						if (randResumingChoice == 15)
-						{
-							//print("Resumed");
-							agent.Resume();
-						}
-
+					else if (dist < AITacticalUnit.minimum_melee_distance && (currentMelee <= 0)) { //very close to target
+						character.meleeAttack ();
+						currentMelee = meleeTime;
 					}
-					
-					else 
-					{
-						int randStoppingChoice = rand.Next(1, 60);
-						if (randStoppingChoice == 15)
-						{
-							//print("stopped");
-							agent.Stop();
+					else if (dist > AITacticalUnit.minimum_melee_distance){
+						character.ShootWeapon (logic.threat);
+					}
+	
+					if (logic.attackState == AI_Logic.AttackState.InPosition) { //agent positioned at some waypoint
+						//Nothing implemented
+					} 
+				else if (logic.attackState == AI_Logic.AttackState.InMotion) { //agent moving to some waypoint
+						if (agent.velocity.magnitude == 0) {//agent has been paused
+							int randResumingChoice = rand.Next (1, 60);
+							if (randResumingChoice == 15) {
+								agent.Resume ();
+							}
+	
+						} else {
+							int randStoppingChoice = rand.Next (1, 60);
+							if (randStoppingChoice == 15) {
+								agent.Stop ();
+							}
+	
 						}
-
 					}
 				}
-				
-				
-				
-
+				break;
 			}
-			break;
 		}
+		else {agent.Stop();}
 	
 		//for animating movement
 		Vector3 moveDir = agent.velocity;
@@ -160,15 +142,12 @@ public class EnemyMovement : MonoBehaviour {
 		/*Gets called by unity for physics updates
 		 */
 		//setting animator parameters for animation 
-		anim.SetBool ("Sliding", sliding);
 		anim.SetBool ("WeaponHeld", weaponHeld);
 		anim.SetBool ("Alive", character.alive);
 		anim.SetFloat ("Poise", character.currentPoise);
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
 		anim.SetBool ("Melee", character.melee);
-		anim.SetFloat ("Poise", character.currentPoise);
-		anim.SetInteger ("MeleeCount", character.currentMelee);
 	}
 	
 
