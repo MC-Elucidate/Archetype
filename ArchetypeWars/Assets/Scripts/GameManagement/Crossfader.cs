@@ -10,8 +10,8 @@ public class Crossfader : MonoBehaviour {
 	private AudioSource lowkeyAudio;
 	private AudioSource combatAudio;
 
-	public float fadeFactor = 0.3f;
-	public float targetVolume = 0.5f;
+	public float fadeFactor = 0.5f;
+	public float targetVolume = 0.7f;
 	
 	void  Start (){
 		lowkeyAudio = gameObject.AddComponent<AudioSource>();
@@ -23,7 +23,7 @@ public class Crossfader : MonoBehaviour {
 
 		lowkeyAudio.Play ();
 		lowkeyAudio.loop = true;
-		combatAudio.Play ();
+		//combatAudio.Play ();
 		combatAudio.loop = true;
 	}
 	
@@ -31,6 +31,8 @@ public class Crossfader : MonoBehaviour {
 
 		//Transitions BGM from combat music to down-time music.
 		//Uses crossfade to transition between tracks.
+		if (combatAudio.isPlaying == false && lowkeyAudio.time > 8.0f)	//First time playing combat music, we want a delayed start
+			combatAudio.Play ();
 
 		if (RoundManager.currentRound == RoundManager.Round.Survival && combatAudio.volume < targetVolume)
 		{
