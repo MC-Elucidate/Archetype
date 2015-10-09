@@ -30,6 +30,7 @@ public class RoundManager : MonoBehaviour {
 	public Affix affixThree;
 
 	public float roundTimer = 0f;
+	public float totalTime = 0f;
 	public static int score = 0;
 	public int roundCounter = 0;
 
@@ -85,6 +86,8 @@ public class RoundManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		totalTime += Time.deltaTime;
 
 		//Round in progress
 		if (roundTimer > 0 && !CheckVictory ()) {
@@ -284,8 +287,8 @@ public class RoundManager : MonoBehaviour {
 		
 		reinforcementSize = Random.Range (3, 7);	//3 to 6 enemies spawned at a time
 
-		if (currentForceSize + reinforcementSize > 15)
-			reinforcementSize = 15 - currentForceSize;
+		if (currentForceSize + reinforcementSize > maxReinforcements)
+			reinforcementSize = maxReinforcements - currentForceSize;
 
 		for (int i = 0; i<reinforcementSize; i++) {
 			switch(Random.Range (0,3)) {
@@ -353,7 +356,7 @@ public class RoundManager : MonoBehaviour {
 				affix_3 = GetRandomEnum<Affix>();
 		}
 
-		Debug.Log ("Affixes:");
+		//Debug.Log ("Affixes:");
 
 		ModifyAffix (affix_1);
 		ModifyAffix (affix_2);
@@ -373,57 +376,57 @@ public class RoundManager : MonoBehaviour {
 		switch (thisAffix) {
 		case Affix.Player_MeleeOnly:
 			player_meleeOnly = true;
-			Debug.Log("Players have melee only.");
+			//Debug.Log("Players have melee only.");
 			break;
 
 		case Affix.Player_HalfHealth:
 			player_healthMultiplier = 0.5f;
-			Debug.Log("Players have 50% life.");
+			//Debug.Log("Players have 50% life.");
 			break;
 
 		case Affix.Player_HalfAmmo:
 			player_ammoMultiplier = 0.5f;
-			Debug.Log("Players have 50% ammo.");
+			//Debug.Log("Players have 50% ammo.");
 			break;
 
 		case Affix.Player_DoubleDamage:
 			player_damageMultiplier = 2.00f;
-			Debug.Log("Players have 200% damage.");
+			//Debug.Log("Players have 200% damage.");
 			break;
 
 		case Affix.Player_FasterMovement:
 			player_movementMultiplier = 1.50f;
-			Debug.Log("Players move 50% faster.");
+			//Debug.Log("Players move 50% faster.");
 			break;
 
 		case Affix.Player_ExplosiveShots:
 			player_explosiveShots = true;
-			Debug.Log("Players' shots explode!!!");
+			//Debug.Log("Players' shots explode!!!");
 			break;
 
 		case Affix.Enemy_HalfHealth:
 			enemy_healthMultiplier = 0.5f;
-			Debug.Log("Enemies have 50% life.");
+			//Debug.Log("Enemies have 50% life.");
 			break;
 
 		case Affix.Enemy_DoubleSpawn:
 			enemy_doubleSpawns = true;
-			Debug.Log("Enemies spawn at double the rate.");
+			//Debug.Log("Enemies spawn at double the rate.");
 			break;
 
 		case Affix.Enemy_FasterMovement:
 			enemy_movementMultiplier = 1.5f;
-			Debug.Log("Enemies move 50% faster");
+			//Debug.Log("Enemies move 50% faster");
 			break;
 
 		case Affix.Enemy_DoubleHealth:
 			enemy_healthMultiplier = 2.00f;
-			Debug.Log("Enemies have 200% life.");
+			//Debug.Log("Enemies have 200% life.");
 			break;
 
 		case Affix.Enemy_ExplosiveShots:
 			enemy_explosiveShots = true;
-			Debug.Log("Enemies' shots explode!");
+			//Debug.Log("Enemies' shots explode!");
 			break;
 		}
 	}
