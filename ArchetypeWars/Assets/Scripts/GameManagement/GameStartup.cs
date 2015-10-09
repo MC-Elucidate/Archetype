@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 /*
@@ -11,6 +12,15 @@ public class GameStartup : MonoBehaviour {
 	private int char2;
 	private int char3;
 	private int char4;
+
+	public Text heavyChoice;
+	public Text commanderChoice;
+	public Text ninjaChoice;
+	public Text sniperChoice;
+
+	public Text prompt;
+	public float promptMaxTime = 3f;
+	public float promptTimer = 0f;
 
 	public int[] playerChoices;// = {0,0,0,0,0};
 
@@ -35,6 +45,12 @@ public class GameStartup : MonoBehaviour {
 		if (Input.GetButtonDown ("Cancel")) {
 			cancelLastCharacterSelect();
 		}
+
+		if (promptTimer > 0)
+			promptTimer -= Time.deltaTime;
+
+		if (promptTimer <= 0)
+			prompt.text = "";
 	}
 
 	/*
@@ -47,7 +63,11 @@ public class GameStartup : MonoBehaviour {
 			Screen.showCursor=false;
 			Application.LoadLevel ("ss 1");
 		} else
+		{
 			Debug.Log ("No character selected");
+			prompt.text = "No character is selected";
+			promptTimer = promptMaxTime;
+		}
 
 	}
 
@@ -63,7 +83,7 @@ public class GameStartup : MonoBehaviour {
 				
 				char1 = playerChoosing; //Set currently selecting player as that character
 				playerChoices[playerChoosing] = charNo; //Set currently choosing player to the character selected
-
+				heavyChoice.text = "Player " + playerChoosing;
 				
 				//Next player chooses
 				playerChoosing++;
@@ -72,6 +92,8 @@ public class GameStartup : MonoBehaviour {
 			//Can't select character
 			else{
 				Debug.Log ("This player has already been chosen");
+				prompt.text = "This player has already been chosen";
+				promptTimer = promptMaxTime;
 			}
 			break;
 			
@@ -81,6 +103,7 @@ public class GameStartup : MonoBehaviour {
 				
 				char2 = playerChoosing; //Set currently selecting player as that character
 				playerChoices[playerChoosing] = charNo; //Set currently choosing player to the character selected
+				commanderChoice.text = "Player " + playerChoosing;
 				
 				//Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
 				
@@ -92,6 +115,8 @@ public class GameStartup : MonoBehaviour {
 			}
 			else{
 				Debug.Log ("This player has already been chosen");
+				prompt.text = "This player has already been chosen";
+				promptTimer = promptMaxTime;
 			}
 			break;
 			
@@ -101,6 +126,7 @@ public class GameStartup : MonoBehaviour {
 				
 				char3 = playerChoosing; //Set currently selecting player as that character
 				playerChoices[playerChoosing] = charNo; //Set currently choosing player to the character selected
+				ninjaChoice.text = "Player " + playerChoosing;
 				
 				//Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
 				
@@ -110,6 +136,8 @@ public class GameStartup : MonoBehaviour {
 			}
 			else{
 				Debug.Log ("This player has already been chosen");
+				prompt.text = "This player has already been chosen";
+				promptTimer = promptMaxTime;
 			}
 			break;
 			
@@ -119,6 +147,7 @@ public class GameStartup : MonoBehaviour {
 				
 				char4 = playerChoosing; //Set currently selecting player as that character
 				playerChoices[playerChoosing] = charNo; //Set currently choosing player to the character selected
+				sniperChoice.text = "Player " + playerChoosing;
 				
 				//Debug.Log ("Player " + playerChoosing + " = " + playerChoices[playerChoosing]);
 				
@@ -130,6 +159,8 @@ public class GameStartup : MonoBehaviour {
 			}
 			else{
 				Debug.Log ("This player has already been chosen");
+				prompt.text = "This player has already been chosen";
+				promptTimer = promptMaxTime;
 			}
 			break;
 		
@@ -152,23 +183,37 @@ public class GameStartup : MonoBehaviour {
 				case 1:
 
 				char1 = -1;
+				heavyChoice.text = "";
 				break;
 
 				case 2:
 				char2 = -1;
+				commanderChoice.text = "";
 				break;
 
 				case 3:
 				char3 = -1;
+				ninjaChoice.text = "";
 				break;
 
 				case 4:
 				char4 = -1;
+				sniperChoice.text = "";
 				break;
 
 			}
 			playerChoices[playerChoosing-1] = -1;	//Remove the player's choice
 			playerChoosing--;						//Decrement the player choosing and go back to their selection
 		}
+	}
+
+	public void clearChoices() {
+
+		//Cheap way to quickly empty the character select choices
+
+		cancelLastCharacterSelect ();
+		cancelLastCharacterSelect ();
+		cancelLastCharacterSelect ();
+		cancelLastCharacterSelect ();
 	}
 }

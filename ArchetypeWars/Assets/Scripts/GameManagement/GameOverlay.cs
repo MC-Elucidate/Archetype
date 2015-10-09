@@ -14,6 +14,7 @@ public class GameOverlay : MonoBehaviour {
 
 	public Text roundType;			
 	public Text roundTimer;
+	public Text roundCounter;
 	public Text totalTimer;
 	public Text alternateRound;
 	public Text affix1;			
@@ -40,6 +41,7 @@ public class GameOverlay : MonoBehaviour {
 		//Set round type and timer.
 		roundType.text = rounds.getRound().ToString();
 		roundTimer.text = System.String.Format("{0}:{1}", (int)rounds.roundTimer/60, ((int)rounds.roundTimer%60).ToString("D2"));
+		roundCounter.text = "Round " + rounds.roundCounter;
 		totalTimer.text = System.String.Format ("{0}:{1}", (int)rounds.totalTime/60, ((int)rounds.totalTime%60).ToString("D2"));
 
 		if (rounds.alternateRound) {
