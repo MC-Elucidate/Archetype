@@ -111,14 +111,14 @@ public class CharacterBase : MonoBehaviour {
 /*
 	 * Sets freemove to true and re-equips weapon
 	 * */
-	public void enableFreemove()
+	public virtual void enableFreemove()
 	{
 		Debug.Log ("freemove");
 		freemove = true;
 		weaponHeld = true;
-		
-		if (currentPoise<50)
-			currentPoise = 50;
+
+		currentPoise = 100;
+		anim.SetFloat ("Poise", currentPoise);
 	}
 	/*
 	 * Ends melee attack.
@@ -164,13 +164,11 @@ public class CharacterBase : MonoBehaviour {
 			if(currentPoise <= 20)
 			{
 				freemove = false;
-				//Debug.Log("KD");
 			}
 			//Stunned
 			else if(currentPoise <= 40 && currentPoise > 20)
 			{
 				freemove = false;
-				//Debug.Log("Stunned");
 			}
 			anim.SetFloat("Poise", currentPoise);
 			if(currentPoise < 0)

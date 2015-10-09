@@ -99,7 +99,7 @@ public class EnemyCharacter : CharacterBase {
 
 	public override void meleeAttack ()
 	{
-		Debug.Log("Doing melee");
+
 			if (currentMelee == 0) { //First melee attack in the combo
 				currentMelee++;
 				melee = true;
@@ -119,6 +119,16 @@ public class EnemyCharacter : CharacterBase {
 		currentMelee = 0;
 		SRWeapon.SetActive (false);
 		weaponHeld = true;
+	}
+
+	public override void enableFreemove()
+	{
+		gameObject.SendMessage ("Resume", SendMessageOptions.DontRequireReceiver);
+		freemove = true;
+		weaponHeld = true;
+		
+		currentPoise = 100;
+		anim.SetFloat ("Poise", currentPoise);
 	}
 
 }
