@@ -51,9 +51,13 @@ public class EnemyMedium : EnemyCharacter {
 				{
 					
 					LRWeapon.SetActive (true);
-					
+
+					//offsetting the long range weapon
 					LRWeapon.transform.localPosition = Vector3.zero;
-					LRWeapon.transform.localEulerAngles = new Vector3(350, 70,137);
+
+
+					LRWeapon.transform.localEulerAngles = new Vector3(0, 70,137); 
+					LRWeapon.transform.localPosition = (Vector3.right * (-9)) + (Vector3.up * -3);
 					an_Set = true;
 					weaponDrawn = true;
 					useIK = true;
