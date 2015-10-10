@@ -266,7 +266,8 @@ public class Leaderboard : MonoBehaviour {
 		Application.LoadLevel ("menu");
 	}
 
-	public static void Credits() {
+	public void Credits() {
+		Destroy (score);
 		Application.LoadLevel ("credits");
 	}
 }
