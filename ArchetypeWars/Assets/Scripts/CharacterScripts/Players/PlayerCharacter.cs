@@ -215,7 +215,8 @@ public class PlayerCharacter : CharacterBase {
 
 		health -= (int)(dmg/armourMod);
 
-		if (health <= 0) {
+		if (health <= 0 && alive) {
+			//gameObject.tag = "DeadCharacter";
 			health = 0;
 			aggro = 0;
 			alive = false;

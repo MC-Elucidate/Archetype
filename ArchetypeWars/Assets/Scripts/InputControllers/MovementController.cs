@@ -58,14 +58,14 @@ public class MovementController: MonoBehaviour {
 			 */
 
 			/*
-			 * OTHER MOVEMENT ACTIONS INPUT MANAGEMENT (MELEE AND SLIDE)
+			 * OTHER MOVEMENT ACTIONS INPUT MANAGEMENT (MELEE AND SLIDE AND SPECIALS)
 			 */
-			else if (Input.GetButtonDown (slideTag)) //Slide button pressed
+			if (Input.GetButtonDown (slideTag)) //Slide button pressed
 				character.slide ();
 			else if (Input.GetButtonDown (meleeTag))  //Melee button pressed
 				character.meleeAttack ();
-			else if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
-				character.meleeAttackEnd ();
+			//else if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+			//	character.meleeAttackEnd ();
 			else if (Input.GetButtonDown (special1Tag)) //Performing special 1
 				character.specialMove (1);
 			else if (Input.GetButtonDown (special2Tag)) //Performing special 2
@@ -118,20 +118,10 @@ public class MovementController: MonoBehaviour {
 		charCon.Move (transform.rotation * character.velocity * Time.deltaTime);
 
 		//Camera Up/Down Movement
-		float pitch = Input.GetAxis (mouseYTag) * character.rotSpeed;
-		character.rotateCamera (pitch);
-
-		//Set animator variables
-		/*anim.SetBool ("Sliding", character.sliding);
-		anim.SetBool ("WeaponHeld", character.weaponHeld);
-		anim.SetBool ("Wallrunning", character.wallRunning);
-		anim.SetBool ("Melee", character.melee);
-		anim.SetBool ("Alive", character.alive);
-		anim.SetInteger ("MeleeCount", character.currentMelee);
-		anim.SetFloat ("Vertical", character.velocity.z);
-		anim.SetFloat ("Horizontal", character.velocity.x);
-		anim.SetFloat ("UpDown", character.velocity.y);
-		anim.SetFloat ("Poise", character.currentPoise);*/
+		if (character.alive) {
+			float pitch = Input.GetAxis (mouseYTag) * character.rotSpeed;
+			character.rotateCamera (pitch);
+		}
 	}
 
 	protected void FixedUpdate()

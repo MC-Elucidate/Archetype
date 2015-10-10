@@ -32,7 +32,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 		charSelection = GameObject.Find ("CharacterSelectManager").GetComponent<GameStartup>();
 		for (int i=1; i<=4; i++) {
 
-			if(charSelection.playerChoices[i] == 0)
+			if(charSelection.playerChoices[i] <= 0)
 				break;
 
 			Transform playerChar;
@@ -97,7 +97,7 @@ public class CharacterSpawnSetup : MonoBehaviour {
 					// Sets up GUI
 					playergui.gameObject.GetComponent<PlayerHUD>().character = ninjascript;
 					playergui.gameObject.GetComponent<PlayerHUD>().setPortraitNinja();
-					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(1, "Team Buff");
+					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(1, "Dodge");
 					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(2, "Invisibility");
 					playergui.gameObject.GetComponent<PlayerHUD>().setCooldownName(3, "Coup de Graçe");
 					
