@@ -26,7 +26,7 @@ public class PlayerCharacter : CharacterBase {
 	public bool doubleJumping = false, wallRunning  = false, wallrunUp = false, wallrunLeft = false, wallrunRight = false, sliding = false, isGrounded = false;
 
 	//Jump variables
-	protected float jumpPower = 3f, jumpGravity = 3f, jumpTime = 0.25f, currentJump = 0f;
+	protected float jumpPower = 4f, jumpGravity = 3f, jumpTime = 0.25f, currentJump = 0f;
 
 	//Slide variables
 	protected float slideSpeed = 12f, slideTime = 0.75f, currentSlide = 0f;
