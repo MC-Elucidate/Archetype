@@ -189,7 +189,7 @@ public class Leaderboard : MonoBehaviour {
 					string[] oldScorePieces = currScore[0].Split(':');
 					float oldScoreTime = int.Parse (oldScorePieces[0])*60 + int.Parse (oldScorePieces[1]) + int.Parse (oldScorePieces[2])/100;	//Rebuild some stupid float of a score from the old one
 					
-					if (score.totalTime < oldScoreTime)
+					if (score.totalTime > oldScoreTime)
 					{
 						//Store the old player name
 						tempScore = highScores[i];
