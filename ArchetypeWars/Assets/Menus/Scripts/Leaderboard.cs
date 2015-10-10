@@ -54,65 +54,68 @@ public class Leaderboard : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (field.text.Length < 3) {
-			if (Input.GetKeyDown (KeyCode.A))
-				field.text += "A";
-			else if (Input.GetKeyDown (KeyCode.B))
-				field.text += "B";
-			else if (Input.GetKeyDown (KeyCode.C))
-				field.text += "C";
-			else if (Input.GetKeyDown (KeyCode.D))
-				field.text += "D";
-			else if (Input.GetKeyDown (KeyCode.E))
-				field.text += "E";
-			else if (Input.GetKeyDown (KeyCode.F))
-				field.text += "F";
-			else if (Input.GetKeyDown (KeyCode.G))
-				field.text += "G";
-			else if (Input.GetKeyDown (KeyCode.H))
-				field.text += "H";
-			else if (Input.GetKeyDown (KeyCode.I))
-				field.text += "I";
-			else if (Input.GetKeyDown (KeyCode.J))
-				field.text += "J";
-			else if (Input.GetKeyDown (KeyCode.K))
-				field.text += "K";
-			else if (Input.GetKeyDown (KeyCode.L))
-				field.text += "L";
-			else if (Input.GetKeyDown (KeyCode.M))
-				field.text += "M";
-			else if (Input.GetKeyDown (KeyCode.N))
-				field.text += "N";
-			else if (Input.GetKeyDown (KeyCode.O))
-				field.text += "O";
-			else if (Input.GetKeyDown (KeyCode.P))
-				field.text += "P";
-			else if (Input.GetKeyDown (KeyCode.Q))
-				field.text += "Q";
-			else if (Input.GetKeyDown (KeyCode.R))
-				field.text += "R";
-			else if (Input.GetKeyDown (KeyCode.S))
-				field.text += "S";
-			else if (Input.GetKeyDown (KeyCode.T))
-				field.text += "T";
-			else if (Input.GetKeyDown (KeyCode.U))
-				field.text += "U";
-			else if (Input.GetKeyDown (KeyCode.V))
-				field.text += "V";
-			else if (Input.GetKeyDown (KeyCode.W))
-				field.text += "W";
-			else if (Input.GetKeyDown (KeyCode.X))
-				field.text += "X";
-			else if (Input.GetKeyDown (KeyCode.Y))
-				field.text += "Y";
-			else if (Input.GetKeyDown (KeyCode.Z))
-				field.text += "Z";
-		}
-
-		if (field.text.Length >= 3 && !updated)
+		if (field!=null) 
 		{
-			updated = true;
-			UpdateScores ();
+			if (field.text.Length < 3) {
+				if (Input.GetKeyDown (KeyCode.A))
+					field.text += "A";
+				else if (Input.GetKeyDown (KeyCode.B))
+					field.text += "B";
+				else if (Input.GetKeyDown (KeyCode.C))
+					field.text += "C";
+				else if (Input.GetKeyDown (KeyCode.D))
+					field.text += "D";
+				else if (Input.GetKeyDown (KeyCode.E))
+					field.text += "E";
+				else if (Input.GetKeyDown (KeyCode.F))
+					field.text += "F";
+				else if (Input.GetKeyDown (KeyCode.G))
+					field.text += "G";
+				else if (Input.GetKeyDown (KeyCode.H))
+					field.text += "H";
+				else if (Input.GetKeyDown (KeyCode.I))
+					field.text += "I";
+				else if (Input.GetKeyDown (KeyCode.J))
+					field.text += "J";
+				else if (Input.GetKeyDown (KeyCode.K))
+					field.text += "K";
+				else if (Input.GetKeyDown (KeyCode.L))
+					field.text += "L";
+				else if (Input.GetKeyDown (KeyCode.M))
+					field.text += "M";
+				else if (Input.GetKeyDown (KeyCode.N))
+					field.text += "N";
+				else if (Input.GetKeyDown (KeyCode.O))
+					field.text += "O";
+				else if (Input.GetKeyDown (KeyCode.P))
+					field.text += "P";
+				else if (Input.GetKeyDown (KeyCode.Q))
+					field.text += "Q";
+				else if (Input.GetKeyDown (KeyCode.R))
+					field.text += "R";
+				else if (Input.GetKeyDown (KeyCode.S))
+					field.text += "S";
+				else if (Input.GetKeyDown (KeyCode.T))
+					field.text += "T";
+				else if (Input.GetKeyDown (KeyCode.U))
+					field.text += "U";
+				else if (Input.GetKeyDown (KeyCode.V))
+					field.text += "V";
+				else if (Input.GetKeyDown (KeyCode.W))
+					field.text += "W";
+				else if (Input.GetKeyDown (KeyCode.X))
+					field.text += "X";
+				else if (Input.GetKeyDown (KeyCode.Y))
+					field.text += "Y";
+				else if (Input.GetKeyDown (KeyCode.Z))
+					field.text += "Z";
+			}
+
+			if (field.text.Length >= 3 && !updated)
+			{
+				updated = true;
+				UpdateScores ();
+			}
 		}
 
 	}
