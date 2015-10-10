@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class RoundManager : MonoBehaviour {
 
+	//SCORE PREFAB
+	public ScoreContainer scoreObject;
+
 	//OTHER SCRIPTS
 	EnemySpawner spawner;
 	public static AITacticalUnit AITactics;
@@ -87,10 +90,11 @@ public class RoundManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		totalTime += Time.deltaTime;
+		if (gameInProgress)
+			totalTime += Time.deltaTime;
 
 		//Round in progress
-		if (roundTimer > 0 && !CheckVictory ()) {
+		if (roundTimer > 0 && !CheckVictory () && gameInProgress) {
 			roundTimer -= Time.deltaTime;
 			reinforcementTimer -= Time.deltaTime;
 
@@ -462,6 +466,13 @@ public class RoundManager : MonoBehaviour {
 		Destroy (GameObject.Find ("CharacterSelectManager"));
 		Screen.lockCursor = false;
 		Screen.showCursor = true;
-		Application.LoadLevel("menu");
+
+		ScoreContainer score = Instantiate(scoreObject) as ScoreContainer;
+		score.rounds = roundCounter;
+		score.totalTime = totalTime;
+		DontDestroyOnLoad (score);
+		//Check player scores, then if they don't have a high score, go to the main menu.
+		//Otherwise, they win! Take them to the leaderboard scene and make them type their name in
+		Application.LoadLevel("leaderboard");
 	}
 }
