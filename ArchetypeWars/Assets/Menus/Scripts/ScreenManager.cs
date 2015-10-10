@@ -131,4 +131,12 @@ public class ScreenManager : MonoBehaviour {
 	public void quitGame() {
 		Application.Quit ();
 	}
+
+	public void creditsMenu() {
+		Application.LoadLevel ("credits");
+	}
+
+	public void mainMenu() {
+		Application.LoadLevel ("menu");
+	}
 }
