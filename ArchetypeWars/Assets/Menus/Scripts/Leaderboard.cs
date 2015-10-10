@@ -115,6 +115,7 @@ public class Leaderboard : MonoBehaviour {
 			{
 				updated = true;
 				UpdateScores ();
+				continueButton.Select();
 			}
 		}
 

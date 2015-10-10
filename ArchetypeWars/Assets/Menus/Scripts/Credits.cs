@@ -5,6 +5,7 @@ using System.Collections;
 public class Credits : MonoBehaviour {
 
 	public GameObject thanks1, thanks2, thanks3;
+	public Button mainMenu;
 	public float timer = 0.0f, maxTime = 5f;
 	// Use this for initialization
 	void Start () {
@@ -12,6 +13,9 @@ public class Credits : MonoBehaviour {
 		thanks2.SetActive (false);
 		thanks3.SetActive (false);
 		timer = maxTime;
+
+		mainMenu.Select ();
+
 	}
 	
 	// Update is called once per frame
