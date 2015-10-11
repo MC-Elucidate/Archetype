@@ -8,6 +8,7 @@ public class NinjaScript: PlayerCharacter {
 	//Invis variables
 	private int baseAggro = 170, invisAggro = 0;
 	private float invisDuration = 15, currentInvis = 0;
+	private int dodgeChance = 30;
 
 	public ParticleSystem smokePrefab;
 
@@ -60,6 +61,51 @@ public class NinjaScript: PlayerCharacter {
 	}
 
 	/*
+	 * Ninja damage override for her passive
+	 * It's exactly the same as before, but it has the if statement with dodge chance
+	 * The else handles resetting her poise and freemove, so she doesn't get stunlocked without taking damage
+	*/
+	public override void receiveDamage(int dmg)
+	{
+		if (Random.Range (0, 101) > (100 - dodgeChance))
+		{
+			//currentPoise = 50; //Enough to move after a dodge, but not
+
+			if(health>0)
+				sounds.playHitSound();
+			
+			shaker.shake = .2f;					//Lasts 0.2 seconds
+			//shaker.shakeFactor = 0.7f;		//Normal shake?
+			
+			health -= (int)(dmg/armourMod);
+			
+			if (health <= 0 && alive) {
+				//gameObject.tag = "DeadCharacter";
+				health = 0;
+				aggro = 0;
+				alive = false;
+				freemove = false;
+				//cam.transform.parent = null;
+				currentGravity = globalGravity;
+				velocity.x = 0;
+				velocity.y = 0;
+				velocity.z = 0;
+				sounds.playDeathSound ();
+			}
+		}
+		else
+		{
+			if (alive)
+			{
+				Debug.Log ("Dodged the attack!");
+				if (currentPoise < 50)
+					currentPoise = 50; //Enough to move after a dodge, but not for the next attack
+				freemove = true;
+			}
+		}
+	}
+
+	/*
 	 * Fires weapon. Overrides base method as the ninja throws card objects instead of firing bullets.
 	 * Gets the direction in which the card will travel and then instantiates the card in that direction.
 	*/
@@ -102,7 +148,7 @@ public class NinjaScript: PlayerCharacter {
 	}
 
 	/*
-	 * Ninja's first ability is a passive that grants her higher move speed.
+	 * Ninja's first ability is a passive that grants her dodge chance
 	 * */
 	public override void special1()
 	{
