@@ -6,6 +6,7 @@ public class PlayerCharacter : CharacterBase {
 
 	//Player Camera
 	public Camera cam;
+	public ScreenShakeQuick shaker;
 	public float defaultRotationSpeed = 7f;
 	public float rotSpeed = 7f;
 
@@ -236,6 +237,9 @@ public class PlayerCharacter : CharacterBase {
 		if(health>0)
 			sounds.playHitSound();
 
+		shaker.shake = .2f;					//Lasts 0.2 seconds
+		//shaker.shakeFactor = 0.7f;		//Normal shake?
+
 		health -= (int)(dmg/armourMod);
 
 		if (health <= 0 && alive) {
@@ -308,6 +312,7 @@ public class PlayerCharacter : CharacterBase {
 				sounds.pew ();
 				Transform fireParticle = Instantiate (weaponFlashEffect, shot_source.transform.position, Quaternion.identity) as Transform;
 				fireParticle.parent = this.transform;
+
 			} 
 		}
 	}

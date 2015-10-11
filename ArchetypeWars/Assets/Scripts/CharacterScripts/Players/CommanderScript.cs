@@ -4,9 +4,11 @@ using System.Collections;
 public class CommanderScript: PlayerCharacter {
 	
 	//Buff
+	public ParticleSystem buffParticles;
 	private float buffDuration = 30, currentBuff = 0;
 	
 	//Heal
+	public ParticleSystem healthParticles;
 	private int healAmount = 200;
 
 	//Rage Attack
@@ -90,7 +92,12 @@ public class CommanderScript: PlayerCharacter {
 			currentBuff = buffDuration;
 			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
 			foreach(GameObject player in players)
+			{
 				player.SendMessage("changeBuffs", "COn");
+				ParticleSystem particles = Instantiate (buffParticles, player.transform.position, Quaternion.identity) as ParticleSystem; //If you ever change invisibility's length, change the objectDestructor duration too
+				particles.transform.parent = player.transform;
+				particles.transform.forward = Vector3.up;
+			}
 			sounds.playSpecial1Sound();
 		}
 	}
@@ -105,7 +112,13 @@ public class CommanderScript: PlayerCharacter {
 			currentSpecial2 = special2CD;
 			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
 			foreach(GameObject player in players)
+			{
 				player.SendMessage("receiveHealth", healAmount);
+				ParticleSystem particles = Instantiate (healthParticles, player.transform.position, Quaternion.identity) as ParticleSystem; //If you ever change invisibility's length, change the objectDestructor duration too
+				particles.transform.parent = player.transform;
+				particles.transform.forward = Vector3.up;
+			}
+
 			sounds.playSpecial2Sound();
 		}
 	}

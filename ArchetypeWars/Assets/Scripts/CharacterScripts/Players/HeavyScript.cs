@@ -6,6 +6,7 @@ public class HeavyScript: PlayerCharacter {
 	//Prefabs for objects that the heavy can spawn
 	public Transform rocketPrefab;
 	public Transform defensePrefab;
+	public ParticleSystem tauntParticles;
 
 	//Taunt variables
 	private int baseAggro = 200, tauntAggro = 400;
@@ -152,6 +153,10 @@ public class HeavyScript: PlayerCharacter {
 			aggro = tauntAggro;
 			currentTaunt = tauntDuration;
 			sounds.playSpecial2Sound();
+
+			ParticleSystem particles = Instantiate (tauntParticles, transform.position, Quaternion.identity) as ParticleSystem; //If you ever change invisibility's length, change the objectDestructor duration too
+			particles.transform.parent = this.transform;
+			particles.transform.forward = Vector3.up;
 		}
 	}
 

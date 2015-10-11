@@ -183,22 +183,26 @@ public class GameStartup : MonoBehaviour {
 				case 1:
 
 				char1 = -1;
-				heavyChoice.text = "";
+				if (heavyChoice!=null)
+					heavyChoice.text = "";
 				break;
 
 				case 2:
 				char2 = -1;
-				commanderChoice.text = "";
+				if (commanderChoice!=null)
+					commanderChoice.text = "";
 				break;
 
 				case 3:
 				char3 = -1;
-				ninjaChoice.text = "";
+				if (ninjaChoice!=null)
+					ninjaChoice.text = "";
 				break;
 
 				case 4:
 				char4 = -1;
-				sniperChoice.text = "";
+				if (sniperChoice!=null)
+					sniperChoice.text = "";
 				break;
 
 			}
