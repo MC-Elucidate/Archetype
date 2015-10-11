@@ -8,6 +8,9 @@ public class NinjaScript: PlayerCharacter {
 	//Invis variables
 	private int baseAggro = 170, invisAggro = 0;
 	private float invisDuration = 15, currentInvis = 0;
+	private int dodgeChance = 30;
+
+	public ParticleSystem smokePrefab;
 
 	//Instakill variables
 	private int instakillDamage = 1000;
@@ -55,6 +58,46 @@ public class NinjaScript: PlayerCharacter {
 			currentInvis -= Time.fixedDeltaTime;
 		else
 			aggro = baseAggro;
+	}
+
+	public override void receiveDamage(int dmg)
+	{
+		if (Random.Range (0, 101) > (100 - dodgeChance))
+		{
+			//currentPoise = 50; //Enough to move after a dodge, but not
+			
+			if(health>0)
+				sounds.playHitSound();
+			
+			shaker.shake = .2f;					//Lasts 0.2 seconds
+			//shaker.shakeFactor = 0.7f;		//Normal shake?
+			
+			health -= (int)(dmg/armourMod);
+			
+			if (health <= 0 && alive) {
+				//gameObject.tag = "DeadCharacter";
+				health = 0;
+				aggro = 0;
+				alive = false;
+				freemove = false;
+				//cam.transform.parent = null;
+				currentGravity = globalGravity;
+				velocity.x = 0;
+				velocity.y = 0;
+				velocity.z = 0;
+				sounds.playDeathSound ();
+			}
+		}
+		else
+		{
+			if (alive)
+			{
+				Debug.Log ("Dodged the attack!");
+				if (currentPoise < 50)
+					currentPoise = 50; //Enough to move after a dodge, but not for the next attack
+				freemove = true;
+			}
+		}
 	}
 
 	/*
@@ -235,6 +278,10 @@ public class NinjaScript: PlayerCharacter {
 				freemove = false;
 				weaponHeld = false; /*special2();*/
 				anim.SetTrigger ("Special2Trigger");
+
+				ParticleSystem particles = Instantiate (smokePrefab, transform.position, Quaternion.identity) as ParticleSystem; //If you ever change invisibility's length, change the objectDestructor duration too
+				particles.transform.parent = this.transform;
+				particles.transform.forward = Vector3.up;
 			}
 		}
 			break;
