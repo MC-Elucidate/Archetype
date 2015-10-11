@@ -21,6 +21,8 @@ public class EnemyCharacter : CharacterBase {
 	public float errFactor;
 	public AI_Logic.Strategy strategy;
 
+	public string enemyType;
+
 	// Use this for initialization
 	void Start () {
 		base.Start ();

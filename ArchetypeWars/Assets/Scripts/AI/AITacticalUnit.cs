@@ -36,19 +36,56 @@ public class AITacticalUnit : MonoBehaviour {
 	//Ambush Point determination function for Gun-based classes
 	public Vector3 LookForAmbushPoint(AI_Logic.Strategy strategy, Transform agent, Transform threat)
 	{
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
-		Vector2 computationVector = Vector3.zero;
-		for (int a = 0; a < enemies.Length; a++)
-		{
-			computationVector.x += agent.transform.position.x - enemies[a].transform.position.x ;
-			computationVector.y += agent.transform.position.y - enemies[a].transform.position.y;
+		if (agent.GetComponent<EnemyCharacter> ().enemyType == "Gun") {
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+			Vector2 computationVector = Vector3.zero;
+			for (int a = 0; a < enemies.Length; a++) {
+				computationVector.x += agent.transform.position.x - enemies [a].transform.position.x;
+				computationVector.y += agent.transform.position.y - enemies [a].transform.position.y;
+			}
+	
+			computationVector.x /= enemies.Length;
+			computationVector.y /= enemies.Length;
+	
+			Vector3 waypoint = new Vector3 (computationVector.x, computationVector.y, agent.transform.position.z) * -5;
+			return waypoint;
+		} else {
+			Vector3 ambushPoint = Vector3.zero;
+			
+			//generating an ambush point around the threat's radius
+			if (strategy == AI_Logic.Strategy.Sneak) {
+				Vector3 radius = agent.position - threat.position;
+				float theta = 5 * rand.Next(1,9); //theta is in range [5, 45)
+				int angleDir = rand.Next (1, 10); //random sign:- or +
+				if (angleDir < 5)
+					theta = theta * (-1);
+				
+				Vector3 delta_Position = Quaternion.AngleAxis(theta, Vector3.up) * (-threat.forward.normalized); //find a point behind the threat and rotate by theta
+				float radius_Length = 5.09f + (float)rand.Next(0, Mathf.Max ((int)radius.magnitude - 5,1)); //randomize the radius length
+				delta_Position = delta_Position * radius_Length; //scale the change in position
+				ambushPoint = threat.position + delta_Position;	//offset threat's position by delta_Position
+				
+			} 
+			else 
+			{
+				Vector3 radius = agent.position - threat.position;
+				Vector3 delta_Position = Quaternion.AngleAxis(15 * rand.Next(1,24), Vector3.up) * radius.normalized; //rotate radius by random angle theta E [15,360]
+				float radius_Length = 1.0f;
+				if (strategy == AI_Logic.Strategy.Approach)
+				{
+					radius_Length = 5.09f + (float)rand.Next(0, Mathf.Max ((int)radius.magnitude - 5,1)); //reduce the radius between the agent and threat
+				}
+				
+				else if (strategy == AI_Logic.Strategy.StepBack)
+				{
+					radius_Length =  (float) rand.Next((int)(radius.magnitude + 5), (int) (radius.magnitude + 40));
+				}
+				delta_Position = delta_Position * radius_Length;
+				ambushPoint = threat.position + delta_Position;	
+			}
+			
+			return ambushPoint;
 		}
-
-		computationVector.x /= enemies.Length;
-		computationVector.y /= enemies.Length;
-
-		Vector3 waypoint = new Vector3(computationVector.x, computationVector.y, agent.transform.position.z) * -5;
-		return waypoint;
 
 	}
 

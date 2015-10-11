@@ -18,6 +18,9 @@ public class EnemyMedium : EnemyCharacter {
 		//Melee
 		meleeMax = 1;
 
+		enemyType = "Gun";
+
+
 		SRWeapon.SetActive (false);
 	}
 	

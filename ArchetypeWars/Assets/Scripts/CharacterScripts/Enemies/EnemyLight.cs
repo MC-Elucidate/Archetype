@@ -20,6 +20,8 @@ public class EnemyLight : EnemyCharacter {
 		shootingRange = 2;
 		stoppingRange = 1;
 
+		enemyType = "Melee";
+
 		SRWeapon.SetActive (false);
 	}
 	

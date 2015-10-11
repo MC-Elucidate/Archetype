@@ -57,7 +57,7 @@ public class PlayerCharacter : CharacterBase {
 		anim.SetBool ("WeaponHeld", weaponHeld);
 		anim.SetBool ("Wallrunning", wallRunning);
 		anim.SetBool ("Melee", melee);
-		anim.SetBool ("Alive", alive);
+		//anim.SetBool ("Alive", alive);
 		anim.SetInteger ("MeleeCount", currentMelee);
 		anim.SetFloat ("Vertical", (velocity.z/maxForwardSpeed));
 		anim.SetFloat ("Horizontal", (velocity.x/maxSideSpeed));
@@ -132,9 +132,33 @@ public class PlayerCharacter : CharacterBase {
 	public void specialMove(int move)
 	{
 		switch (move) {
-		case 1: if(currentSpecial1 <= 0) special1(); break;
-		case 2: if(currentSpecial2 <= 0) special2(); break;
-		case 3: if(currentSuper <= 0){ weaponHeld = false; super(); anim.SetTrigger("SuperTrigger"); }break;
+		case 1:
+			{
+				if (currentSpecial1 <= 0) {
+					freemove = false;
+					weaponHeld = false; /*specia1();*/
+					anim.SetTrigger ("Special1Trigger");
+				}
+			}
+			break;
+		case 2:
+			{
+				if (currentSpecial2 <= 0) {
+					freemove = false;
+					weaponHeld = false; /*special2();*/
+					anim.SetTrigger ("Special2Trigger");
+				}
+			}
+			break;
+		case 3:
+			{
+				if (currentSuper <= 0) {
+					freemove = false;
+					weaponHeld = false; /*super();*/
+					anim.SetTrigger ("SuperTrigger");
+				}
+				break;
+			}
 		}
 	}
 
@@ -227,6 +251,7 @@ public class PlayerCharacter : CharacterBase {
 			velocity.y = 0;
 			velocity.z = 0;
 			sounds.playDeathSound ();
+			anim.SetBool ("Alive", alive);
 		}
 	}
 
