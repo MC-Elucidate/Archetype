@@ -57,7 +57,6 @@ public class PlayerCharacter : CharacterBase {
 		anim.SetBool ("WeaponHeld", weaponHeld);
 		anim.SetBool ("Wallrunning", wallRunning);
 		anim.SetBool ("Melee", melee);
-		//anim.SetBool ("Alive", alive);
 		anim.SetInteger ("MeleeCount", currentMelee);
 		anim.SetFloat ("Vertical", (velocity.z/maxForwardSpeed));
 		anim.SetFloat ("Horizontal", (velocity.x/maxSideSpeed));
@@ -129,7 +128,7 @@ public class PlayerCharacter : CharacterBase {
 	 * Plays special animation if cooldown is 0.
 	 * 
 	 * */
-	public void specialMove(int move)
+	public virtual void specialMove(int move)
 	{
 		switch (move) {
 		case 1:

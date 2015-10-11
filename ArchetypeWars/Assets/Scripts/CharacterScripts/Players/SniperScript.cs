@@ -194,4 +194,31 @@ public class SniperScript: PlayerCharacter {
 		else
 			base.rotateCamera (pitch);
 	}
+
+	public override void specialMove(int move)
+	{
+		switch (move) {
+		case 1:
+			special1();
+			break;
+		case 2:
+		{
+			if (currentSpecial2 <= 0) {
+				freemove = false;
+				weaponHeld = false; /*special2();*/
+				anim.SetTrigger ("Special2Trigger");
+			}
+		}
+			break;
+		case 3:
+		{
+			if (currentSuper <= 0) {
+				freemove = false;
+				weaponHeld = false; /*super();*/
+				anim.SetTrigger ("SuperTrigger");
+			}
+			break;
+		}
+		}
+	}
 }

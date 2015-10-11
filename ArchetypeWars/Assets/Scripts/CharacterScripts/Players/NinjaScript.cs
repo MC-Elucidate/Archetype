@@ -100,7 +100,7 @@ public class NinjaScript: PlayerCharacter {
 	}
 
 	/*
-	 * Ninja's first ability is a passive that grants her higher move speed.
+	 * Ninja's first ability is a passive that grants her the ability to avoid all damage.
 	 * */
 	public override void special1()
 	{
@@ -222,6 +222,32 @@ public class NinjaScript: PlayerCharacter {
 		SRWeapon.SetActive (false);
 		SRWeapon2.SetActive (false);
 		weaponHeld = true;
+	}
+
+	public override void specialMove(int move)
+	{
+		switch (move) {
+		case 1:
+			break;
+		case 2:
+		{
+			if (currentSpecial2 <= 0) {
+				freemove = false;
+				weaponHeld = false; /*special2();*/
+				anim.SetTrigger ("Special2Trigger");
+			}
+		}
+			break;
+		case 3:
+		{
+			if (currentSuper <= 0) {
+				freemove = false;
+				weaponHeld = false; /*super();*/
+				anim.SetTrigger ("SuperTrigger");
+			}
+			break;
+		}
+		}
 	}
 
 }
