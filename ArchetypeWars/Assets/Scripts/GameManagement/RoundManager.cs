@@ -35,6 +35,7 @@ public class RoundManager : MonoBehaviour {
 	public float roundTimer = 0f;
 	public static int score = 0;
 	public int roundCounter = 0;
+	private bool paused = false;
 
 	public Transform[] spawnPoints;
 	public float reinforcementDelay = 6f;
@@ -89,6 +90,17 @@ public class RoundManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		//pausing the game
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+
+			if (paused)
+				Time.timeScale = 1.0f;
+			else
+				Time.timeScale = 0.0f;
+
+			paused = !paused;
+		}
 		//Round in progress
 		if (roundTimer > 0 && !CheckVictory ()) {
 			roundTimer -= Time.deltaTime;

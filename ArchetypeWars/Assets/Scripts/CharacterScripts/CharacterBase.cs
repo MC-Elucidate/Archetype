@@ -16,8 +16,11 @@ public class CharacterBase : MonoBehaviour {
 	protected int gunDamage;
 	public Transform shot_source;
 	public Transform weaponFlashEffect;
+	protected Vector3 rifleOffSet_pos = Vector3.zero;
+	protected Vector3 rifleOffSet_rot = new Vector3 (220, 0, -90);
+	protected int offSet_rev = 75;
 
-	//IK stuff
+	//IK stuffs
 	public bool useIK = false;
 	public bool leftHandIK = true;
 	public bool rightHandIK = true;
@@ -244,9 +247,10 @@ public class CharacterBase : MonoBehaviour {
 					//Positions gun correctly
 					LRWeapon.SetActive (true);
 					LRWeapon.transform.localPosition = Vector3.zero;
+					LRWeapon.transform.localPosition = rifleOffSet_pos;
 					LRWeapon.transform.localRotation = Quaternion.identity;
-					LRWeapon.transform.Rotate(220, 0, -90);
-					LRWeapon.transform.RotateAround (RHandPos.position, transform.right, 75);
+					LRWeapon.transform.Rotate(rifleOffSet_rot.x, rifleOffSet_rot.y, rifleOffSet_rot.z);
+					LRWeapon.transform.RotateAround (RHandPos.position, transform.right, offSet_rev);
 					
 					an_Set = true;
 					weaponDrawn = true;
