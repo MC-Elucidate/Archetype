@@ -9,6 +9,8 @@ public class NinjaScript: PlayerCharacter {
 	private int baseAggro = 170, invisAggro = 0;
 	private float invisDuration = 15, currentInvis = 0;
 
+	public ParticleSystem smokePrefab;
+
 	//Instakill variables
 	private int instakillDamage = 1000;
 	private float instakillRange = 5;
@@ -121,6 +123,10 @@ public class NinjaScript: PlayerCharacter {
 			aggro = invisAggro;
 			currentInvis = invisDuration;
 			sounds.playSpecial2Sound ();
+
+			ParticleSystem particles = Instantiate (smokePrefab, transform.position, Quaternion.identity) as ParticleSystem; //If you ever change invisibility's length, change the objectDestructor duration too
+			particles.transform.parent = this.transform;
+			particles.transform.forward = Vector3.up;
 
 			//Tells AI module to recheck targets immediately after turning invisible.
 			RoundManager.AITactics.assignTargets();
