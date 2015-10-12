@@ -13,7 +13,7 @@ public class LightChanger : MonoBehaviour {
 				 dusk = new Color(0.5f, 0.5f, 0.5f), 
 				 midnight = new Color(0.0f, 0.0f, 0.0f);
 
-	public float timer = 0f, changeTime = 4*60, t = 0f, duration = 15f, flipper = 0f;
+	public float timer = 0f, changeTime = 4*60, t = 0f, duration = 15f;
 	public bool makeChange = false;
 
 	// Use this for initialization
