@@ -12,6 +12,8 @@ public class AITacticalUnit : MonoBehaviour {
 	public static int maximum_rage = 20;
 	public static float minimum_melee_distance = 2;
 
+	public int neighboringDistance = 25;
+
 	void Start () {
 		/**Gets called by unity when the script is initialized
 		 * */ 
@@ -39,9 +41,14 @@ public class AITacticalUnit : MonoBehaviour {
 		if (agent.GetComponent<EnemyCharacter> ().enemyType == "Gun") {
 			GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 			Vector2 computationVector = Vector3.zero;
+			//separation part of the boid algorithm
 			for (int a = 0; a < enemies.Length; a++) {
-				computationVector.x += agent.transform.position.x - enemies [a].transform.position.x;
-				computationVector.y += agent.transform.position.y - enemies [a].transform.position.y;
+				if ((enemies[a].transform.position - agent.transform.position).magnitude < neighboringDistance)
+				{
+					computationVector.x += agent.transform.position.x - enemies [a].transform.position.x;
+					computationVector.y += agent.transform.position.z - enemies [a].transform.position.z;
+				}
+
 			}
 	
 			computationVector.x /= enemies.Length;
@@ -189,7 +196,7 @@ public class AITacticalUnit : MonoBehaviour {
 		{
 			//searching for the most suitable threat.priority is directly proportional to the threat's aggro and inversely proportional to the distance between threat and agent
 			Transform threat = players[i].transform;
-			int aggro = threat.gameObject.GetComponent<PlayerCharacter>().getAggro();
+			int aggro = threat.gameObject.GetComponent<CharacterBase>().getAggro();
 			if (aggro !=0)//aggro == 0 is when the threat is in cloak mode,so the agent does not follow or attack it
 			{
 				float distance = Vector3.Distance(threat.position, enemy.position);

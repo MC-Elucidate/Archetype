@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour {
 	public bool weaponHeld = true;
 
 	//private float verticalVel = 0f;
-	private float meleeTime = 3f, currentMelee = 0;
+	private float meleeTime = 7f, currentMelee = 0;
 
 	//change in position attributes
 	protected float xMove = 0.0f;
@@ -59,7 +59,7 @@ public class EnemyMovement : MonoBehaviour {
 					if (agent.updateRotation == false) {
 						agent.updateRotation = true;
 					}
-					agent.SetDestination (logic.getTarget ());
+					agent.SetDestination (logic.threat.position);
 					
 				}
 				break;
@@ -72,14 +72,27 @@ public class EnemyMovement : MonoBehaviour {
 					}
 					lookAt (logic.threat.position);
 					float dist = (float)Vector3.Distance (transform.position, logic.threat.position);
-					//if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
-					//	character.meleeAttackEnd ();
-					if (dist < AITacticalUnit.minimum_melee_distance && (currentMelee <= 0)) { //very close to target
+					if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+						character.meleeAttackEnd ();
+					else if (dist < AITacticalUnit.minimum_melee_distance && (currentMelee <= 0)) { //very close to target
 						character.meleeAttack ();
 						currentMelee = meleeTime;
 					}
 					else if (dist > AITacticalUnit.minimum_melee_distance){
-						character.ShootWeapon (logic.threat);
+					RaycastHit hit;
+					if (Physics.Raycast( transform.position + Vector3.up * 0.8f + transform.forward * 0.08f,transform.forward, out hit, character.shootingRange))
+						{
+
+
+						print(hit.transform.gameObject.tag);
+						if (hit.transform.gameObject.transform == logic.threat) //if the agent can see a player
+							{
+								character.ShootWeapon (logic.threat);
+							}
+							
+						}
+						
+						
 					}
 	
 					if (logic.attackState == AI_Logic.AttackState.InPosition) { //agent positioned at some waypoint
@@ -148,7 +161,6 @@ public class EnemyMovement : MonoBehaviour {
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
 		anim.SetBool ("Melee", character.melee);
-		anim.SetInteger ("MeleeCount", character.currentMelee);
 	}
 	
 
