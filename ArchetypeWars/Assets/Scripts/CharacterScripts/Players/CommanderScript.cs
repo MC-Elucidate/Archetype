@@ -45,8 +45,8 @@ public class CommanderScript: PlayerCharacter {
 
 		//Special cooldowns
 		special1CD = 90f;
-		special2CD = 90f;
-		superCD = 90f;
+		special2CD = 75f;
+		superCD = 60f;
 	}
 	
 	// Update is called once per frame

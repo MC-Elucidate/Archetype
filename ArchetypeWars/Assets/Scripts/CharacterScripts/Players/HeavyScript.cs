@@ -45,8 +45,8 @@ public class HeavyScript: PlayerCharacter {
 		offSet_rev = 110;
 
 		//Special cooldowns
-		special1CD = 90f;
-		special2CD = 90f;
+		special1CD = 60f;
+		special2CD = 30f;
 		superCD = 90f;
 	}
 	

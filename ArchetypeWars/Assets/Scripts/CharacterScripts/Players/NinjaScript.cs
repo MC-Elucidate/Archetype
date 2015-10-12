@@ -47,7 +47,7 @@ public class NinjaScript: PlayerCharacter {
 
 		//Special cooldowns
 		special1CD = 0f;
-		special2CD = 90f;
+		special2CD = 60f;
 		superCD = 7f;
 	}
 	

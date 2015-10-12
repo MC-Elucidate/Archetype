@@ -313,7 +313,15 @@ public class RoundManager : MonoBehaviour {
 			reinforcementSize = maxReinforcements - currentForceSize;
 
 		for (int i = 0; i<reinforcementSize; i++) {
-			switch(Random.Range (0,3)) {
+			int roll = Random.Range (1,101);
+			if (roll <= 35)
+				roll = 0;
+			else if (roll <= 80)
+				roll = 1;
+			else if (roll <= 100)
+				roll = 2;
+
+			switch(roll) {
 			case 0:
 				spawner.spawnLightEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position);	//Spawn light enemy
 				break;

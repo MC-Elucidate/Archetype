@@ -15,7 +15,7 @@ public class SniperScript: PlayerCharacter {
 	public Transform kiballPrefab;
 
 	//Laugh variables
-	private float cooldownReduction = 7f;
+	private float cooldownReduction = 5f;
 
 
 	// Use this for initialization
@@ -45,8 +45,8 @@ public class SniperScript: PlayerCharacter {
 
 		//Special cooldowns
 		special1CD = 0f;
-		special2CD = 15f;
-		superCD = 90f;
+		special2CD = 10f;
+		superCD = 60f;
 	}
 	
 	// Update is called once per frame

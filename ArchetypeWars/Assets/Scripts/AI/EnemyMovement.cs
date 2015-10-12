@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour {
 	public bool weaponHeld = true;
 
 	//private float verticalVel = 0f;
-	private float meleeTime = 7f, currentMelee = 0;
+	private float meleeTime = 3f, currentMelee = 0;
 
 	//change in position attributes
 	protected float xMove = 0.0f;

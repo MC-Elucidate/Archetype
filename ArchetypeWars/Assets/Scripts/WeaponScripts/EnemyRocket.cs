@@ -5,9 +5,9 @@ public class EnemyRocket : MonoBehaviour {
 	
 	//Rocket variables
 	public float velocity;
-	public int damage = 90;
-	public float poiseDamage = 70;
-	public float explosionRadius = 5;
+	public int damage = 30;
+	public float poiseDamage = 25;
+	public float explosionRadius = 3;
 	public Transform explosionParticles;
 	
 	
@@ -33,10 +33,10 @@ public class EnemyRocket : MonoBehaviour {
 			if(coll.tag == "Player")
 			{
 				RaycastHit hit;
-				//Debug.DrawLine(transform.position, coll.transform.position, Color.red, 2f);
-				if (Physics.Linecast(transform.position, coll.transform.position, out hit) && hit.collider.gameObject==coll.gameObject)	//Returns true if it connects with a collider
+				Debug.DrawLine(transform.position, coll.transform.position, Color.red, 2f);
+				if (Physics.Linecast(transform.position, coll.transform.position + new Vector3(0f,0.5f,0f), out hit) && hit.collider.gameObject==coll.gameObject)	//Returns true if it connects with a collider
 				{
-					//Debug.Log ("Rocket shot connected!");
+					Debug.Log ("Enemy rocket shot connected!");
 					coll.gameObject.SendMessage("receiveDamage", damage);
 					coll.gameObject.SendMessage("receivePoiseDamage", poiseDamage);
 				}
