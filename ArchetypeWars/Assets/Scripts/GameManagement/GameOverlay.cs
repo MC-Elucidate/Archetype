@@ -34,6 +34,7 @@ public class GameOverlay : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		UpdateOverlay ();
+
 	}
 
 	public void UpdateOverlay() {
@@ -55,6 +56,11 @@ public class GameOverlay : MonoBehaviour {
 			affix1.text = "";
 			affix2.text = "";
 			affix3.text = "";
+		}
+
+		if(rounds.paused && Input.GetKeyDown(KeyCode.B))
+		{
+			rounds.ExitGame();
 		}
 
 		if (!rounds.gameInProgress) {
