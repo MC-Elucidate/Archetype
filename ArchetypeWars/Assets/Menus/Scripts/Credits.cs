@@ -5,7 +5,7 @@ using System.Collections;
 public class Credits : MonoBehaviour {
 
 	public GameObject thanks1, thanks2, thanks3;
-	public Button mainMenu;
+	public Button creditsButton;
 	public float timer = 0.0f, maxTime = 5f;
 	// Use this for initialization
 	void Start () {
@@ -14,7 +14,7 @@ public class Credits : MonoBehaviour {
 		thanks3.SetActive (false);
 		timer = maxTime;
 
-		mainMenu.Select ();
+		creditsButton.Select();
 
 	}
 	
