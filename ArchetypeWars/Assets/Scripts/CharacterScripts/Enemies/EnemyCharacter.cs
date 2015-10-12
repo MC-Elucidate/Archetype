@@ -66,20 +66,22 @@ public class EnemyCharacter : CharacterBase {
 				float distance = Vector3.Distance(target.position, transform.position);
 				float error = ((float)r.NextDouble()) * errFactor * distance/shootingRange;
 				Vector3 accuracyError =  new Vector3( error, 0, 0);//by how much does the agent miss the target.Directly proportional to the distance from target
-				Physics.Raycast (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, out hit, weaponRange);
+				if(Physics.Raycast (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, out hit, weaponRange))
+				{
 				//Debug.DrawRay (shot_source.position, (target.position + new Vector3(0,1,0)) + accuracyError - shot_source.position, Color.green, 0.8f);
-				weaponFireRateTimer = weaponFireRate;
-				spreadCount++;
-				spreadRateTimer = spreadRate;
-				//Debug.Log(hit.transform.gameObject);
-				if(hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "PlayerTeam"){
-					hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
-					hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
-				}
+					weaponFireRateTimer = weaponFireRate;
+					spreadCount++;
+					spreadRateTimer = spreadRate;
+					//Debug.Log(hit.transform.gameObject);
+					if(hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "PlayerTeam"){
+						hit.transform.gameObject.SendMessage ("receiveDamage", gunDamage, SendMessageOptions.DontRequireReceiver);
+						hit.transform.gameObject.SendMessage ("receivePoiseDamage", poiseDamage, SendMessageOptions.DontRequireReceiver);
+					}
 
-				sounds.pew();
-				Transform fireParticle = Instantiate (weaponFlashEffect, shot_source.transform.position, Quaternion.identity) as Transform;
-				fireParticle.parent = this.transform;
+					sounds.pew();
+					Transform fireParticle = Instantiate (weaponFlashEffect, shot_source.transform.position, Quaternion.identity) as Transform;
+					fireParticle.parent = this.transform;
+				}
 			}
 
 		} 
@@ -101,7 +103,7 @@ public class EnemyCharacter : CharacterBase {
 
 	public override void meleeAttack ()
 	{
-
+		//Debug.Log ("Melee");
 			if (currentMelee == 0) { //First melee attack in the combo
 				currentMelee++;
 				melee = true;
@@ -117,6 +119,7 @@ public class EnemyCharacter : CharacterBase {
 
 	public override void meleeAttackEnd ()
 	{
+		//Debug.Log ("MeleeEnd");
 		melee = false;
 		currentMelee = 0;
 		SRWeapon.SetActive (false);

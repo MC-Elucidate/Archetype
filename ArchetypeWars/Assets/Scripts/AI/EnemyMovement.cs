@@ -72,9 +72,9 @@ public class EnemyMovement : MonoBehaviour {
 					}
 					lookAt (logic.threat.position);
 					float dist = (float)Vector3.Distance (transform.position, logic.threat.position);
-					if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
-						character.meleeAttackEnd ();
-					else if (dist < AITacticalUnit.minimum_melee_distance && (currentMelee <= 0)) { //very close to target
+					//if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+					//	character.meleeAttackEnd ();
+					if (dist < AITacticalUnit.minimum_melee_distance && (currentMelee <= 0)) { //very close to target
 						character.meleeAttack ();
 						currentMelee = meleeTime;
 					}
@@ -148,6 +148,7 @@ public class EnemyMovement : MonoBehaviour {
 		anim.SetFloat ("Vertical", zMove);
 		anim.SetFloat ("Horizontal", xMove);
 		anim.SetBool ("Melee", character.melee);
+		anim.SetInteger ("MeleeCount", character.currentMelee);
 	}
 	
 
