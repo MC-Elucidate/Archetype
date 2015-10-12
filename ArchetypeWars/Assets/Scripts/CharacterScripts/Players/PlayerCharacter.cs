@@ -21,7 +21,7 @@ public class PlayerCharacter : CharacterBase {
 	//Player movement variables
 	public Vector3 velocity;
 	public float globalGravity = -16f, currentGravity = -16f;
-	private float maxForwardSpeed = 8f, maxBackSpeed = -6f, maxSideSpeed = 7f, groundAcc = 60f, airAcc = 40f, airFriction = 40f;
+	public float maxForwardSpeed = 8f, maxBackSpeed = -6f, maxSideSpeed = 7f, groundAcc = 60f, airAcc = 40f, airFriction = 40f;
 
 	//State booleans
 	public bool doubleJumping = false, wallRunning  = false, wallrunUp = false, wallrunLeft = false, wallrunRight = false, sliding = false, isGrounded = false;
@@ -248,7 +248,7 @@ public class PlayerCharacter : CharacterBase {
 			aggro = 0;
 			alive = false;
 			freemove = false;
-			cam.transform.parent = null;
+			//cam.transform.parent = null;
 			currentGravity = globalGravity;
 			velocity.x = 0;
 			velocity.y = 0;

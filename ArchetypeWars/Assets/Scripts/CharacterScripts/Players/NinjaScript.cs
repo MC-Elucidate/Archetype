@@ -6,7 +6,7 @@ public class NinjaScript: PlayerCharacter {
 	public Transform cardPrefab;
 
 	//Invis variables
-	private int baseAggro = 170, invisAggro = 0;
+	private int baseAggro = 140, invisAggro = 0;
 	private float invisDuration = 15, currentInvis = 0;
 	private int dodgeChance = 30;
 
@@ -22,12 +22,17 @@ public class NinjaScript: PlayerCharacter {
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
-		health = 150;
-		maxHealth = 150;
+		health = 200;
+		maxHealth = 200;
 		runSpeed = 16;
 		meleeMax = 7;
 		characterRadius = 0.4f;
 		aggro = baseAggro;
+
+		maxForwardSpeed = 9f;
+		maxBackSpeed = -9f;
+		maxSideSpeed = 9f;
+		slideSpeed = 12f;
 
 		//Character-specific weapon stats
 		weaponRange = 2000f;
@@ -70,7 +75,7 @@ public class NinjaScript: PlayerCharacter {
 				sounds.playHitSound();
 			
 			shaker.shake = .2f;					//Lasts 0.2 seconds
-			//shaker.shakeFactor = 0.7f;		//Normal shake?
+			shaker.shakeAmount = 0.7f;			//Normal shake?
 			
 			health -= (int)(dmg/armourMod);
 			
@@ -291,6 +296,9 @@ public class NinjaScript: PlayerCharacter {
 				freemove = false;
 				weaponHeld = false; /*super();*/
 				anim.SetTrigger ("SuperTrigger");
+				shaker.shakeAmount = 1.3f;
+				shaker.shake = 0.4f;
+
 			}
 			break;
 		}

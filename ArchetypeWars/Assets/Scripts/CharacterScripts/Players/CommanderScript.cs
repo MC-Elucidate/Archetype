@@ -23,7 +23,11 @@ public class CommanderScript: PlayerCharacter {
 		runSpeed = 12;
 		meleeMax = 3;
 		characterRadius = 0.4f;
-		aggro = 150;
+		aggro = 100;
+
+		maxForwardSpeed = 8f;
+		maxBackSpeed = -6f;
+		maxSideSpeed = 7f;
 
 		//Character-specific weapon stats
 		weaponRange = 200f;
@@ -140,6 +144,12 @@ public class CommanderScript: PlayerCharacter {
 					coll.gameObject.SendMessage("receiveDamage", rageDamage);
 					coll.gameObject.SendMessage("receivePoiseDamage", ragePoiseDamage);
 				}
+			}
+
+			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+			foreach (GameObject p in players) {
+				p.GetComponent<PlayerCharacter>().shaker.shake = .6f;					//Lasts 0.2 seconds
+				p.GetComponent<PlayerCharacter>().shaker.shakeAmount = 2.5f;			//Normal shake?
 			}
 			sounds.playSpecial3Sound();
 		}

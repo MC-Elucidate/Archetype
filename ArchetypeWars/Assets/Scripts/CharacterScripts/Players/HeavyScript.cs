@@ -18,17 +18,22 @@ public class HeavyScript: PlayerCharacter {
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
-		health = 200;
-		maxHealth = 200;
-		runSpeed = 10;
+		health = 300;
+		maxHealth = 300;			//HEALTH
+		runSpeed = 4;				//RUN SPEED
 		meleeMax = 4;
 		currentMelee = 0;
 		characterRadius = 0.4f;
 		aggro = baseAggro;
 
+		maxForwardSpeed = 5f;
+		maxBackSpeed = -3f;
+		maxSideSpeed = 4f;
+		slideSpeed = 8f;
+
 		//Character-specific weapon stats
 		weaponRange = 2000f;
-		weaponFireRate = 0.8f;
+		weaponFireRate = 1.8f;
 		spreadRate = 0.21f;
 		maxSpread = 12;
 		ammoCount = 10;
@@ -179,6 +184,13 @@ public class HeavyScript: PlayerCharacter {
 				enemy.SendMessage("receiveDamage", gpDamage);
 				enemy.SendMessage("receivePoiseDamage", gpPoiseDamage);
 			}
+
+			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+			foreach (GameObject p in players) {
+				p.GetComponent<PlayerCharacter>().shaker.shake = .7f;					//Lasts 0.2 seconds
+				p.GetComponent<PlayerCharacter>().shaker.shakeAmount = 3f;			//Normal shake?
+			}
+
 			sounds.playSpecial3Sound();
 		}
 	}

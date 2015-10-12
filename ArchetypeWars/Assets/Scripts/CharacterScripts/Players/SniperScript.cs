@@ -21,12 +21,16 @@ public class SniperScript: PlayerCharacter {
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
-		health = 100;
-		maxHealth = 100;
+		health = 150;
+		maxHealth = 150;
 		runSpeed = 10;
 		meleeMax = 2;
 		characterRadius = 0.4f;
-		aggro = 150;
+		aggro = 300;
+
+		maxForwardSpeed = 8f;
+		maxBackSpeed = -6f;
+		maxSideSpeed = 7f;
 
 		//Character-specific weapon stats
 		weaponRange = 2000f;
@@ -120,13 +124,15 @@ public class SniperScript: PlayerCharacter {
 				fpcam.enabled = true;
 				tpcam.enabled = false;
 				fpcam.rect = tpcam.rect;
-				neckAngle = 0f;
+				//neckAngle = 0f;
+				fpcam.gameObject.transform.localRotation = tpcam.gameObject.transform.localRotation;
 				cam = fpcam;
 				rotSpeed = rotScopeSpeed;
 			} else {
 				scoped = !scoped;
 				fpcam.enabled = false;
 				tpcam.enabled = true;
+				tpcam.gameObject.transform.localRotation = fpcam.gameObject.transform.localRotation;
 				cam = tpcam;
 				rotSpeed = defaultRotationSpeed;
 			}
@@ -169,6 +175,11 @@ public class SniperScript: PlayerCharacter {
 			
 			SniperKiballScript shield = Instantiate (kiballPrefab, RHandPos.position, kiballRotation) as SniperKiballScript;
 
+			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+			foreach (GameObject p in players) {
+				p.GetComponent<PlayerCharacter>().shaker.shake = .4f;					//Lasts 0.2 seconds
+				p.GetComponent<PlayerCharacter>().shaker.shakeAmount = 3.6f;			//Normal shake?
+			}
 
 			sounds.playSpecial3Sound();
 		}
@@ -183,7 +194,7 @@ public class SniperScript: PlayerCharacter {
 	 * */
 	public override void rotateCamera(float pitch)
 	{
-		if (scoped) {
+		/*if (scoped) {
 			neckAngle -= pitch; //Change the angle the camera is looking at based on input
 			if (neckAngle > neckAngleLimit) //Clamp the camera angle so we don't break out necks
 				neckAngle = neckAngleLimit;
@@ -191,8 +202,9 @@ public class SniperScript: PlayerCharacter {
 				neckAngle = -neckAngleLimit;
 			cam.transform.localRotation = Quaternion.Euler (neckAngle, 0f, 0f);
 		} 
-		else
-			base.rotateCamera (pitch);
+		else*/
+		base.rotateCamera (pitch);
+		fpcam.transform.localPosition = new Vector3 (0f, 57f, 6.8f);
 	}
 
 	public override void specialMove(int move)
