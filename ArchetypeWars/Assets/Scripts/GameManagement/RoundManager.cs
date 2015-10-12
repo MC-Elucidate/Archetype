@@ -321,7 +321,7 @@ public class RoundManager : MonoBehaviour {
 				spawner.spawnMediumEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position);	//Spawn medium enemy
 				break;
 			case 2:
-				spawner.spawnMediumEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position); //Spawn heavy enemy
+				spawner.spawnHeavyEnemy(spawnPoints[Random.Range(0,spawnPoints.Length)].position); //Spawn heavy enemy
 				break;
 			}
 		}

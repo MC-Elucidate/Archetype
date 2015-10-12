@@ -73,13 +73,13 @@ public class EnemySpawner : MonoBehaviour {
 	{
 		Transform enemy = Instantiate(heavyEnemy, spawnPoint, Quaternion.identity) as Transform;
 		EnemyCharacter script = enemy.GetComponent<EnemyHeavy>();
-		GameObject LRWeapon = (GameObject) Instantiate (heavyEnemyGun, script.RightHand.position, Quaternion.identity);
-		GunStats gunstats = LRWeapon.GetComponentInChildren<GunStats>();
+		Transform LRWeapon = Instantiate (heavyEnemyGun, script.RightHand.position, Quaternion.identity) as Transform;
+		GunStats gunstats = LRWeapon.gameObject.GetComponentInChildren<GunStats>();
 		LRWeapon.transform.parent = script.RightHand; //attach the weapon to the right hand
-
+		
 		
 		//initialising hand IK targets
-		script.LRWeapon = LRWeapon;
+		script.LRWeapon = LRWeapon.gameObject;
 		script.LHandPos = gunstats.LHandPos;
 		script.RHandPos = gunstats.RHandPos;
 		script.shot_source = gunstats.bulletSpawn;
