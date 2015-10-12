@@ -70,7 +70,7 @@ public class NinjaScript: PlayerCharacter {
 				sounds.playHitSound();
 			
 			shaker.shake = .2f;					//Lasts 0.2 seconds
-			//shaker.shakeFactor = 0.7f;		//Normal shake?
+			shaker.shakeAmount = 0.7f;			//Normal shake?
 			
 			health -= (int)(dmg/armourMod);
 			
@@ -291,6 +291,9 @@ public class NinjaScript: PlayerCharacter {
 				freemove = false;
 				weaponHeld = false; /*super();*/
 				anim.SetTrigger ("SuperTrigger");
+				shaker.shakeAmount = 1.3f;
+				shaker.shake = 0.4f;
+
 			}
 			break;
 		}

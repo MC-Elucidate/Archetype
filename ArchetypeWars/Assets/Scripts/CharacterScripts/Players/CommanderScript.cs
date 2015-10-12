@@ -139,6 +139,12 @@ public class CommanderScript: PlayerCharacter {
 					coll.gameObject.SendMessage("receivePoiseDamage", ragePoiseDamage);
 				}
 			}
+
+			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+			foreach (GameObject p in players) {
+				p.GetComponent<PlayerCharacter>().shaker.shake = .6f;					//Lasts 0.2 seconds
+				p.GetComponent<PlayerCharacter>().shaker.shakeAmount = 2.5f;			//Normal shake?
+			}
 			sounds.playSpecial3Sound();
 		}
 	}

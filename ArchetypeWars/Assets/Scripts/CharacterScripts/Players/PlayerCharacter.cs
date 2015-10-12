@@ -248,7 +248,7 @@ public class PlayerCharacter : CharacterBase {
 			aggro = 0;
 			alive = false;
 			freemove = false;
-			cam.transform.parent = null;
+			//cam.transform.parent = null;
 			currentGravity = globalGravity;
 			velocity.x = 0;
 			velocity.y = 0;

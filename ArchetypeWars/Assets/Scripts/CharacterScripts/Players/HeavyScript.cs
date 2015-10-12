@@ -176,6 +176,13 @@ public class HeavyScript: PlayerCharacter {
 				enemy.SendMessage("receiveDamage", gpDamage);
 				enemy.SendMessage("receivePoiseDamage", gpPoiseDamage);
 			}
+
+			GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+			foreach (GameObject p in players) {
+				p.GetComponent<PlayerCharacter>().shaker.shake = .7f;					//Lasts 0.2 seconds
+				p.GetComponent<PlayerCharacter>().shaker.shakeAmount = 3f;			//Normal shake?
+			}
+
 			sounds.playSpecial3Sound();
 		}
 	}
