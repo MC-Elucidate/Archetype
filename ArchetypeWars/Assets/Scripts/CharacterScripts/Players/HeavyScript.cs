@@ -29,9 +29,7 @@ public class HeavyScript: PlayerCharacter {
 		maxForwardSpeed = 5f;
 		maxBackSpeed = -3f;
 		maxSideSpeed = 4f;
-		groundAcc = 60f;
-		airAcc = 40f;
-		airFriction = 40f;
+		slideSpeed = 8f;
 
 		//Character-specific weapon stats
 		weaponRange = 2000f;

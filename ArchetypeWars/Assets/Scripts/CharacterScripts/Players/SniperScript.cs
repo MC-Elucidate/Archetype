@@ -28,6 +28,10 @@ public class SniperScript: PlayerCharacter {
 		characterRadius = 0.4f;
 		aggro = 300;
 
+		maxForwardSpeed = 8f;
+		maxBackSpeed = -6f;
+		maxSideSpeed = 7f;
+
 		//Character-specific weapon stats
 		weaponRange = 2000f;
 		weaponFireRate = 1.6f;

@@ -29,6 +29,11 @@ public class NinjaScript: PlayerCharacter {
 		characterRadius = 0.4f;
 		aggro = baseAggro;
 
+		maxForwardSpeed = 9f;
+		maxBackSpeed = -9f;
+		maxSideSpeed = 9f;
+		slideSpeed = 12f;
+
 		//Character-specific weapon stats
 		weaponRange = 2000f;
 		weaponFireRate = 0.2f;

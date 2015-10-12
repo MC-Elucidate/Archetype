@@ -25,6 +25,10 @@ public class CommanderScript: PlayerCharacter {
 		characterRadius = 0.4f;
 		aggro = 100;
 
+		maxForwardSpeed = 8f;
+		maxBackSpeed = -6f;
+		maxSideSpeed = 7f;
+
 		//Character-specific weapon stats
 		weaponRange = 200f;
 		weaponFireRate = 0.1f;
