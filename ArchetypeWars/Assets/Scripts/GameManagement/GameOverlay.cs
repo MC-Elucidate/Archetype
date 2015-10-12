@@ -24,6 +24,11 @@ public class GameOverlay : MonoBehaviour {
 	public Text gameOverText;
 	public Text gameOverSubtext;
 
+	public Text pauseText;
+	public Text pauseSubtext;
+
+	public bool overlayPause = false;
+
 	public float endTimer = 10f;
 
 	// Use this for initialization
@@ -61,6 +66,19 @@ public class GameOverlay : MonoBehaviour {
 		if(rounds.paused && Input.GetKeyDown(KeyCode.B))
 		{
 			rounds.ExitGame();
+		}
+
+		if (rounds.paused && rounds.gameInProgress) {
+				
+			overlayPause = true;
+			pauseText.gameObject.SetActive(true);
+			pauseSubtext.gameObject.SetActive(true);
+		}
+
+		if (!rounds.paused && overlayPause) {
+			overlayPause = false;
+			pauseText.gameObject.SetActive(false);
+			pauseSubtext.gameObject.SetActive(false);
 		}
 
 		if (!rounds.gameInProgress) {
