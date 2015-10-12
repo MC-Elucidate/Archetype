@@ -35,6 +35,8 @@ public class CommanderScript: PlayerCharacter {
 		maxAmmo = 120;
 		ammoPickup = 40;
 		poiseDamage = 20;
+		rifleOffSet_pos = Vector3.up * -3 + Vector3.forward * 5;
+		rifleOffSet_rot = new Vector3 (250, 0, -90);
 
 		//Special cooldowns
 		special1CD = 90f;

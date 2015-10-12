@@ -35,6 +35,9 @@ public class HeavyScript: PlayerCharacter {
 		maxAmmo = 10;
 		gunDamage = 80;
 		ammoPickup = 5;
+		rifleOffSet_pos =  Vector3.up * -2;
+		rifleOffSet_rot = new Vector3 (230, 0, -90);
+		offSet_rev = 110;
 
 		//Special cooldowns
 		special1CD = 90f;

@@ -5,7 +5,7 @@ public class AITacticalUnit : MonoBehaviour {
 
 	//initialization
 	private float time = 0.0f;
-	private float commandTime,delta_CommandTime = 12.0f; //command agents when the time is right
+	private float commandTime,delta_CommandTime = 4.0f; //command agents when the time is right
 	private System.Random rand;
 
 	//static attributes

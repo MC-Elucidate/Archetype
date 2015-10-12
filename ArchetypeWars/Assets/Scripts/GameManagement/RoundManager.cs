@@ -24,6 +24,7 @@ public class RoundManager : MonoBehaviour {
 	public bool deadPlayers;
 	public static Round currentRound;
 
+	private bool paused = false;
 
 	//General round vars
 	public bool alternateRound;			//alternateRound indicates that 3 affixes will be chosen for the round.
@@ -90,6 +91,18 @@ public class RoundManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		//pausing the game
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+
+			if (paused)
+				Time.timeScale = 1.0f;
+			else
+				Time.timeScale = 0.0f;
+
+			paused = !paused;
+		}
+		
 		if (gameInProgress)
 			totalTime += Time.deltaTime;
 
