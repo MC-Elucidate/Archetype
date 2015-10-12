@@ -189,7 +189,7 @@ public class AITacticalUnit : MonoBehaviour {
 		{
 			//searching for the most suitable threat.priority is directly proportional to the threat's aggro and inversely proportional to the distance between threat and agent
 			Transform threat = players[i].transform;
-			int aggro = threat.gameObject.GetComponent<CharacterBase>().getAggro();
+			int aggro = threat.gameObject.GetComponent<PlayerCharacter>().getAggro();
 			if (aggro !=0)//aggro == 0 is when the threat is in cloak mode,so the agent does not follow or attack it
 			{
 				float distance = Vector3.Distance(threat.position, enemy.position);

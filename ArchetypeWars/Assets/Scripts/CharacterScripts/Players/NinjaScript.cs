@@ -6,7 +6,7 @@ public class NinjaScript: PlayerCharacter {
 	public Transform cardPrefab;
 
 	//Invis variables
-	private int baseAggro = 170, invisAggro = 0;
+	private int baseAggro = 140, invisAggro = 0;
 	private float invisDuration = 15, currentInvis = 0;
 	private int dodgeChance = 30;
 
@@ -22,8 +22,8 @@ public class NinjaScript: PlayerCharacter {
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
-		health = 150;
-		maxHealth = 150;
+		health = 200;
+		maxHealth = 200;
 		runSpeed = 16;
 		meleeMax = 7;
 		characterRadius = 0.4f;

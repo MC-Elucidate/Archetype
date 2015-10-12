@@ -21,12 +21,12 @@ public class SniperScript: PlayerCharacter {
 	// Use this for initialization
 	protected void Start () {
 		base.Start ();
-		health = 100;
-		maxHealth = 100;
+		health = 150;
+		maxHealth = 150;
 		runSpeed = 10;
 		meleeMax = 2;
 		characterRadius = 0.4f;
-		aggro = 150;
+		aggro = 300;
 
 		//Character-specific weapon stats
 		weaponRange = 2000f;
