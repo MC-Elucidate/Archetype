@@ -32,8 +32,11 @@ public class RocketScript : MonoBehaviour {
 		{
 			if(coll.tag == "Enemy")
 			{
-				coll.gameObject.SendMessage("receiveDamage", damage);
-				coll.gameObject.SendMessage("receivePoiseDamage", poiseDamage);
+				if (!Physics.Linecast(transform.position, coll.transform.position))
+				{
+					coll.gameObject.SendMessage("receiveDamage", damage);
+					coll.gameObject.SendMessage("receivePoiseDamage", poiseDamage);
+				}
 			}
 		}
 		Destroy (this.gameObject);
