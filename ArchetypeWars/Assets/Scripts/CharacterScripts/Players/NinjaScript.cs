@@ -43,6 +43,7 @@ public class NinjaScript: PlayerCharacter {
 		ammoCount = 60;
 		maxAmmo = 60;
 		ammoPickup = 20;
+		gunDamage = 40;
 		SRWeapon2.SetActive (false);
 
 		//Special cooldowns
