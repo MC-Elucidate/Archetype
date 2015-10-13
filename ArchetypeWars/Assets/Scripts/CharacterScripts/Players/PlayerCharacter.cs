@@ -272,7 +272,10 @@ public class PlayerCharacter : CharacterBase {
 			ammoCount = maxAmmo;
 	}
 
-
+	public void disableFreemove()
+	{
+		freemove = false;
+	}
 	/*
 	 * Function called when player presses the Fire button.
 	 * Simulates weapon recoil and accuracy, and fire rate of weapons.

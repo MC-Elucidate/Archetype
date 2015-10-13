@@ -21,7 +21,6 @@ public class MovementController: MonoBehaviour {
 	}
 
 
-
 	// Update is called once per frame
 	protected void Update () {
 		//Use custom method for checking if we are on the ground

@@ -117,11 +117,13 @@ public class CharacterBase : MonoBehaviour {
 	public virtual void enableFreemove()
 	{
 		//Debug.Log ("freemove");
-		freemove = true;
-		weaponHeld = true;
+		if (alive) {
+			freemove = true;
+			weaponHeld = true;
 
-		currentPoise = 100;
-		anim.SetFloat ("Poise", currentPoise);
+			currentPoise = 100;
+			anim.SetFloat ("Poise", currentPoise);
+		}
 	}
 	/*
 	 * Ends melee attack.

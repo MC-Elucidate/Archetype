@@ -60,7 +60,7 @@ public class HeavyScript: PlayerCharacter {
 		base.FixedUpdate ();
 
 		//FixedUpdate used to end the taunt after a specific amount of time has passed
-		if (currentTaunt > 0 && alive)
+		if (currentTaunt > 0)
 			currentTaunt -= Time.fixedDeltaTime;
 		else
 			aggro = baseAggro;
@@ -201,5 +201,35 @@ public class HeavyScript: PlayerCharacter {
 	public override void rotateCamera(float pitch)
 	{
 		base.rotateCamera (pitch);
+	}
+
+	public override void receiveDamage(int dmg)
+	{
+		if(health>0)
+			sounds.playHitSound();
+		
+		shaker.shake = .2f;					//Lasts 0.2 seconds
+		shaker.shakeAmount = 0.7f;		//Normal shake?
+		
+		health -= (int)(dmg/armourMod);
+		
+		if (health <= 0 && alive) {
+			//gameObject.tag = "DeadCharacter";
+			health = 0;
+			aggro = 0;
+			baseAggro = 0;
+			alive = false;
+			freemove = false;
+			//cam.transform.parent = null;
+			currentGravity = globalGravity;
+			velocity.x = 0;
+			velocity.y = 0;
+			velocity.z = 0;
+			sounds.playDeathSound ();
+			anim.SetBool ("Alive", alive);
+			RoundManager.AITactics.assignTargets();
+			RoundManager.AITactics.Strategize();
+			gameObject.GetComponent<CharacterController>().height = 1;
+		}
 	}
 }

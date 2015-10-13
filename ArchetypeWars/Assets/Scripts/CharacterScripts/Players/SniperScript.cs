@@ -79,13 +79,13 @@ public class SniperScript: PlayerCharacter {
 					//Determines target to shoot.
 					//Draws ray from centre of the screeen to the first target hit.
 					RaycastHit hit;
-					Ray camRay = cam.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0));
+					Ray camRay = cam.ViewportPointToRay (new Vector3(0.5f, 0.5f, 0));
 					Physics.Raycast (camRay, out hit, weaponRange);
 				
 					//Then draws ray from gun to the target hit
 					Vector3 target = hit.point;
 					Physics.Raycast (shot_source.position, target - shot_source.position, out hit, weaponRange);
-					Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 0.1f);
+					Debug.DrawRay (shot_source.position, target - shot_source.position, Color.green, 1.0f);
 
 					//Deals damage if it is an enemy
 					if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "EnemyHead") {
