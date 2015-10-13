@@ -298,7 +298,7 @@ public class PlayerCharacter : CharacterBase {
 
 				//Deal damage if we hit an enemy's body or head
 				if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "EnemyHead") {
-					Debug.Log ("Shooting: " + hit.transform.gameObject.tag);
+//					Debug.Log ("Shooting: " + hit.transform.gameObject.tag);
 					hit.transform.gameObject.SendMessage ("receiveDamage", (int)(gunDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 					hit.transform.gameObject.SendMessage ("receivePoiseDamage", (int)(poiseDamage*damageMod), SendMessageOptions.DontRequireReceiver);
 				}

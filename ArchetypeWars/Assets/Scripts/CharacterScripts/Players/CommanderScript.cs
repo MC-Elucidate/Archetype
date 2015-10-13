@@ -35,7 +35,7 @@ public class CommanderScript: PlayerCharacter {
 		weaponFireRate = 0.1f;
 		spreadRate = 0.07f;
 		maxSpread = 18;
-		gunDamage = 16;
+		gunDamage = 22;
 		ammoCount = 120;
 		maxAmmo = 120;
 		ammoPickup = 40;

@@ -22,7 +22,7 @@ public class MovementController: MonoBehaviour {
 
 
 	// Update is called once per frame
-	protected void Update () {
+	protected void FixedUpdate () {
 		//Use custom method for checking if we are on the ground
 		if(character.velocity.y <= 0)
 			checkGrounded ();
@@ -43,36 +43,7 @@ public class MovementController: MonoBehaviour {
 			character.velocity = Quaternion.AngleAxis(-yaw, Vector3.up) * character.velocity;
 			character.movementUpdate (vert, hor);
 		
-			/*
-			 * JUMP INPUT MANAGEMENT
-			 */
-			if (Input.GetButtonDown (jumpTag))  //Jump button pressed
-				character.jump ();
-			else if (Input.GetButton (jumpTag))  //Holding jump to accelerate upwards (platformer style)
-				character.jumpHold ();
-			else if (Input.GetButtonUp (jumpTag)) //Release jump button, return to normal gravity
-				character.jumpEnd ();
-			/*
-			 * END OF JUMP SECTION
-			 */
 
-			/*
-			 * OTHER MOVEMENT ACTIONS INPUT MANAGEMENT (MELEE AND SLIDE AND SPECIALS)
-			 */
-			if (Input.GetButtonDown (slideTag)) //Slide button pressed
-				character.slide ();
-			else if (Input.GetButtonDown (meleeTag))  //Melee button pressed
-				character.meleeAttack ();
-			//else if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
-			//	character.meleeAttackEnd ();
-			else if (Input.GetButtonDown (special1Tag)) //Performing special 1
-				character.specialMove (1);
-			else if (Input.GetButtonDown (special2Tag)) //Performing special 2
-				character.specialMove (2);
-			else if (Input.GetButtonDown (superTag) || Input.GetAxis (fireTag) < 0) //Performing super move
-				character.specialMove (3);
-			else if (Input.GetAxis (fireTag) > 0) //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
-				character.shootWeapon ();
 
 
 		} 
@@ -123,8 +94,42 @@ public class MovementController: MonoBehaviour {
 		}
 	}
 
-	protected void FixedUpdate()
+	protected void Update()
 	{
+
+		if (!character.wallRunning && !character.sliding && character.freemove) {
+			/*
+			 * JUMP INPUT MANAGEMENT
+			 */
+			if (Input.GetButtonDown (jumpTag))  //Jump button pressed
+				character.jump ();
+			else if (Input.GetButton (jumpTag))  //Holding jump to accelerate upwards (platformer style)
+				character.jumpHold ();
+			else if (Input.GetButtonUp (jumpTag)) //Release jump button, return to normal gravity
+				character.jumpEnd ();
+			/*
+			 	* END OF JUMP SECTION
+			 	*/
+			
+			/*
+			 	* OTHER MOVEMENT ACTIONS INPUT MANAGEMENT (MELEE AND SLIDE AND SPECIALS)
+			 	*/
+			if (Input.GetButtonDown (slideTag)) //Slide button pressed
+				character.slide ();
+			else if (Input.GetButtonDown (meleeTag))  //Melee button pressed
+				character.meleeAttack ();
+			//else if (character.melee && !(anim.GetCurrentAnimatorStateInfo (1).IsTag ("MeleeAttack"))) //When the melee animation is finished
+			//	character.meleeAttackEnd ();
+			else if (Input.GetButtonDown (special1Tag)) //Performing special 1
+				character.specialMove (1);
+			else if (Input.GetButtonDown (special2Tag)) //Performing special 2
+				character.specialMove (2);
+			else if (Input.GetButtonDown (superTag) || Input.GetAxis (fireTag) < 0) //Performing super move
+				character.specialMove (3);
+			else if (Input.GetAxis (fireTag) > 0) //Axis > 0 = R2, Axis < 0 = L2 (when inverted)
+				character.shootWeapon ();
+		}
+
 		if (transform.position.y < -10) {
 			transform.position = new Vector3 (transform.position.x, 15, transform.position.z);
 			character.velocity.y = 0;
