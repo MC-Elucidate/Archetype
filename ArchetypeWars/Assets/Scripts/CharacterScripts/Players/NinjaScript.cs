@@ -60,7 +60,7 @@ public class NinjaScript: PlayerCharacter {
 		base.FixedUpdate ();
 
 		//Uses FixedUpdate to countdown to when invisibility deactivates.
-		if (currentInvis > 0)
+		if (currentInvis > 0 && alive)
 			currentInvis -= Time.fixedDeltaTime;
 		else
 			aggro = baseAggro;
@@ -68,7 +68,7 @@ public class NinjaScript: PlayerCharacter {
 
 	public override void receiveDamage(int dmg)
 	{
-		if (Random.Range (0, 101) > (100 - dodgeChance))
+		if (Random.Range (0, 101) < (100 - dodgeChance))
 		{
 			//currentPoise = 50; //Enough to move after a dodge, but not
 			
@@ -92,18 +92,22 @@ public class NinjaScript: PlayerCharacter {
 				velocity.y = 0;
 				velocity.z = 0;
 				sounds.playDeathSound ();
+				anim.SetBool ("Alive", alive);
+				RoundManager.AITactics.assignTargets();
+				RoundManager.AITactics.Strategize();
+				gameObject.GetComponent<CharacterController>().height = 1;
 			}
 		}
-		else
+		/*else
 		{
 			if (alive)
 			{
-				Debug.Log ("Dodged the attack!");
+				//Debug.Log ("Dodged the attack!");
 				if (currentPoise < 50)
 					currentPoise = 50; //Enough to move after a dodge, but not for the next attack
 				freemove = true;
 			}
-		}
+		}*/
 	}
 
 	/*

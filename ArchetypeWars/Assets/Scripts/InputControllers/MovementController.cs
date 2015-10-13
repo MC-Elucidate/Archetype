@@ -126,7 +126,10 @@ public class MovementController: MonoBehaviour {
 
 	protected void FixedUpdate()
 	{
-
+		if (transform.position.y < -10) {
+			transform.position = new Vector3 (transform.position.x, 15, transform.position.z);
+			character.velocity.y = 0;
+		}
 	}
 
 	/*
@@ -136,7 +139,7 @@ public class MovementController: MonoBehaviour {
 	* Only wallruns if we encounter an object tagged as "Wall".
 	*/
 	protected void OnControllerColliderHit(ControllerColliderHit collision) {
-		if (collision.gameObject.tag == "Wall" && Input.GetButton(wallrunTag) && !character.wallRunning && character.velocity.z > 0 && !character.sliding && !character.doubleJumping){
+		if (collision.gameObject.tag == "Wall" && Input.GetButton(wallrunTag) && !character.wallRunning && character.velocity.z > 0 && !character.sliding && !character.doubleJumping && character.freemove){
 			RaycastHit target;
 			if(Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.forward, out target, character.characterRadius))
 			{

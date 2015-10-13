@@ -238,7 +238,7 @@ public class PlayerCharacter : CharacterBase {
 			sounds.playHitSound();
 
 		shaker.shake = .2f;					//Lasts 0.2 seconds
-		//shaker.shakeFactor = 0.7f;		//Normal shake?
+		shaker.shakeAmount = 0.7f;		//Normal shake?
 
 		health -= (int)(dmg/armourMod);
 
@@ -255,6 +255,9 @@ public class PlayerCharacter : CharacterBase {
 			velocity.z = 0;
 			sounds.playDeathSound ();
 			anim.SetBool ("Alive", alive);
+			RoundManager.AITactics.assignTargets();
+			RoundManager.AITactics.Strategize();
+			gameObject.GetComponent<CharacterController>().height = 1;
 		}
 	}
 

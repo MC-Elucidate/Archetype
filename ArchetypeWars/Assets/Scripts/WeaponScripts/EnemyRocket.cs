@@ -36,7 +36,7 @@ public class EnemyRocket : MonoBehaviour {
 				Debug.DrawLine(transform.position, coll.transform.position, Color.red, 2f);
 				if (Physics.Linecast(transform.position, coll.transform.position + new Vector3(0f,0.5f,0f), out hit) && hit.collider.gameObject==coll.gameObject)	//Returns true if it connects with a collider
 				{
-					Debug.Log ("Enemy rocket shot connected!");
+					//Debug.Log ("Enemy rocket shot connected!");
 					coll.gameObject.SendMessage("receiveDamage", damage);
 					coll.gameObject.SendMessage("receivePoiseDamage", poiseDamage);
 				}

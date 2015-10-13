@@ -116,7 +116,7 @@ public class CharacterBase : MonoBehaviour {
 	 * */
 	public virtual void enableFreemove()
 	{
-		Debug.Log ("freemove");
+		//Debug.Log ("freemove");
 		freemove = true;
 		weaponHeld = true;
 
@@ -161,7 +161,7 @@ public class CharacterBase : MonoBehaviour {
 	 * */
 	public void receivePoiseDamage(float poisedmg)
 	{
-		if(alive){
+		if(alive && freemove){
 			currentPoise -= poisedmg;
 			//Knocked down
 			if(currentPoise <= 20)

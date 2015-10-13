@@ -14,6 +14,9 @@ public class AITacticalUnit : MonoBehaviour {
 
 	public int neighboringDistance = 25;
 
+	//rage
+	protected int initialRage = 10;
+
 	void Start () {
 		/**Gets called by unity when the script is initialized
 		 * */ 
@@ -168,7 +171,7 @@ public class AITacticalUnit : MonoBehaviour {
 			if (enemies[a] != null)
 			{
 				//rage
-				enemies[a].GetComponent<EnemyCharacter>().rage = 14;
+				enemies[a].GetComponent<EnemyCharacter>().rage = Mathf.Min(initialRage + (RoundManager.roundCounter/2), maximum_rage-3);
 				//strategies
 				int option = rand.Next (0, 10); 
 				if (option < 5)
@@ -189,7 +192,7 @@ public class AITacticalUnit : MonoBehaviour {
 
 		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
 
-		float priority = 999.0f;
+		float priority = 0f;
 		int index = -1;
 
 		for (int i = 0;i < players.Length; i++)
@@ -201,7 +204,8 @@ public class AITacticalUnit : MonoBehaviour {
 			{
 				float distance = Vector3.Distance(threat.position, enemy.position);
 				float priority_temp = aggro/distance;
-				if (priority_temp < priority)
+				//if (priority_temp < priority)
+				if (priority_temp > priority)
 				{
 					priority = priority_temp; //update priority
 					index = i;
