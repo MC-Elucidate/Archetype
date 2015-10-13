@@ -36,7 +36,7 @@ public class RoundManager : MonoBehaviour {
 	public float roundTimer = 0f;
 	public float totalTime = 0f;
 	public static int score = 0;
-	public int roundCounter = 0;
+	public static int roundCounter = 0;
 
 	public Transform[] spawnPoints;
 	public float reinforcementDelay = 6f;
@@ -80,7 +80,7 @@ public class RoundManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		roundCounter = 0;
 		spawner = gameObject.GetComponent<EnemySpawner>();
 		AITactics = gameObject.GetComponent<AITacticalUnit>();
 		KillRound ();

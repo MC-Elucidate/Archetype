@@ -60,7 +60,7 @@ public class HeavyScript: PlayerCharacter {
 		base.FixedUpdate ();
 
 		//FixedUpdate used to end the taunt after a specific amount of time has passed
-		if (currentTaunt > 0)
+		if (currentTaunt > 0 && alive)
 			currentTaunt -= Time.fixedDeltaTime;
 		else
 			aggro = baseAggro;
